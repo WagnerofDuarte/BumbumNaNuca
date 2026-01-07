@@ -21,6 +21,30 @@ App iOS nativo para gerenciar planos de treino personalizados com exercícios or
 - ✅ Categorizar por 7 grupos musculares
 - ✅ Visualização com ícones coloridos
 
+### Execução de Treinos 🆕
+- ✅ Iniciar sessão de treino a partir de um plano
+- ✅ Registrar séries com peso e repetições
+- ✅ Validação em tempo real de dados
+- ✅ Timer de descanso automático entre séries
+  - Feedback haptic e sonoro ao completar
+  - Controles pause/resume/skip
+  - Funciona em background por até 3 minutos
+- ✅ Visualizar dados do último treino
+  - Peso e reps da última sessão completa
+  - Formatação localizada de números
+- ✅ Acompanhar progresso durante sessão
+  - Badges de status (pendente/em andamento/completo)
+  - Barra de progresso visual
+  - Contador de exercícios completados
+- ✅ Gerenciar sessões incompletas
+  - Detectar sessão existente ao iniciar
+  - Retomar treino anterior
+  - Abandonar e iniciar nova sessão
+- ✅ Resumo final do treino
+  - Duração total da sessão
+  - Total de séries e repetições
+  - Lista de exercícios completados
+
 ## 🏗️ Arquitetura
 
 ### Stack Tecnológica
@@ -35,6 +59,8 @@ BumbumNaNuca/
 ├── Models/                    # Entidades SwiftData
 │   ├── WorkoutPlan.swift      # Plano de treino
 │   ├── Exercise.swift         # Exercício individual
+│   ├── WorkoutSession.swift   # Sessão de treino
+│   ├── ExerciseSet.swift      # Série executada
 │   └── MuscleGroup.swift      # Enum de grupos musculares
 ├── Views/
 │   ├── Workout/               # Telas relacionadas a planos
@@ -43,17 +69,32 @@ BumbumNaNuca/
 │   │   ├── WorkoutPlanRowView.swift
 │   │   ├── CreateWorkoutPlanView.swift
 │   │   ├── EditWorkoutPlanView.swift
-│   │   └── AddExerciseView.swift
+│   │   ├── AddExerciseView.swift
+│   │   └── Execute/           # 🆕 Telas de execução
+│   │       ├── ExecuteWorkoutView.swift
+│   │       ├── ExecuteExerciseView.swift
+│   │       ├── ExerciseExecutionRow.swift
+│   │       ├── WorkoutSummaryView.swift
+│   │       └── RestTimerView.swift
 │   └── Components/            # Componentes reutilizáveis
 │       ├── PrimaryButton.swift
 │       ├── EmptyStateView.swift
-│       └── ExerciseRowView.swift
+│       ├── ExerciseRowView.swift
+│       ├── ProgressHeader.swift
+│       ├── SetInputView.swift
+│       ├── ValidationFeedback.swift
+│       └── CircularProgressView.swift
 ├── ViewModels/                # Lógica de negócio
 │   ├── WorkoutPlanListViewModel.swift
 │   ├── WorkoutPlanDetailViewModel.swift
 │   ├── CreateWorkoutPlanViewModel.swift
 │   ├── EditWorkoutPlanViewModel.swift
-│   └── AddExerciseViewModel.swift
+│   ├── AddExerciseViewModel.swift
+│   └── Execute/               # 🆕 ViewModels de execução
+│       ├── WorkoutSessionViewModel.swift
+│       ├── ExecuteExerciseViewModel.swift
+│       ├── WorkoutSummaryViewModel.swift
+│       └── RestTimerViewModel.swift
 └── Utilities/
     └── Extensions/
         └── Date+Extensions.swift  # Formatação de datas
@@ -79,7 +120,68 @@ BumbumNaNuca/
 ### WorkoutPlan
 ```swift
 - id: UUID (unique)
-- name: String
+- n
+
+### WorkoutSession 🆕
+```swift
+- id: UUID (unique)
+- startDate: Date
+- endDate: Date?
+- isCompleted: Bool
+- completedExercises: Set<UUID>
+- workoutPlan: WorkoutPlan?
+- exerciseSets: [ExerciseSet]
+```🚀 Como Usar a Feature de Execução de Treinos
+
+### Iniciar Treino
+1. Na lista de planos, toque em um plano
+2. Toque no botão "Iniciar Treino" (ícone de play)
+3. Se houver uma sessão incompleta, escolha:
+   - **Retomar**: continua de onde parou
+   - **Abandonar e Iniciar Nova**: salva a atual e começa nova
+
+### Durante o Treino
+1. **Lista de Exercícios**: veja todos os exercícios com status
+   - ⚪ Círculo vazio: pendente
+   - 🔵 Círculo preenchido: em andamento
+   - ✅ Check verde: completo
+
+2. **Executar Exercício**: toque em um exercício
+   - Veja dados do último treino (se houver)
+   - Digite peso (opcional para peso corporal)
+   - Digite número de repetições
+   - Toque em "Concluir Série"
+
+3. **Timer de Descanso** (automático após série)
+   - Veja tempo restante em um círculo visual
+   - **Pausar**: congela o timer
+   - **Retomar**: continua de onde parou
+   - **Pular**: cancela e volta para registro
+
+4. **Completar Exercício**
+   - Faça quantas séries quiser (não obrigatório seguir defaultSets)
+   - Indicador verde aparece ao atingir meta de séries
+   - Toque "Concluir Exercício" quando terminar
+
+### Finalizar Treino
+1. Toque em "Finalizar" no canto superior direito
+2. Veja resumo completo:
+   - Duração total
+   - Total de séries e repetições
+   - Lista de exercícios com detalhes
+
+## 
+
+### ExerciseSet 🆕
+```swift
+- id: UUID (unique)
+- setNumber: Int
+- weight: Double?
+- reps: Int
+- completedDate: Date
+- exercise: Exercise?
+- session: WorkoutSession?
+```ame: String
 - description: String
 - createdDate: Date
 - isActive: Bool
@@ -93,11 +195,13 @@ BumbumNaNuca/
 - muscleGroup: MuscleGroup
 - defaultSets: Int (1-10)
 - defaultReps: Int (1-50)
-- defaultRestTime: Int seconds (15-300)
-- order: Int (para drag & drop futuro)
-- workoutPlan: WorkoutPlan?
-```
-
+- defaHistórico de treinos completo
+- [ ] Gráficos de progresso
+- [ ] Filtros por grupo muscular
+- [ ] Duplicar plano existente
+- [ ] Importar/Exportar planos (JSON)
+- [ ] Notas por série/exercício
+- [ ] Templates de planos populares
 ### MuscleGroup (Enum)
 - Peito 🔵 (blue, dumbbell)
 - Costas 🟢 (green, figure.walk)
@@ -110,8 +214,8 @@ BumbumNaNuca/
 ## 🧪 Testes
 
 ### Manual Testing
-Ver [TESTING.md](TESTING.md) para guia completo de testes manuais.
-
+Ver [TESTING.md](TESTING.md) para guia completo, Combine
+**Status**: ✅ Feature "Executar Treino" Completa
 ### Casos de Teste Cobertos
 - ✅ Criar plano vazio (sem exercícios)
 - ✅ Validação de nome obrigatório

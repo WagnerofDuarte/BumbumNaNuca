@@ -36,6 +36,24 @@ final class WorkoutSessionViewModel {
         session?.endDate == nil
     }
     
+    // MARK: - Exercise Status
+    
+    func exerciseStatus(_ exercise: Exercise) -> ExerciseStatus {
+        if completedExercises.contains(exercise.id) {
+            return .completed
+        }
+        
+        // Check if exercise has any sets recorded
+        if let session = session {
+            let hasSets = session.exerciseSets.contains { $0.exercise?.id == exercise.id }
+            if hasSets {
+                return .inProgress
+            }
+        }
+        
+        return .pending
+    }
+    
     // MARK: - Initialization
     
     init(workoutPlan: WorkoutPlan, modelContext: ModelContext) {

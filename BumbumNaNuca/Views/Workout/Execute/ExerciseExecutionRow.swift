@@ -13,10 +13,8 @@ struct ExerciseExecutionRow: View {
     
     var body: some View {
         HStack(spacing: 12) {
-            // Status indicator
-            Circle()
-                .fill(statusColor)
-                .frame(width: 12, height: 12)
+            // Status badge icon
+            statusIcon
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(exercise.name)
@@ -33,10 +31,46 @@ struct ExerciseExecutionRow: View {
             
             Spacer()
             
-            // Status badge
-            statusBadge
+            // Status label
+            if status != .pending {
+                statusLabel
+            }
         }
         .padding(.vertical, 8)
+    }
+    
+    @ViewBuilder
+    private var statusIcon: some View {
+        switch status {
+        case .pending:
+            Image(systemName: "circle")
+                .foregroundColor(.gray)
+                .imageScale(.large)
+        case .inProgress:
+            Image(systemName: "circle.fill")
+                .foregroundColor(.blue)
+                .imageScale(.large)
+        case .completed:
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundColor(.green)
+                .imageScale(.large)
+        }
+    }
+    
+    @ViewBuilder
+    private var statusLabel: some View {
+        switch status {
+        case .pending:
+            EmptyView()
+        case .inProgress:
+            Text("Em andamento")
+                .font(.caption)
+                .foregroundColor(.blue)
+        case .completed:
+            Text("Completo")
+                .font(.caption)
+                .foregroundColor(.green)
+        }
     }
     
     private var statusColor: Color {

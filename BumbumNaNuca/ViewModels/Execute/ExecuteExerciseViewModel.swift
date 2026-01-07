@@ -29,6 +29,10 @@ final class ExecuteExerciseViewModel {
     private(set) var completedSets: [ExerciseSet] = []
     private(set) var lastWorkoutData: LastWorkoutData?
     
+    // Timer state
+    var showRestTimer: Bool = false
+    var shouldCancelTimer: Bool = false
+    
     // MARK: - Computed Properties
     
     var currentSetNumber: Int {
@@ -130,6 +134,28 @@ final class ExecuteExerciseViewModel {
         repsError = nil
     }
     
+    // MARK: - Timer Management
+    
+    func startRestTimer() {
+        // Cancel any existing timer
+        shouldCancelTimer = true
+        
+        // Show new timer
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            self?.shouldCancelTimer = false
+            self?.showRestTimer = true
+        }
+    }
+    
+    func hideRestTimer() {
+        showRestTimer = false
+    }
+    
+    func cancelRestTimer() {
+        shouldCancelTimer = true
+        showRestTimer = false
+    }
+    
     // MARK: - Query
     
     private func loadCompletedSets() {
@@ -184,7 +210,20 @@ final class ExecuteExerciseViewModel {
         let date: Date
         
         var formattedText: String {
-            let weightStr = weight.map { String(format: "%.1f kg", $0) } ?? "Peso corporal"
+            let weightStr: String
+            if let weight = weight {
+                let formatter = NumberFormatter()
+                formatter.numberStyle = .decimal
+                formatter.minimumFractionDigits = 0
+                formatter.maximumFractionDigits = 1
+                formatter.locale = Locale.current
+                
+                let formattedWeight = formatter.string(from: NSNumber(value: weight)) ?? String(format: "%.1f", weight)
+                weightStr = "\(formattedWeight) kg"
+            } else {
+                weightStr = "Peso corporal"
+            }
+            
             return "Último: \(weightStr) × \(reps) reps"
         }
     }

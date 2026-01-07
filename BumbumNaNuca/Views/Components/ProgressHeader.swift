@@ -13,13 +13,18 @@ struct ProgressHeader: View {
     
     var body: some View {
         VStack(spacing: 12) {
+            HStack {
+                Text(text)
+                    .font(.headline)
+                Spacer()
+                Text("\(Int(progress * 100))%")
+                    .font(.headline)
+                    .foregroundColor(.accentColor)
+            }
+            
             ProgressView(value: progress)
                 .progressViewStyle(.linear)
                 .tint(.accentColor)
-            
-            Text(text)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
         }
         .padding()
         .background(.regularMaterial)

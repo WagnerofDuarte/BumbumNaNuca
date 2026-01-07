@@ -89,7 +89,7 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 - [X] T025 Implementar método finalizeSession() em WorkoutSessionViewModel
 - [X] T026 Implementar cálculos de resumo em WorkoutSummaryViewModel (duration, totalSets, totalReps)
 - [X] T027 Adicionar navegação para ExecuteWorkoutView em WorkoutPlanDetailView
-- [ ] T028 [P] Adicionar SwiftUI Previews para todas as Views criadas (T014, T015, T016, T017, T018, T019, T020)
+- [X] T028 [P] Adicionar SwiftUI Previews para todas as Views criadas (T014, T015, T016, T017, T018, T019, T020)
 
 **Checkpoint**: User Story 1 completamente funcional - pronta para MVP release
 
@@ -103,17 +103,17 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 
 ### Implementação User Story 2
 
-- [ ] T041 [P] Criar RestTimerViewModel em BumbumNaNuca/ViewModels/Execute/RestTimerViewModel.swift
-- [ ] T042 [P] Criar componente CircularProgressView em BumbumNaNuca/Views/Components/CircularProgressView.swift
-- [ ] T043 Criar RestTimerView em BumbumNaNuca/Views/Workout/Execute/RestTimerView.swift (depende de T041, T042)
-- [ ] T044 Implementar Combine Timer + Background Task em RestTimerViewModel para 3min background
-- [ ] T045 Implementar haptic feedback (UINotificationFeedbackGenerator) em RestTimerViewModel.onTimerComplete()
-- [ ] T046 Implementar áudio feedback (AVAudioPlayer com system sounds) em RestTimerViewModel.onTimerComplete()
-- [ ] T047 Implementar controles pause/resume em RestTimerViewModel
-- [ ] T048 Implementar controle skip em RestTimerViewModel
-- [ ] T049 Integrar RestTimerView em ExecuteExerciseView após recordSet() bem-sucedido
-- [ ] T050 Implementar auto-cancelamento do timer quando nova série é iniciada em ExecuteExerciseViewModel
-- [ ] T051 [P] Adicionar SwiftUI Preview para RestTimerView
+- [X] T041 [P] Criar RestTimerViewModel em BumbumNaNuca/ViewModels/Execute/RestTimerViewModel.swift
+- [X] T042 [P] Criar componente CircularProgressView em BumbumNaNuca/Views/Components/CircularProgressView.swift
+- [X] T043 Criar RestTimerView em BumbumNaNuca/Views/Workout/Execute/RestTimerView.swift (depende de T041, T042)
+- [X] T044 Implementar Combine Timer + Background Task em RestTimerViewModel para 3min background
+- [X] T045 Implementar haptic feedback (UINotificationFeedbackGenerator) em RestTimerViewModel.onTimerComplete()
+- [X] T046 Implementar áudio feedback (AVAudioPlayer com system sounds) em RestTimerViewModel.onTimerComplete()
+- [X] T047 Implementar controles pause/resume em RestTimerViewModel
+- [X] T048 Implementar controle skip em RestTimerViewModel
+- [X] T049 Integrar RestTimerView em ExecuteExerciseView após recordSet() bem-sucedido
+- [X] T050 Implementar auto-cancelamento do timer quando nova série é iniciada em ExecuteExerciseViewModel
+- [X] T051 [P] Adicionar SwiftUI Preview para RestTimerView
 
 **Checkpoint**: User Story 1 E 2 ambas funcionam independentemente
 
@@ -127,11 +127,11 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 
 ### Implementação User Story 3
 
-- [ ] T060 Implementar método fetchLastWorkoutData() em ExecuteExerciseViewModel
-- [ ] T061 Criar Query SwiftData com Predicate para buscar última sessão completa do mesmo plano em ExecuteExerciseViewModel
-- [ ] T062 Implementar struct LastWorkoutData com formattedText em ExecuteExerciseViewModel
-- [ ] T063 Adicionar seção "Dados do Último Treino" em ExecuteExerciseView (condicional se dados existirem)
-- [ ] T064 Formatar exibição com locale correto (NumberFormatter para peso)
+- [X] T060 Implementar método fetchLastWorkoutData() em ExecuteExerciseViewModel
+- [X] T061 Criar Query SwiftData com Predicate para buscar última sessão completa do mesmo plano em ExecuteExerciseViewModel
+- [X] T062 Implementar struct LastWorkoutData com formattedText em ExecuteExerciseViewModel
+- [X] T063 Adicionar seção "Dados do Último Treino" em ExecuteExerciseView (condicional se dados existirem)
+- [X] T064 Formatar exibição com locale correto (NumberFormatter para peso)
 
 **Checkpoint**: User Stories 1, 2 E 3 todas funcionam independentemente
 
@@ -145,14 +145,14 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 
 ### Implementação User Story 4
 
-- [ ] T070 Implementar enum ExerciseStatus (pending, inProgress, completed) em WorkoutSessionViewModel
-- [ ] T071 Implementar método exerciseStatus(_:) em WorkoutSessionViewModel
-- [ ] T072 Implementar computed property progressPercentage em WorkoutSessionViewModel
-- [ ] T073 Implementar computed property progressText em WorkoutSessionViewModel
-- [ ] T074 Adicionar status badges em ExerciseExecutionRow (SF Symbols: circle, circle.fill, checkmark.circle.fill)
-- [ ] T075 Atualizar ProgressHeader para mostrar barra de progresso visual (ProgressView)
-- [ ] T076 Adicionar indicador "Série X de Y" em ExecuteExerciseView usando viewModel.progressText
-- [ ] T077 [P] Atualizar SwiftUI Previews com diferentes estados de progresso
+- [X] T070 Implementar enum ExerciseStatus (pending, inProgress, completed) em WorkoutSessionViewModel
+- [X] T071 Implementar método exerciseStatus(_:) em WorkoutSessionViewModel
+- [X] T072 Implementar computed property progressPercentage em WorkoutSessionViewModel
+- [X] T073 Implementar computed property progressText em WorkoutSessionViewModel
+- [X] T074 Adicionar status badges em ExerciseExecutionRow (SF Symbols: circle, circle.fill, checkmark.circle.fill)
+- [X] T075 Atualizar ProgressHeader para mostrar barra de progresso visual (ProgressView)
+- [X] T076 Adicionar indicador "Série X de Y" em ExecuteExerciseView usando viewModel.progressText
+- [X] T077 [P] Atualizar SwiftUI Previews com diferentes estados de progresso
 
 **Checkpoint**: User Stories 1-4 todas funcionam
 
@@ -166,16 +166,16 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 
 ### Implementação User Story 5
 
-- [ ] T083 Implementar método checkExistingSession() em WorkoutSessionViewModel
-- [ ] T084 Criar Query SwiftData para encontrar sessões não finalizadas do mesmo plano
-- [ ] T085 Implementar método resumeSession(_:) em WorkoutSessionViewModel
-- [ ] T086 Implementar método abandonSession(_:) em WorkoutSessionViewModel (marca como completa com dados atuais)
-- [ ] T087 Adicionar enum SessionConflictResolution (resume, abandon) em WorkoutSessionViewModel
-- [ ] T088 Adicionar state ViewState.sessionConflict em ExecuteWorkoutView
-- [ ] T089 Criar alert de conflito de sessão em ExecuteWorkoutView.onAppear()
-- [ ] T090 Garantir que recordSet() salva imediatamente via SwiftData (auto-save já configurado)
-- [ ] T091 Implementar método markExerciseComplete() que permite completar com qualquer número de séries
-- [ ] T092 Adicionar indicador visual quando defaultSets atingido mas permitir continuar (hasReachedDefaultSets)
+- [X] T083 Implementar método checkExistingSession() em WorkoutSessionViewModel
+- [X] T084 Criar Query SwiftData para encontrar sessões não finalizadas do mesmo plano
+- [X] T085 Implementar método resumeSession(_:) em WorkoutSessionViewModel
+- [X] T086 Implementar método abandonSession(_:) em WorkoutSessionViewModel (marca como completa com dados atuais)
+- [X] T087 Adicionar enum SessionConflictResolution (resume, abandon) em WorkoutSessionViewModel
+- [X] T088 Adicionar state ViewState.sessionConflict em ExecuteWorkoutView
+- [X] T089 Criar alert de conflito de sessão em ExecuteWorkoutView.onAppear()
+- [X] T090 Garantir que recordSet() salva imediatamente via SwiftData (auto-save já configurado)
+- [X] T091 Implementar método markExerciseComplete() que permite completar com qualquer número de séries
+- [X] T092 Adicionar indicador visual quando defaultSets atingido mas permitir continuar (hasReachedDefaultSets)
 
 **Checkpoint**: Todas user stories (1-5) independentemente funcionais
 
@@ -188,9 +188,9 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 - [ ] T099 [P] Adicionar suporte a Dynamic Type (tamanhos de fonte) em todas as Views
 - [ ] T100 [P] Testar contraste de cores no modo escuro em todas as telas
 - [ ] T101 [P] Adicionar localização (Localizable.strings) para todos os textos UI
-- [ ] T102 [P] Configurar formatação de números com locale correto (NumberFormatter para pesos)
+- [X] T102 [P] Configurar formatação de números com locale correto (NumberFormatter para pesos)
 - [ ] T103 [P] Adicionar logging estruturado para eventos críticos (sessão iniciada, finalizada, erro)
-- [ ] T104 [P] Revisar e garantir que modo silencioso do dispositivo é respeitado no áudio do timer
+- [X] T104 [P] Revisar e garantir que modo silencioso do dispositivo é respeitado no áudio do timer
 - [ ] T105 [P] Adicionar animações suaves para transições de estado (exercício completo, progresso)
 - [ ] T106 [P] Otimizar queries SwiftData com índices se necessário (performance > 60fps)
 - [ ] T107 [P] Documentar código público com DocC comments
@@ -202,8 +202,8 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 
 **Purpose**: Documentação final
 
-- [ ] T109 [P] Atualizar README.md com instruções de uso da feature Execute Workout
-- [ ] T110 [P] Atualizar IMPLEMENTATION_STATUS.md marcando feature como completa
+- [X] T109 [P] Atualizar README.md com instruções de uso da feature Execute Workout
+- [X] T110 [P] Atualizar IMPLEMENTATION_STATUS.md marcando feature como completa
 - [ ] T111 Criar PR com título "feat: Implementar Executar Treino (002-execute-workout)"
 
 ---

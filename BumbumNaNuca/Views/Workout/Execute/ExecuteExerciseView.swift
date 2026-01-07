@@ -37,47 +37,48 @@ struct ExecuteExerciseView: View {
     
     @ViewBuilder
     private func exerciseContent(viewModel: ExecuteExerciseViewModel) -> some View {
-        NavigationStack {
-            Form {
-                // Last workout reference
-                if let lastData = viewModel.lastWorkoutData {
-                    Section {
-                        Label {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(lastData.formattedText)
-                                    .font(.subheadline)
-                                Text(lastData.date.toRelativeString())
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
+        ZStack {
+            NavigationStack {
+                Form {
+                    // Last workout reference
+                    if let lastData = viewModel.lastWorkoutData {
+                        Section {
+                            Label {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(lastData.formattedText)
+                                        .font(.subheadline)
+                                    Text(lastData.date.toRelativeString())
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                            } icon: {
+                                Image(systemName: "clock.arrow.circlepath")
+                                    .foregroundColor(.accentColor)
                             }
-                        } icon: {
-                            Image(systemName: "clock.arrow.circlepath")
-                                .foregroundColor(.accentColor)
                         }
                     }
-                }
-                
-                // Progress indicator
-                Section {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(viewModel.progressText)
-                            .font(.headline)
-                        
-                        if viewModel.hasReachedDefaultSets {
-                            Label("Meta de séries atingida! Pode continuar se quiser.", systemImage: "checkmark.circle.fill")
-                                .font(.caption)
-                                .foregroundColor(.green)
+                    
+                    // Progress indicator
+                    Section {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(viewModel.progressText)
+                                .font(.headline)
+                            
+                            if viewModel.hasReachedDefaultSets {
+                                Label("Meta de séries atingida! Pode continuar se quiser.", systemImage: "checkmark.circle.fill")
+                                    .font(.caption)
+                                    .foregroundColor(.green)
+                            }
                         }
                     }
-                }
-                
-                // Input section
-                Section("Nova Série") {
-                    ExerciseInputContent(viewModel: viewModel, recordSet: recordSet)
-                }
-                
-                // Completed sets
-                if !viewModel.completedSets.isEmpty {
+                    
+                    // Input section
+                    Section("Nova Série") {
+                        ExerciseInputContent(viewModel: viewModel, recordSet: recordSet)
+                    }
+                    
+                    // Completed sets
+                    if !viewModel.completedSets.isEmpty {
                     Section("Séries Completadas (\(viewModel.completedSets.count))") {
                         ForEach(viewModel.completedSets) { set in
                             HStack {
@@ -111,7 +112,27 @@ struct ExecuteExerciseView: View {
                 }
             }
         }
+        
+        // Rest Timer Overlay
+        if viewModel.showRestTimer && !viewModel.shouldCancelTimer {
+            Color.black.opacity(0.4)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    // Dismiss timer on background tap
+                }
+            
+            // Start rest timer if rest time is configured
+            if exercise.defaultRestTime > 0 {
+                viewModel.startRestTimer()
+            }
+            
+            RestTimerView(duration: TimeInterval(exercise.defaultRestTime)) {
+                viewModel.hideRestTimer()
+            }
+            .transition(.scale.combined(with: .opacity))
+        }
     }
+    .animation(.spring(), value: viewModel.showRestTimer)
     
     private func recordSet() {
         guard let viewModel = viewModel else { return }

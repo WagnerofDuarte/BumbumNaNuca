@@ -64,8 +64,8 @@ Rationale: Predictable versioning and migration rules reduce user disruption and
 coordination.
 
 ## Additional Constraints
-- Target Platform: iOS (SwiftUI). Assumption: iOS 15+ (TODO: confirm Xcode project deployment target).
-- Language / Toolchain: Swift (use the repository's configured toolchain; default to current stable
+- Target Platform: iOS (SwiftUI). Minimum deployment target: iOS 17.0+.
+- Language / Toolchain: Swift 5.9+ (use the repository's configured toolchain; default to current stable
   Swift supported by Xcode). If the project requires a specific Swift version, document it in
   docs/ or the README.
 - Third‑party libraries: Each dependency MUST be justified, reviewed for size and privacy impact, and

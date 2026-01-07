@@ -46,3 +46,29 @@ extension Date {
         return formatter.string(from: self)
     }
 }
+
+// MARK: - TimeInterval Extensions
+
+extension TimeInterval {
+    /// Formata duração em formato legível (ex: "1h 23min", "45min", "12s")
+    func toFormattedDuration() -> String {
+        let hours = Int(self) / 3600
+        let minutes = (Int(self) % 3600) / 60
+        let seconds = Int(self) % 60
+        
+        if hours > 0 {
+            return "\(hours)h \(minutes)min"
+        } else if minutes > 0 {
+            return "\(minutes)min"
+        } else {
+            return "\(seconds)s"
+        }
+    }
+    
+    /// Formata duração do timer (ex: "02:45", "00:12")
+    func toTimerString() -> String {
+        let minutes = Int(self) / 60
+        let seconds = Int(self) % 60
+        return String(format: "%02d:%02d", minutes, seconds)
+    }
+}

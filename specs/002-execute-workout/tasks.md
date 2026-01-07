@@ -42,10 +42,10 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 
 **Purpose**: Configuração inicial do projeto e estrutura básica
 
-- [ ] T001 Criar estrutura de diretórios para feature em BumbumNaNuca/Views/Workout/Execute/
-- [ ] T002 Criar estrutura de diretórios para ViewModels em BumbumNaNuca/ViewModels/Execute/
-- [ ] T003 Verificar iOS deployment target >= 17.0 em BumbumNaNuca.xcodeproj/project.pbxproj
-- [ ] T004 Verificar Swift toolchain >= 5.9 nas configurações do projeto
+- [X] T001 Criar estrutura de diretórios para feature em BumbumNaNuca/Views/Workout/Execute/
+- [X] T002 Criar estrutura de diretórios para ViewModels em BumbumNaNuca/ViewModels/Execute/
+- [X] T003 Verificar iOS deployment target >= 17.0 em BumbumNaNuca.xcodeproj/project.pbxproj
+- [X] T004 Verificar Swift toolchain >= 5.9 nas configurações do projeto
 
 ---
 
@@ -55,11 +55,11 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 
 **⚠️ CRÍTICO**: Nenhuma implementação de user story pode começar até esta fase estar completa
 
-- [ ] T005 Criar modelo WorkoutSession em BumbumNaNuca/Models/WorkoutSession.swift
-- [ ] T006 [P] Criar modelo ExerciseSet em BumbumNaNuca/Models/ExerciseSet.swift
-- [ ] T007 [P] Estender modelo Exercise com defaultSets, defaultReps, defaultRestTime em BumbumNaNuca/Models/Exercise.swift
-- [ ] T008 Atualizar schema SwiftData em BumbumNaNuca/BumbumNaNucaApp.swift para incluir WorkoutSession e ExerciseSet
-- [ ] T009 [P] Criar arquivo de extensões Date+Extensions.swift para formatação de duração (se não existir)
+- [X] T005 Criar modelo WorkoutSession em BumbumNaNuca/Models/WorkoutSession.swift
+- [X] T006 [P] Criar modelo ExerciseSet em BumbumNaNuca/Models/ExerciseSet.swift
+- [X] T007 [P] Estender modelo Exercise com defaultSets, defaultReps, defaultRestTime em BumbumNaNuca/Models/Exercise.swift
+- [X] T008 Atualizar schema SwiftData em BumbumNaNuca/BumbumNaNucaApp.swift para incluir WorkoutSession e ExerciseSet
+- [X] T009 [P] Criar arquivo de extensões Date+Extensions.swift para formatação de duração (se não existir)
 - [ ] T010 [P] Configurar Logger para feature Execute em BumbumNaNuca/Utilities/Helpers/ExecuteLogger.swift
 
 **Checkpoint**: Fundação pronta - implementação de user stories pode começar em paralelo
@@ -74,23 +74,23 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 
 ### Implementação User Story 1
 
-- [ ] T011 [P] Criar WorkoutSessionViewModel em BumbumNaNuca/ViewModels/Execute/WorkoutSessionViewModel.swift
-- [ ] T012 [P] Criar ExecuteExerciseViewModel em BumbumNaNuca/ViewModels/Execute/ExecuteExerciseViewModel.swift
-- [ ] T013 [P] Criar WorkoutSummaryViewModel em BumbumNaNuca/ViewModels/Execute/WorkoutSummaryViewModel.swift
-- [ ] T014 [P] Criar componente ProgressHeader em BumbumNaNuca/Views/Components/ProgressHeader.swift
-- [ ] T015 [P] Criar componente SetInputView em BumbumNaNuca/Views/Components/SetInputView.swift
-- [ ] T016 [P] Criar componente ValidationFeedback em BumbumNaNuca/Views/Components/ValidationFeedback.swift
-- [ ] T017 [P] Criar ExerciseExecutionRow em BumbumNaNuca/Views/Workout/Execute/ExerciseExecutionRow.swift
-- [ ] T018 Criar ExecuteWorkoutView em BumbumNaNuca/Views/Workout/Execute/ExecuteWorkoutView.swift (depende de T011, T014, T017)
-- [ ] T019 Criar ExecuteExerciseView em BumbumNaNuca/Views/Workout/Execute/ExecuteExerciseView.swift (depende de T012, T015, T016)
-- [ ] T020 Criar WorkoutSummaryView em BumbumNaNuca/Views/Workout/Execute/WorkoutSummaryView.swift (depende de T013)
-- [ ] T021 Implementar validação em tempo real de peso em ExecuteExerciseViewModel.validateWeight()
-- [ ] T022 Implementar validação em tempo real de reps em ExecuteExerciseViewModel.validateReps()
-- [ ] T023 Implementar método recordSet() em ExecuteExerciseViewModel com persistência SwiftData
-- [ ] T024 Implementar método startSession() em WorkoutSessionViewModel
-- [ ] T025 Implementar método finalizeSession() em WorkoutSessionViewModel
-- [ ] T026 Implementar cálculos de resumo em WorkoutSummaryViewModel (duration, totalSets, totalReps)
-- [ ] T027 Adicionar navegação para ExecuteWorkoutView em WorkoutPlanDetailView
+- [X] T011 [P] Criar WorkoutSessionViewModel em BumbumNaNuca/ViewModels/Execute/WorkoutSessionViewModel.swift
+- [X] T012 [P] Criar ExecuteExerciseViewModel em BumbumNaNuca/ViewModels/Execute/ExecuteExerciseViewModel.swift
+- [X] T013 [P] Criar WorkoutSummaryViewModel em BumbumNaNuca/ViewModels/Execute/WorkoutSummaryViewModel.swift
+- [X] T014 [P] Criar componente ProgressHeader em BumbumNaNuca/Views/Components/ProgressHeader.swift
+- [X] T015 [P] Criar componente SetInputView em BumbumNaNuca/Views/Components/SetInputView.swift
+- [X] T016 [P] Criar componente ValidationFeedback em BumbumNaNuca/Views/Components/ValidationFeedback.swift
+- [X] T017 [P] Criar ExerciseExecutionRow em BumbumNaNuca/Views/Workout/Execute/ExerciseExecutionRow.swift
+- [X] T018 Criar ExecuteWorkoutView em BumbumNaNuca/Views/Workout/Execute/ExecuteWorkoutView.swift (depende de T011, T014, T017)
+- [X] T019 Criar ExecuteExerciseView em BumbumNaNuca/Views/Workout/Execute/ExecuteExerciseView.swift (depende de T012, T015, T016)
+- [X] T020 Criar WorkoutSummaryView em BumbumNaNuca/Views/Workout/Execute/WorkoutSummaryView.swift (depende de T013)
+- [X] T021 Implementar validação em tempo real de peso em ExecuteExerciseViewModel.validateWeight()
+- [X] T022 Implementar validação em tempo real de reps em ExecuteExerciseViewModel.validateReps()
+- [X] T023 Implementar método recordSet() em ExecuteExerciseViewModel com persistência SwiftData
+- [X] T024 Implementar método startSession() em WorkoutSessionViewModel
+- [X] T025 Implementar método finalizeSession() em WorkoutSessionViewModel
+- [X] T026 Implementar cálculos de resumo em WorkoutSummaryViewModel (duration, totalSets, totalReps)
+- [X] T027 Adicionar navegação para ExecuteWorkoutView em WorkoutPlanDetailView
 - [ ] T028 [P] Adicionar SwiftUI Previews para todas as Views criadas (T014, T015, T016, T017, T018, T019, T020)
 - [ ] T029 [P] Adicionar labels de acessibilidade (VoiceOver) em ExecuteWorkoutView
 - [ ] T030 [P] Adicionar labels de acessibilidade (VoiceOver) em ExecuteExerciseView

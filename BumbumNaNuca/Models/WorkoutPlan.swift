@@ -19,6 +19,9 @@ final class WorkoutPlan {
     @Relationship(deleteRule: .cascade, inverse: \Exercise.workoutPlan)
     var exercises: [Exercise]
     
+    @Relationship(deleteRule: .cascade)
+    var workoutSessions: [WorkoutSession]
+    
     init(
         id: UUID = UUID(),
         name: String,
@@ -32,6 +35,7 @@ final class WorkoutPlan {
         self.createdDate = createdDate
         self.isActive = isActive
         self.exercises = []
+        self.workoutSessions = []
     }
     
     /// Computed property para facilitar acesso

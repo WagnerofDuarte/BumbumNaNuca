@@ -61,6 +61,16 @@ struct WorkoutPlanDetailView: View {
             
             // Botão de ativar/desativar
             Section {
+                // Botão de Iniciar Treino
+                NavigationLink {
+                    ExecuteWorkoutView(workoutPlan: plan)
+                } label: {
+                    Label("Iniciar Treino", systemImage: "play.circle.fill")
+                        .font(.headline)
+                }
+                .disabled(sortedExercises.isEmpty)
+                .tint(.accentColor)
+                
                 Button {
                     viewModel.toggleActive(plan: plan, context: modelContext)
                 } label: {

@@ -13,7 +13,9 @@ struct BumbumNaNucaApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             WorkoutPlan.self,
-            Exercise.self
+            Exercise.self,
+            WorkoutSession.self,
+            ExerciseSet.self
         ])
         
         let modelConfiguration = ModelConfiguration(

@@ -22,21 +22,21 @@ Sync Impact Report
 
 ### I. Mobile‑First SwiftUI Components
 Every UI feature MUST be implemented as small, reusable SwiftUI views and lightweight view models. Views
-MUST be accessible (VoiceOver labels, dynamic type, contrast), localized where user-facing strings are
-present, and documented with a short usage note. Components MUST be independently previewable and
-independently testable.
+SHOULD be localized where user-facing strings are present, and documented with a short usage note.
+Components SHOULD be independently previewable.
 
-Rationale: A component-driven approach increases reusability, simplifies testing, and improves
-accessibility and localization across the app.
+Rationale: A component-driven approach increases reusability and simplifies development across the app.
 
-### II. Test‑First (NON‑NEGOTIABLE)
-All new features and bug fixes MUST include automated tests before implementation completes. Unit tests
-(XCTest) MUST cover view models, business logic and any parsing/formatting. UI tests (XCTest UI or
-lightweight snapshot tests) MUST cover primary user flows for P1 stories. Tests MUST be run by CI on
-every PR and MUST pass before merge.
+**Note**: Accessibility (VoiceOver, Dynamic Type, etc.) and automated testing are NOT required for this
+project. Focus on rapid feature delivery and core functionality.
 
-Rationale: Tests prevent regressions and enable safe refactoring; a Test‑First discipline encourages
-well-scoped, decoupled design.
+### II. Rapid Development & Manual Validation
+All new features and bug fixes SHOULD be manually tested and validated before release. Automated tests
+are NOT required. Focus on rapid iteration and feature delivery. Manual smoke tests and end-to-end
+validation are sufficient for quality assurance.
+
+Rationale: Automated testing overhead slows down development. Manual validation allows for faster
+iteration and focuses effort on delivering features to users quickly.
 
 ### III. Clean Architecture & Module Boundaries
 Code MUST be organized by feature (feature module or folder), not by technical role only. Public APIs
@@ -75,13 +75,12 @@ coordination.
 
 ## Development Workflow
 - All work MUST be done on short‑lived feature branches and delivered via pull requests (PRs).
-- Every PR MUST include: description of change, linked spec/issue, test coverage details, screenshots
-  or recordings for UI changes, and a "Constitution Compliance" checklist referencing relevant
-  principles.
+- Every PR SHOULD include: description of change, linked spec/issue, screenshots or recordings for UI
+  changes, and notes on manual testing performed.
 - Code review: At least one approving review from a maintainer is REQUIRED for routine changes; two
   approvals are REQUIRED for changes that alter architecture, introduce new dependencies, or affect
   data formats.
-- CI: PRs MUST pass automated tests, linting and formatting checks before merge.
+- CI: PRs SHOULD pass linting and formatting checks before merge. Automated tests are not required.
 
 ## Governance
 Amendments to this constitution MUST follow the process below:
@@ -101,4 +100,10 @@ Amendments to this constitution MUST follow the process below:
 6. Compliance reviews: Once per release cycle (or quarterly), maintainers MUST run a Constitution
    Compliance review of open plans/specs/tasks and create issues for violations.
 
-**Version**: 1.0.0 | **Ratified**: TODO(RATIFICATION_DATE): original adoption date unknown | **Last Amended**: 2025-12-20
+**Version**: 2.0.0 | **Ratified**: 2025-12-20 | **Last Amended**: 2026-01-07
+
+**Major Changes in v2.0.0**:
+- Removed accessibility requirements (VoiceOver, Dynamic Type)
+- Removed automated testing requirements (unit tests, UI tests)
+- Changed from Test-First to Rapid Development approach
+- Simplified development workflow by removing test-related requirements

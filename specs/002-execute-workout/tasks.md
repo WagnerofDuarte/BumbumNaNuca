@@ -18,8 +18,6 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 - 1 modelo estendido (Exercise)
 - 4 ViewModels (@Observable)
 - 8 Views (SwiftUI)
-- ~15 testes unitários (XCTest)
-- ~5 testes de UI (XCTest UI)
 
 **Estratégia de Implementação**:
 1. MVP: User Story 1 apenas (P1) - entrega valor fundamental
@@ -92,23 +90,8 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 - [X] T026 Implementar cálculos de resumo em WorkoutSummaryViewModel (duration, totalSets, totalReps)
 - [X] T027 Adicionar navegação para ExecuteWorkoutView em WorkoutPlanDetailView
 - [ ] T028 [P] Adicionar SwiftUI Previews para todas as Views criadas (T014, T015, T016, T017, T018, T019, T020)
-- [ ] T029 [P] Adicionar labels de acessibilidade (VoiceOver) em ExecuteWorkoutView
-- [ ] T030 [P] Adicionar labels de acessibilidade (VoiceOver) em ExecuteExerciseView
 
-### Testes User Story 1
-
-- [ ] T031 [P] Criar WorkoutSessionViewModelTests em BumbumNaNucaTests/ViewModels/WorkoutSessionViewModelTests.swift
-- [ ] T032 [P] Criar ExecuteExerciseViewModelTests em BumbumNaNucaTests/ViewModels/ExecuteExerciseViewModelTests.swift
-- [ ] T033 [P] Escrever teste: startSession cria WorkoutSession com startDate correto
-- [ ] T034 [P] Escrever teste: validateWeight aceita valores positivos e rejeita negativos/zero
-- [ ] T035 [P] Escrever teste: validateReps aceita inteiros > 0 e rejeita <= 0
-- [ ] T036 [P] Escrever teste: recordSet persiste ExerciseSet com dados corretos
-- [ ] T037 [P] Escrever teste: finalizeSession marca isCompleted=true e define endDate
-- [ ] T038 [P] Escrever teste: resumo calcula duration, totalSets, totalReps corretamente
-- [ ] T039 Criar ExecuteWorkoutUITests em BumbumNaNucaUITests/ExecuteWorkoutUITests.swift
-- [ ] T040 Escrever UI test: fluxo completo P1 (iniciar → registrar séries → finalizar → verificar resumo)
-
-**Checkpoint**: User Story 1 completamente funcional e testada - pronta para MVP release
+**Checkpoint**: User Story 1 completamente funcional - pronta para MVP release
 
 ---
 
@@ -131,17 +114,6 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 - [ ] T049 Integrar RestTimerView em ExecuteExerciseView após recordSet() bem-sucedido
 - [ ] T050 Implementar auto-cancelamento do timer quando nova série é iniciada em ExecuteExerciseViewModel
 - [ ] T051 [P] Adicionar SwiftUI Preview para RestTimerView
-- [ ] T052 [P] Adicionar labels de acessibilidade em RestTimerView
-
-### Testes User Story 2
-
-- [ ] T053 [P] Criar RestTimerViewModelTests em BumbumNaNucaTests/ViewModels/RestTimerViewModelTests.swift
-- [ ] T054 [P] Escrever teste: timer inicia com duração configurada do exercício
-- [ ] T055 [P] Escrever teste: timer decrementa corretamente a cada segundo
-- [ ] T056 [P] Escrever teste: pause congela contador, resume retoma
-- [ ] T057 [P] Escrever teste: skip cancela timer imediatamente
-- [ ] T058 [P] Escrever teste: onTimerComplete é chamado quando timer chega a zero
-- [ ] T059 Criar UI test: timer aparece após série, conta até zero, emite feedback
 
 **Checkpoint**: User Story 1 E 2 ambas funcionam independentemente
 
@@ -160,14 +132,6 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 - [ ] T062 Implementar struct LastWorkoutData com formattedText em ExecuteExerciseViewModel
 - [ ] T063 Adicionar seção "Dados do Último Treino" em ExecuteExerciseView (condicional se dados existirem)
 - [ ] T064 Formatar exibição com locale correto (NumberFormatter para peso)
-
-### Testes User Story 3
-
-- [ ] T065 [P] Escrever teste: fetchLastWorkoutData retorna dados corretos da última sessão completa
-- [ ] T066 [P] Escrever teste: fetchLastWorkoutData retorna nil se é primeira execução
-- [ ] T067 [P] Escrever teste: fetchLastWorkoutData ignora sessões incompletas
-- [ ] T068 [P] Escrever teste: fetchLastWorkoutData ignora sessões de outros planos
-- [ ] T069 Criar UI test: dados do último treino aparecem corretamente na tela de execução
 
 **Checkpoint**: User Stories 1, 2 E 3 todas funcionam independentemente
 
@@ -189,14 +153,6 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 - [ ] T075 Atualizar ProgressHeader para mostrar barra de progresso visual (ProgressView)
 - [ ] T076 Adicionar indicador "Série X de Y" em ExecuteExerciseView usando viewModel.progressText
 - [ ] T077 [P] Atualizar SwiftUI Previews com diferentes estados de progresso
-
-### Testes User Story 4
-
-- [ ] T078 [P] Escrever teste: exerciseStatus retorna pending para exercício não iniciado
-- [ ] T079 [P] Escrever teste: exerciseStatus retorna inProgress quando exercício tem séries mas não completo
-- [ ] T080 [P] Escrever teste: exerciseStatus retorna completed quando exercício marcado como completo
-- [ ] T081 [P] Escrever teste: progressPercentage calcula corretamente (2/4 exercícios = 50%)
-- [ ] T082 Criar UI test: progresso visual atualiza conforme exercícios são completados
 
 **Checkpoint**: User Stories 1-4 todas funcionam
 
@@ -221,15 +177,6 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 - [ ] T091 Implementar método markExerciseComplete() que permite completar com qualquer número de séries
 - [ ] T092 Adicionar indicador visual quando defaultSets atingido mas permitir continuar (hasReachedDefaultSets)
 
-### Testes User Story 5
-
-- [ ] T093 [P] Escrever teste: checkExistingSession detecta sessão não finalizada
-- [ ] T094 [P] Escrever teste: resumeSession carrega estado da sessão existente
-- [ ] T095 [P] Escrever teste: abandonSession marca sessão como completa e permite nova
-- [ ] T096 [P] Escrever teste: recordSet persiste dados imediatamente (verificar com fetch)
-- [ ] T097 [P] Escrever teste: markExerciseComplete permite completar com 2 séries quando defaultSets=4
-- [ ] T098 Criar UI test: fluxo de conflito (iniciar → sair → reiniciar → alerta → retomar)
-
 **Checkpoint**: Todas user stories (1-5) independentemente funcionais
 
 ---
@@ -247,21 +194,17 @@ Este documento quebra a implementação do recurso "Executar Treino" em tarefas 
 - [ ] T105 [P] Adicionar animações suaves para transições de estado (exercício completo, progresso)
 - [ ] T106 [P] Otimizar queries SwiftData com índices se necessário (performance > 60fps)
 - [ ] T107 [P] Documentar código público com DocC comments
-- [ ] T108 Executar todos os testes unitários e garantir 100% passam
-- [ ] T109 Executar todos os testes UI e garantir 100% passam
-- [ ] T110 Testar fluxo completo end-to-end manualmente (smoke test)
+- [ ] T108 Testar fluxo completo end-to-end manualmente (smoke test)
 
 ---
 
-## Phase 9: CI & Documentation
+## Phase 9: Documentation
 
-**Purpose**: Integração contínua e documentação final
+**Purpose**: Documentação final
 
-- [ ] T111 Adicionar configuração de CI para executar testes em cada PR (.github/workflows/ ou equivalente)
-- [ ] T112 [P] Atualizar README.md com instruções de uso da feature Execute Workout
-- [ ] T113 [P] Criar TESTING.md documentando cenários de teste manuais
-- [ ] T114 [P] Atualizar IMPLEMENTATION_STATUS.md marcando feature como completa
-- [ ] T115 Criar PR com título "feat: Implementar Executar Treino (002-execute-workout)"
+- [ ] T109 [P] Atualizar README.md com instruções de uso da feature Execute Workout
+- [ ] T110 [P] Atualizar IMPLEMENTATION_STATUS.md marcando feature como completa
+- [ ] T111 Criar PR com título "feat: Implementar Executar Treino (002-execute-workout)"
 
 ---
 
@@ -315,7 +258,7 @@ Setup → Fundação → US1 → Polish (subset) → Release
 **Week 1**: Setup + Fundação + US1
 - Entrega: Executar treino básico completo
 - Valor: Usuário pode registrar treinos e ver resumo
-- Testável: Fluxo P1 end-to-end
+- Validação: Fluxo P1 end-to-end manual
 
 **Week 2**: US2 + US3
 - Entrega: Timer automático + dados anteriores
@@ -333,12 +276,6 @@ Cada user story entrega valor independente:
 - **US3**: Dados anteriores → Release v1.2
 - **US4**: Progresso visual → Release v1.3
 - **US5**: Sessões incompletas → Release v1.4
-
-### 3. Test Coverage Targets
-
-- **Unit Tests**: ≥80% coverage para ViewModels
-- **UI Tests**: 100% coverage para P1 flows
-- **Manual Tests**: All edge cases em TESTING.md
 
 ---
 
@@ -362,21 +299,21 @@ Cada user story entrega valor independente:
 
 ## Totals
 
-- **Total Tasks**: 115
+- **Total Tasks**: 74
 - **Setup Tasks**: 4 (Phase 1)
 - **Foundational Tasks**: 6 (Phase 2) - BLOCKING
-- **US1 Tasks**: 30 (T011-T040) - MVP
-- **US2 Tasks**: 19 (T041-T059) - P2 Enhancement
-- **US3 Tasks**: 10 (T060-T069) - P2 Enhancement
-- **US4 Tasks**: 13 (T070-T082) - P3 Enhancement
-- **US5 Tasks**: 16 (T083-T098) - P3 Edge Cases
-- **Polish Tasks**: 12 (T099-T110)
-- **CI/Docs Tasks**: 5 (T111-T115)
+- **US1 Tasks**: 18 (T011-T028) - MVP
+- **US2 Tasks**: 11 (T041-T051) - P2 Enhancement
+- **US3 Tasks**: 5 (T060-T064) - P2 Enhancement
+- **US4 Tasks**: 8 (T070-T077) - P3 Enhancement
+- **US5 Tasks**: 10 (T083-T092) - P3 Edge Cases
+- **Polish Tasks**: 9 (T099-T108)
+- **Docs Tasks**: 3 (T109-T111)
 
-**Parallelizable Tasks**: 58 (marcados com [P])
+**Parallelizable Tasks**: 39 (marcados com [P])
 
-**Estimated Total Duration**: 15-20 horas (com US1-5 completas)
-**Estimated MVP Duration**: 8-12 horas (apenas US1)
+**Estimated Total Duration**: 9-14 horas (com US1-5 completas)
+**Estimated MVP Duration**: 4-6 horas (apenas US1)
 
 ---
 
@@ -385,5 +322,5 @@ Cada user story entrega valor independente:
 1. ✅ Review tasks.md com stakeholders
 2. ⏳ Começar Phase 1 (Setup)
 3. ⏳ Completar Phase 2 (Fundação) - BLOCKING
-4. ⏳ Implementar US1 (MVP) com testes
+4. ⏳ Implementar US1 (MVP)
 5. ⏳ Release MVP ou continuar com US2-5

@@ -35,6 +35,21 @@ struct ExecuteExerciseView: View {
         }
     }
     
+    private func recordSet() {
+        guard let viewModel = viewModel else { return }
+        
+        do {
+            let _ = try viewModel.recordSet()
+            viewModel.clearInputs()
+        } catch {
+            print("Error recording set: \(error)")
+        }
+    }
+    
+    private func completeExercise() {
+        onComplete()
+    }
+    
     @ViewBuilder
     private func exerciseContent(viewModel: ExecuteExerciseViewModel) -> some View {
         ZStack {
@@ -79,18 +94,19 @@ struct ExecuteExerciseView: View {
                     
                     // Completed sets
                     if !viewModel.completedSets.isEmpty {
-                    Section("Séries Completadas (\(viewModel.completedSets.count))") {
-                        ForEach(viewModel.completedSets) { set in
-                            HStack {
-                                Text("Série \(set.setNumber)")
-                                    .font(.subheadline)
-                                Spacer()
-                                Text(set.formattedWeight)
-                                    .foregroundColor(.secondary)
-                                Text("×")
-                                    .foregroundColor(.secondary)
-                                Text("\(set.reps) reps")
-                                    .foregroundColor(.secondary)
+                        Section("Séries Completadas (\(viewModel.completedSets.count))") {
+                            ForEach(viewModel.completedSets) { set in
+                                HStack {
+                                    Text("Série \(set.setNumber)")
+                                        .font(.subheadline)
+                                    Spacer()
+                                    Text(set.formattedWeight)
+                                        .foregroundColor(.secondary)
+                                    Text("×")
+                                        .foregroundColor(.secondary)
+                                    Text("\(set.reps) reps")
+                                        .foregroundColor(.secondary)
+                                }
                             }
                         }
                     }
@@ -111,42 +127,28 @@ struct ExecuteExerciseView: View {
                     }
                 }
             }
-        }
-        
-        // Rest Timer Overlay
-        if viewModel.showRestTimer && !viewModel.shouldCancelTimer {
-            Color.black.opacity(0.4)
-                .ignoresSafeArea()
-                .onTapGesture {
-                    // Dismiss timer on background tap
+            
+            // Rest Timer Overlay
+            if viewModel.showRestTimer && !viewModel.shouldCancelTimer {
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        // Dismiss timer on background tap
+                    }
+                
+                RestTimerView(duration: TimeInterval(exercise.defaultRestTime)) {
+                    viewModel.hideRestTimer()
                 }
-            
-            // Start rest timer if rest time is configured
-            if exercise.defaultRestTime > 0 {
-                viewModel.startRestTimer()
+                .transition(.scale.combined(with: .opacity))
+                .onAppear {
+                    // Start rest timer if rest time is configured
+                    if exercise.defaultRestTime > 0 {
+                        viewModel.startRestTimer()
+                    }
+                }
             }
-            
-            RestTimerView(duration: TimeInterval(exercise.defaultRestTime)) {
-                viewModel.hideRestTimer()
-            }
-            .transition(.scale.combined(with: .opacity))
         }
-    }
-    .animation(.spring(), value: viewModel.showRestTimer)
-    
-    private func recordSet() {
-        guard let viewModel = viewModel else { return }
-        
-        do {
-            let _ = try viewModel.recordSet()
-            viewModel.clearInputs()
-        } catch {
-            print("Error recording set: \(error)")
-        }
-    }
-    
-    private func completeExercise() {
-        onComplete()
+        .animation(.spring(), value: viewModel.showRestTimer)
     }
 }
 

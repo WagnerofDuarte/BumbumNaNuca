@@ -12,9 +12,16 @@ import SwiftUI
 struct SessionDetailView: View {
     let session: WorkoutSession
     
+    private var groupedExercises: [(key: UUID, value: [ExerciseSet])] {
+        let grouped = Dictionary(grouping: session.exerciseSets) { set in
+            set.exercise?.id ?? UUID()
+        }
+        return grouped.sorted { $0.value.first?.setNumber ?? 0 < $1.value.first?.setNumber ?? 0 }
+    }
+    
     private var duration: String {
-        guard let endTime = session.endTime else { return "Em andamento" }
-        let interval = endTime.timeIntervalSince(session.startTime)
+        guard let endTime = session.endDate else { return "Em andamento" }
+        let interval = endTime.timeIntervalSince(session.startDate)
         let hours = Int(interval) / 3600
         let minutes = Int(interval) / 60 % 60
         
@@ -30,20 +37,17 @@ struct SessionDetailView: View {
         formatter.dateStyle = .full
         formatter.timeStyle = .short
         formatter.locale = Locale(identifier: "pt_BR")
-        return formatter.string(from: session.startTime)
+        return formatter.string(from: session.startDate)
     }
     
     private var totalSets: Int {
-        session.completedExercises.reduce(0) { total, exercise in
-            total + exercise.sets.count
-        }
+        session.exerciseSets.count
     }
     
     private var totalVolume: Double {
-        session.completedExercises.reduce(0.0) { total, exercise in
-            total + exercise.sets.reduce(0.0) { exerciseTotal, set in
-                exerciseTotal + (Double(set.reps) * set.weight)
-            }
+        session.exerciseSets.reduce(0.0) { total, set in
+            let weight = set.weight ?? 0.0
+            return total + (Double(set.reps) * weight)
         }
     }
     
@@ -90,6 +94,7 @@ struct SessionDetailView: View {
                         }
                         .padding(.top, 4)
                     }
+                }
                 .padding()
                 .background(Color(.systemGray6))
                 .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -99,20 +104,20 @@ struct SessionDetailView: View {
                     Text("Exercícios Realizados")
                         .font(.headline)
                     
-                    ForEach(session.completedExercises.sorted(by: { 
-                        ($0.sets.first?.order ?? 0) < ($1.sets.first?.order ?? 0)
-                    })) { exercise in
-                        ExerciseDetailCard(exercise: exercise, session: session)
+                    ForEach(groupedExercises, id: \.key) { exerciseId, sets in
+                        if let exercise = sets.first?.exercise {
+                            ExerciseDetailCard(exercise: exercise, sets: sets)
+                        }
                     }
                 }
                 
                 // Notes (if any)
-                if let notes = session.notes, !notes.isEmpty {
+                if !session.notes.isEmpty {
                     VStack(alignment: .leading, spacing: 8) {
                         Label("Observações", systemImage: "note.text")
                             .font(.headline)
                         
-                        Text(notes)
+                        Text(session.notes)
                             .font(.body)
                             .foregroundStyle(.secondary)
                             .padding()
@@ -157,17 +162,16 @@ private struct StatItem: View {
 /// Card showing exercise details with all sets
 private struct ExerciseDetailCard: View {
     let exercise: Exercise
-    let session: WorkoutSession
+    let sets: [ExerciseSet]
     
-    private var sets: [ExerciseSet] {
-        exercise.sets
-            .filter { $0.workoutSession?.id == session.id }
-            .sorted { $0.order < $1.order }
+    private var sortedSets: [ExerciseSet] {
+        sets.sorted { $0.setNumber < $1.setNumber }
     }
     
     private var exerciseVolume: Double {
         sets.reduce(0.0) { total, set in
-            total + (Double(set.reps) * set.weight)
+            let weight = set.weight ?? 0.0
+            return total + (Double(set.reps) * weight)
         }
     }
     
@@ -226,7 +230,7 @@ private struct ExerciseDetailCard: View {
                 Divider()
                 
                 // Sets
-                ForEach(Array(sets.enumerated()), id: \.element.id) { index, set in
+                ForEach(Array(sortedSets.enumerated()), id: \.element.id) { index, set in
                     HStack {
                         Text("\(index + 1)")
                             .font(.body)
@@ -237,7 +241,7 @@ private struct ExerciseDetailCard: View {
                             .fontWeight(.medium)
                             .frame(width: 60, alignment: .center)
                         
-                        Text(String(format: "%.1f", set.weight))
+                        Text(set.weight != nil ? String(format: "%.1f", set.weight!) : "PC")
                             .font(.body)
                             .fontWeight(.medium)
                             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -245,7 +249,7 @@ private struct ExerciseDetailCard: View {
                     .padding(.horizontal, 12)
                     .padding(.vertical, 8)
                     
-                    if index < sets.count - 1 {
+                    if index < sortedSets.count - 1 {
                         Divider()
                     }
                 }
@@ -261,5 +265,4 @@ private struct ExerciseDetailCard: View {
         .background(Color(.systemGray6).opacity(0.3))
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
-}
 }

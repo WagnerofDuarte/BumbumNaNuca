@@ -23,7 +23,7 @@ struct ExecuteExerciseView: View {
             if let viewModel = viewModel {
                 exerciseContent(viewModel: viewModel)
             } else {
-                ProgressView("Carregando...")
+                ProgressView()
                     .onAppear {
                         self.viewModel = ExecuteExerciseViewModel(
                             exercise: exercise,

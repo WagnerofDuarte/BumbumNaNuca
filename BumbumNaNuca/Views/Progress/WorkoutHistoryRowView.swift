@@ -13,8 +13,8 @@ struct WorkoutHistoryRowView: View {
     let session: WorkoutSession
     
     private var duration: String {
-        guard let endTime = session.endTime else { return "Em andamento" }
-        let interval = endTime.timeIntervalSince(session.startTime)
+        guard let endDate = session.endDate else { return "Em andamento" }
+        let interval = endDate.timeIntervalSince(session.startDate)
         let minutes = Int(interval) / 60
         return "\(minutes) min"
     }
@@ -23,11 +23,11 @@ struct WorkoutHistoryRowView: View {
         let calendar = Calendar.current
         let now = Date()
         
-        if calendar.isDateInToday(session.startTime) {
+        if calendar.isDateInToday(session.startDate) {
             return "Hoje"
-        } else if calendar.isDateInYesterday(session.startTime) {
+        } else if calendar.isDateInYesterday(session.startDate) {
             return "Ontem"
-        } else if let daysAgo = calendar.dateComponents([.day], from: session.startTime, to: now).day,
+        } else if let daysAgo = calendar.dateComponents([.day], from: session.startDate, to: now).day,
                   daysAgo < 7 {
             return "\(daysAgo) dias atrás"
         } else {
@@ -35,7 +35,7 @@ struct WorkoutHistoryRowView: View {
             formatter.dateStyle = .medium
             formatter.timeStyle = .none
             formatter.locale = Locale(identifier: "pt_BR")
-            return formatter.string(from: session.startTime)
+            return formatter.string(from: session.startDate)
         }
     }
     
@@ -44,9 +44,7 @@ struct WorkoutHistoryRowView: View {
     }
     
     private var totalSets: Int {
-        session.completedExercises.reduce(0) { total, exercise in
-            total + exercise.sets.count
-        }
+        session.totalSets
     }
     
     var body: some View {
@@ -94,9 +92,3 @@ struct WorkoutHistoryRowView: View {
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
 }
-
-
-
-
-
-

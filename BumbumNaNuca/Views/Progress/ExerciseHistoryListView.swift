@@ -14,10 +14,13 @@ struct ExerciseHistoryListView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var viewModel = ProgressViewModel()
     @Query private var allExercises: [Exercise]
+    @Query private var allSets: [ExerciseSet]
     
     // Group exercises by muscle group
     private var groupedExercises: [(MuscleGroup, [Exercise])] {
-        let exercisesWithSets = allExercises.filter { !$0.sets.isEmpty }
+        // Filter exercises that have at least one set
+        let exerciseIdsWithSets = Set(allSets.compactMap { $0.exercise?.id })
+        let exercisesWithSets = allExercises.filter { exerciseIdsWithSets.contains($0.id) }
         let grouped = Dictionary(grouping: exercisesWithSets) { $0.muscleGroup }
         return grouped.sorted { $0.key.rawValue < $1.key.rawValue }
             .map { ($0.key, $0.value.sorted { $0.name < $1.name }) }
@@ -25,7 +28,7 @@ struct ExerciseHistoryListView: View {
     
     var body: some View {
         Group {
-            if allExercises.filter({ !$0.sets.isEmpty }).isEmpty {
+            if groupedExercises.isEmpty {
                 // Empty state
                 EmptyStateView(
                     icon: "dumbbell",
@@ -60,7 +63,12 @@ struct ExerciseHistoryListView: View {
                     .padding(.vertical)
                 }
                 .navigationDestination(for: Exercise.self) { exercise in
-                    ExerciseHistoryView(exercise: exercise, viewModel: viewModel)
+                    let exerciseSets = allSets.filter { $0.exercise?.id == exercise.id }
+                    ExerciseHistoryView(
+                        exerciseName: exercise.name,
+                        allSets: exerciseSets,
+                        viewModel: viewModel
+                    )
                 }
             }
         }
@@ -74,19 +82,31 @@ struct ExerciseHistoryListView: View {
 private struct ExerciseStatsRow: View {
     let exercise: Exercise
     let viewModel: ProgressViewModel
+    @Query private var allSets: [ExerciseSet]
+    
+    private var exerciseSets: [ExerciseSet] {
+        allSets.filter { $0.exercise?.id == exercise.id }
+    }
     
     private var lastExecution: Date? {
-        exercise.sets
-            .compactMap { $0.workoutSession?.startDate }
+        exerciseSets
+            .map { $0.completedDate }
             .max()
     }
     
     private var totalSets: Int {
-        exercise.sets.count
+        exerciseSets.count
     }
     
     private var personalRecord: PersonalRecord? {
-        viewModel.calculatePersonalRecord(for: exercise)
+        guard !exerciseSets.isEmpty else { return nil }
+        // Calculate PR locally since method is private
+        let sortedSets = exerciseSets.sorted { ($0.weight ?? 0) > ($1.weight ?? 0) }
+        guard let maxWeightSet = sortedSets.first,
+              let maxWeight = maxWeightSet.weight else { return nil }
+        let maxWeightSets = exerciseSets.filter { $0.weight == maxWeight }
+        guard let bestSet = maxWeightSets.max(by: { $0.reps < $1.reps }) else { return nil }
+        return PersonalRecord(weight: maxWeight, reps: bestSet.reps, date: bestSet.completedDate)
     }
     
     private var relativeTime: String {

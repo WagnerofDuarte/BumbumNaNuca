@@ -254,15 +254,36 @@ Ver [TESTING.md](TESTING.md) para guia completo, Combine
 
 ## 📝 Próximos Passos (Backlog)
 
-### Funcionalidades Planejadas
+### 🚧 Feature 003: MVP Completion (Em Planejamento)
+
+**Documentação**: [specs/003-mvp-completion/](specs/003-mvp-completion/)  
+**Status**: 📋 Planejamento Completo - Pronto para Implementação
+
+Próxima feature que completa o MVP com:
+1. **Home Dashboard** - Visão geral com plano ativo, último treino, check-in do dia
+2. **Sistema de Check-in** - Registro diário com gamificação (sequências de dias) e estatísticas mensais
+3. **Histórico de Progresso** - Treinos executados e evolução por exercício com recordes pessoais
+
+**Componentes Principais**:
+- TabView com 4 tabs (Home, Treinos, Progresso, Check-in)
+- 3 novos ViewModels (Home, CheckIn, Progress)
+- 7 novas Views principais
+- 1 novo modelo SwiftData (CheckIn)
+- 42 test cases manuais documentados
+
+**Estratégia de Implementação**: Ver [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md) para detalhes completos da abordagem faseada.
+
+---
+
+### Outras Funcionalidades Planejadas
 - [ ] Reordenar exercícios (drag & drop)
 - [ ] Editar exercícios existentes
 - [ ] Deletar exercícios individuais
-- [ ] Botão "Iniciar Treino" (WorkoutSession)
-- [ ] Histórico de execuções
 - [ ] Filtros por grupo muscular
 - [ ] Duplicar plano existente
 - [ ] Importar/Exportar planos (JSON)
+- [ ] Notas por série/exercício
+- [ ] Templates de planos populares
 
 ### Melhorias Técnicas
 - [ ] Unit tests (XCTest)
@@ -277,6 +298,6 @@ Projeto educacional - Uso livre.
 
 ---
 
-**Desenvolvido com**: Swift, SwiftUI, SwiftData
-**Status**: ✅ MVP Completo
-**Última Atualização**: 07/01/2026
+**Desenvolvido com**: Swift, SwiftUI, SwiftData  
+**Status**: ✅ Features 001-002 Completas | 🚧 Feature 003 Em Planejamento  
+**Última Atualização**: 09/01/2026

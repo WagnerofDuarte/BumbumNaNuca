@@ -318,10 +318,329 @@
 
 ---
 
-**Status Final**: 🎉 **MVP COMPLETO E PRONTO PARA USO**
+---
 
-**Data de Conclusão**: 07/01/2026
-**Tempo de Desenvolvimento**: 1 sessão
+## 🚧 Feature 003: MVP Completion
+
+**Status**: 📋 Planejamento Completo - Pronto para Implementação  
+**Branch**: `003-mvp-completion` (a ser criado)  
+**Spec**: [specs/003-mvp-completion/spec.md](specs/003-mvp-completion/spec.md)  
+**Tasks**: [specs/003-mvp-completion/tasks.md](specs/003-mvp-completion/tasks.md)  
+**Documentação**: [specs/003-mvp-completion/](specs/003-mvp-completion/)
+
+### Objetivo da Feature
+
+Completar o MVP implementando 3 funcionalidades essenciais:
+1. **Home Dashboard**: Visão geral com plano ativo, último treino, check-in do dia
+2. **Sistema de Check-in**: Registro diário com gamificação (sequências) e estatísticas mensais
+3. **Histórico de Progresso**: Treinos executados e evolução por exercício com recordes pessoais
+
+### Estratégia de Implementação
+
+**Abordagem Faseada** - Completar base do MVP primeiro, depois adicionar features incrementalmente:
+
+#### 🔧 Phase 1: Setup (3 tasks)
+**Tasks**: T001-T003  
+**Objetivo**: Preparar infraestrutura base
+
+- T001: Registrar CheckIn model no SwiftData schema
+- T002 [P]: Criar Calendar+Extensions.swift com CheckInStreak helper
+- T003 [P]: Adicionar toHeaderString() e toTimeString() em Date+Extensions
+
+**Checkpoint**: ✅ Schema v2 pronto, funções utilitárias disponíveis
+
+---
+
+#### 🏗️ Phase 2: Foundational (9 tasks) 🚨 BLOQUEADOR CRÍTICO
+**Tasks**: T004-T012  
+**Objetivo**: Criar base que todas as user stories dependem
+
+- T004: CheckIn model com SwiftData annotations
+- T005-T006: ContentView modificado para TabView com 4 tabs
+- T007-T009 [P]: 3 ViewModels (Home, CheckIn, Progress) em paralelo
+- T010-T012 [P]: 3 Componentes reutilizáveis (CheckInCard, StatCard, StreakBadge)
+
+**⚠️ CRITICAL**: Nenhuma user story pode começar antes desta fase completar
+
+**Checkpoint**: ✅ Foundation pronta - todas as user stories podem prosseguir em paralelo
+
+---
+
+#### 🧭 Phase 3: US5 - Navegação por Tabs (4 tasks) | Priority: P1 🎯
+**Tasks**: T013-T016  
+**Objetivo**: Implementar TabView com navegação independente entre 4 seções
+
+- T013: NavigationStack independente para cada tab
+- T014: Ícones e labels usando SF Symbols
+- T015: Pop-to-root ao re-tocar tab
+- T016: Navegação cross-tab (Home → Workouts)
+
+**Teste Independente**: Tocar cada tab verifica troca de tela. Estado preservado ao alternar tabs.
+
+**Checkpoint**: ✅ TabView funcionando com 4 tabs, preservação de estado verificada
+
+---
+
+#### 🏠 Phase 4: US1 - Home Dashboard (9 tasks) | Priority: P1 🎯
+**Tasks**: T017-T025  
+**Objetivo**: Dashboard principal mostrando status do usuário
+
+- T017-T018: Estrutura HomeView com header e saudação
+- T019: Card plano ativo com botão "Iniciar Treino"
+- T020: Card último treino com duração e tempo relativo
+- T021: Card check-in usando CheckInCard component
+- T022-T023: Queries no HomeViewModel + quick check-in
+- T024: Empty states (sem plano, sem treino)
+- T025: Wire cross-tab navigation para ExecuteWorkoutView
+
+**Teste Independente**: Dashboard mostra: (1) data atual, (2) card check-in, (3) plano ativo com botão, (4) último treino com duração.
+
+**🎉 MILESTONE: MVP v0.1 - Deploy/Demo Ready**
+
+**Checkpoint**: ✅ Home Dashboard completo - valor principal entregue
+
+---
+
+#### ✅ Phase 5: US2 - Check-in na Academia (12 tasks) | Priority: P2
+**Tasks**: T026-T037  
+**Objetivo**: Gamificação através de registro diário e sequências
+
+- T026-T027: CheckInView com botão principal
+- T028-T029: Displays de sequência (atual e melhor)
+- T030: Estatísticas mensais (total/percentual)
+- T031: Lista dos últimos 30 check-ins
+- T032-T035: Lógica no CheckInViewModel (validation, streaks, stats)
+- T036: Estado desabilitado após check-in
+- T037: Empty state
+
+**Teste Independente**: Check-in funciona, só permite 1/dia, sequências calculam corretamente, stats precisos.
+
+**🎉 MILESTONE: MVP v0.2 - Check-in gamification live**
+
+**Checkpoint**: ✅ Sistema de check-in completo com gamificação funcionando
+
+---
+
+#### 📊 Phase 6: US3 - Histórico de Treinos (10 tasks) | Priority: P2
+**Tasks**: T038-T047  
+**Objetivo**: Visualizar todos os treinos executados com detalhes
+
+- T038-T039: ProgressView com segmented control (Treinos/Exercícios)
+- T040-T041: WorkoutHistoryListView com WorkoutHistoryRow
+- T042-T043: SessionDetailView mostrando exercícios e séries
+- T044: loadWorkoutHistory() com fetchLimit 50
+- T045: Navegação para detalhes
+- T046: Empty state
+- T047: Tempo relativo usando Date+Extensions
+
+**Teste Independente**: Completar 3+ treinos, lista mostra todos ordenados por data. Tocar mostra exercícios e séries.
+
+**🎉 MILESTONE: MVP v0.3 - Full workout tracking**
+
+**Checkpoint**: ✅ Histórico de treinos acessível e completo
+
+---
+
+#### 💪 Phase 7: US4 - Histórico por Exercício (9 tasks) | Priority: P3
+**Tasks**: T048-T056  
+**Objetivo**: Tracking avançado por exercício individual com recordes
+
+- T048-T050 [P]: ExerciseHistoryListView com ExerciseStatsRow
+- T049 [P]: ExerciseHistoryView com PR e stats
+- T051-T052: loadExerciseHistory() + calculatePersonalRecord()
+- T053-T054: Display de recorde pessoal + lista de séries
+- T055: Navegação para detalhes
+- T056: Empty state
+
+**Teste Independente**: Executar mesmo exercício em múltiplas sessões, verificar PR correto e histórico completo.
+
+**🎉 MILESTONE: MVP v0.4 - Complete exercise tracking**
+
+**Checkpoint**: ✅ Tracking individualizado por exercício funcionando
+
+---
+
+#### ✨ Phase 8: Polish & Cross-Cutting (8 tasks)
+**Tasks**: T057-T064  
+**Objetivo**: Melhorias que afetam múltiplas user stories
+
+- T057-T059 [P]: Accessibility (VoiceOver, Dynamic Type, Color Contrast)
+- T060-T062: Performance validation (Home <1s, Progress <1s, Memory <50MB)
+- T063: Manual testing completo (42 test cases do quickstart.md)
+- T064: Update IMPLEMENTATION_STATUS.md
+
+**🎉 MILESTONE: MVP v1.0 - Production Ready**
+
+**Checkpoint**: ✅ Feature completa, testada e pronta para release
+
+---
+
+### Milestones de Entrega
+
+| Milestone | Phases | Total Tasks | Deliverable | Timeline Sugerido |
+|-----------|--------|-------------|-------------|-------------------|
+| **MVP Minimum** | 1-4 | 25 | Home Dashboard + Navigation | Semana 1-2 |
+| **MVP Standard** | +5-6 | 47 | + Check-in + Workout History | Semana 3-4 |
+| **MVP Complete** | +7-8 | 64 | + Exercise History + Polish | Semana 5-6 |
+
+### Oportunidades de Paralelização
+
+**Setup (Phase 1)**: 2 tasks paralelas
+- T002: Calendar+Extensions (arquivo diferente)
+- T003: Date+Extensions (arquivo diferente)
+
+**Foundational (Phase 2)**: 6 tasks paralelas
+- T007-T009: 3 ViewModels simultâneos (arquivos diferentes)
+- T010-T012: 3 Componentes simultâneos (arquivos diferentes)
+
+**User Stories (Phases 4-7)**: Após US5 completar
+- US1, US2, US3, US4 podem ser desenvolvidos **em paralelo** por diferentes devs
+- Cada story é independente e testável isoladamente
+
+### Estratégia para Time
+
+**Desenvolvedor Solo** (Sequencial por prioridade):
+1. Phase 1 (Setup) → Phase 2 (Foundation) → Phase 3 (US5 Navigation)
+2. Phase 4 (US1 Home) → **DEPLOY MVP v0.1**
+3. Phase 5 (US2 Check-in) → Phase 6 (US3 History)
+4. Phase 7 (US4 Exercise) → Phase 8 (Polish)
+
+**Time com 4+ Desenvolvedores** (Paralelo após foundation):
+1. **Semana 1**: Todos juntos em Phase 1-2 (Setup + Foundation)
+2. **Semana 2**: Todos juntos em Phase 3 (US5 - base para todos)
+3. **Semana 3-4**: Paralelo após US5
+   - Dev A: Phase 4 (US1 Home)
+   - Dev B: Phase 5 (US2 Check-in)
+   - Dev C: Phase 6 (US3 Workout History)
+   - Dev D: Phase 7 (US4 Exercise History)
+4. **Semana 5**: Todos em Phase 8 (Polish)
+
+### Componentes a Implementar
+
+**Modelos** (1 novo):
+- [ ] CheckIn (@Model com SwiftData)
+
+**ViewModels** (3 novos):
+- [ ] HomeViewModel - Agregação de dados do dashboard
+- [ ] CheckInViewModel - Cálculo de sequências e stats
+- [ ] ProgressViewModel - Queries de histórico e recordes
+
+**Views Principais** (7 novas):
+- [ ] HomeView - Dashboard principal
+- [ ] CheckInView - Interface de check-in
+- [ ] ProgressView - Histórico com segmented control
+- [ ] WorkoutHistoryListView - Lista de treinos completados
+- [ ] SessionDetailView - Detalhes de sessão de treino
+- [ ] ExerciseHistoryListView - Lista de exercícios com stats
+- [ ] ExerciseHistoryView - Histórico e PR de exercício
+
+**Componentes Reutilizáveis** (3 novos):
+- [ ] CheckInCard - Display de status de check-in
+- [ ] StatCard - Card genérico para estatísticas
+- [ ] StreakBadge - Badge de sequência com ícone 🔥
+
+**Extensions** (2 arquivos):
+- [ ] Calendar+Extensions - Helper CheckInStreak para cálculo de sequências
+- [ ] Date+Extensions - Métodos toHeaderString() e toTimeString()
+
+**Arquivos Modificados**:
+- [ ] ContentView.swift - Adicionar TabView com 4 tabs
+- [ ] BumbumNaNucaApp.swift - Registrar CheckIn no schema SwiftData
+
+### Cobertura de Requisitos
+
+- **Total de Requisitos Funcionais**: 35 (FR-001 a FR-035)
+- **Requisitos com Tasks**: 35
+- **Cobertura**: 100%
+
+Todos os 35 requisitos funcionais do spec.md estão mapeados para tasks específicos no tasks.md.
+
+### Manual Testing
+
+**42 test cases** documentados em [quickstart.md](specs/003-mvp-completion/quickstart.md):
+
+| Feature | Test Cases | Cobertura |
+|---------|------------|-----------|
+| Home Dashboard | TC-H1 a TC-H5 | 5 casos |
+| Check-in System | TC-C1 a TC-C6 | 6 casos |
+| Progress - Treinos | TC-P1 a TC-P4 | 4 casos |
+| Progress - Exercícios | TC-P5 a TC-P8 | 4 casos |
+| Navigation | TC-N1 a TC-N4 | 4 casos |
+| Performance | Benchmarks | Load times + Memory |
+| Accessibility | Checklist | VoiceOver, Dynamic Type, Contrast |
+
+### Critérios de Sucesso
+
+Per [spec.md Success Criteria](specs/003-mvp-completion/spec.md):
+
+- [ ] **SC-001**: Check-in completa em <3 segundos
+- [ ] **SC-002**: Cálculo de sequência 100% correto em todos os casos testados
+- [ ] **SC-003**: Home Dashboard carrega em <1 segundo com 50+ treinos
+- [ ] **SC-004**: Navegação entre tabs mantém 60fps
+- [ ] **SC-005**: Histórico de treinos mostra todas as sessões corretamente
+- [ ] **SC-006**: Recorde pessoal identificado corretamente (100% accuracy)
+- [ ] **SC-007**: Uso de memória <50MB com histórico completo
+- [ ] **SC-008**: Encontrar sessão específica em <5 segundos
+- [ ] **SC-009**: 90% dos usuários completam check-in na primeira tentativa (beta feedback)
+- [ ] **SC-010**: Estatísticas mensais corretas para meses 28/30/31 dias
+- [ ] **SC-011**: Todos os empty states são informativos com próxima ação
+- [ ] **SC-012**: App mantém responsividade com 100+ registros
+
+### Performance Benchmarks
+
+Targets definidos (medições após desenvolvimento):
+
+**Load Times**:
+- Home Dashboard: <1s (target)
+- Check-in View: <500ms (target)
+- Progress - Treinos (50 items): <1s (target)
+- Progress - Exercícios: <800ms (target)
+
+**Memory Usage**:
+- Home + 50 treinos: <50MB (target)
+- Check-in + 60 histórico: <50MB (target)
+- Progress full history: <60MB (target)
+
+### Próximos Passos
+
+#### Pré-Implementação
+1. [ ] Verificar Features 001 e 002 completas
+2. [ ] Confirmar SwiftData schema está em v1 (sem CheckIn ainda)
+3. [ ] Criar feature branch: `git checkout -b 003-mvp-completion`
+
+#### Implementação MVP Minimum (Semana 1-2)
+4. [ ] **Phase 1**: Setup (T001-T003) - 3 tasks
+5. [ ] **Phase 2**: Foundational (T004-T012) - 9 tasks 🚨 BLOCKER
+6. [ ] **Phase 3**: US5 Navigation (T013-T016) - 4 tasks
+7. [ ] **Phase 4**: US1 Home Dashboard (T017-T025) - 9 tasks
+8. [ ] Manual test MVP Minimum (TC-H1 a TC-H5, TC-N1 a TC-N4)
+9. [ ] **DEPLOY/DEMO** MVP v0.1 para feedback
+
+#### Implementação Incremental (Semana 3-4)
+10. [ ] **Phase 5**: US2 Check-in (T026-T037) - 12 tasks
+11. [ ] Manual test US2 (TC-C1 a TC-C6)
+12. [ ] **DEPLOY/DEMO** MVP v0.2
+13. [ ] **Phase 6**: US3 Workout History (T038-T047) - 10 tasks
+14. [ ] Manual test US3 (TC-P1 a TC-P4)
+15. [ ] **DEPLOY/DEMO** MVP v0.3
+
+#### Completar MVP (Semana 5-6)
+16. [ ] **Phase 7**: US4 Exercise History (T048-T056) - 9 tasks
+17. [ ] Manual test US4 (TC-P5 a TC-P8)
+18. [ ] **Phase 8**: Polish (T057-T064) - 8 tasks
+19. [ ] Manual testing completo (todos 42 test cases)
+20. [ ] Performance profiling (Instruments)
+21. [ ] Accessibility validation
+22. [ ] Update IMPLEMENTATION_STATUS.md com resultados
+23. [ ] Merge para main: `git merge 003-mvp-completion`
+24. [ ] **RELEASE** MVP v1.0 🎉
+
+---
+
+**Status Final Features 001 e 002**: 🎉 **MVP FOUNDATION COMPLETO E PRONTO PARA USO**
+
+**Data de Conclusão Feature 002**: 07/01/2026  
+**Tempo de Desenvolvimento Feature 002**: ~10-12 horas  
 **Metodologia**: Speckit (Specify → Plan → Tasks → Implement)
 
 **Desenvolvido com ❤️ usando Swift, SwiftUI e SwiftData**

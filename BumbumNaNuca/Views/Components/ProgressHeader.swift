@@ -22,9 +22,20 @@ struct ProgressHeader: View {
                     .foregroundColor(.accentColor)
             }
             
-            ProgressView(value: progress)
-                .progressViewStyle(.linear)
-                .tint(.accentColor)
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.3))
+                        .frame(height: 4)
+                        .cornerRadius(2)
+                    
+                    Rectangle()
+                        .fill(Color.accentColor)
+                        .frame(width: geometry.size.width * progress, height: 4)
+                        .cornerRadius(2)
+                }
+            }
+            .frame(height: 4)
         }
         .padding()
         .background(.regularMaterial)

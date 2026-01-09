@@ -45,6 +45,27 @@ extension Date {
         formatter.locale = Locale(identifier: "pt_BR")
         return formatter.string(from: self)
     }
+    
+    /// Formata cabeçalho com dia da semana completo
+    /// Exemplo: "Segunda, 8 de Janeiro de 2026"
+    func toHeaderString() -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "pt_BR")
+        formatter.dateFormat = "EEEE, d 'de' MMMM 'de' yyyy"
+        
+        let formattedString = formatter.string(from: self)
+        // Capitaliza primeira letra do dia da semana
+        return formattedString.prefix(1).capitalized + formattedString.dropFirst()
+    }
+    
+    /// Formata apenas hora e minuto
+    /// Exemplo: "18:30"
+    func toTimeString() -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "pt_BR")
+        formatter.dateFormat = "HH:mm"
+        return formatter.string(from: self)
+    }
 }
 
 // MARK: - TimeInterval Extensions

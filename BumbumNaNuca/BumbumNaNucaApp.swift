@@ -15,7 +15,8 @@ struct BumbumNaNucaApp: App {
             WorkoutPlan.self,
             Exercise.self,
             WorkoutSession.self,
-            ExerciseSet.self
+            ExerciseSet.self,
+            CheckIn.self
         ])
         
         let modelConfiguration = ModelConfiguration(

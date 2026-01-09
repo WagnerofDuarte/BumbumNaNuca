@@ -16,9 +16,9 @@ struct WorkoutSummaryView: View {
     var body: some View {
         Group {
             if let viewModel = viewModel {
-                summaryContent(viewModel: viewModel)
+                summaryContent
             } else {
-                ProgressView("Calculando resumo...")
+                ProgressView()
                     .onAppear {
                         self.viewModel = WorkoutSummaryViewModel(session: session)
                     }
@@ -28,61 +28,63 @@ struct WorkoutSummaryView: View {
     }
     
     @ViewBuilder
-    private func summaryContent(viewModel: WorkoutSummaryViewModel) -> some View {
-        VStack(spacing: 30) {
-            // Header
-            VStack(spacing: 10) {
-                Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 60))
-                    .foregroundColor(.green)
+    private var summaryContent: some View {
+        if let viewModel = viewModel {
+            VStack(spacing: 30) {
+                // Header
+                VStack(spacing: 10) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 60))
+                        .foregroundColor(.green)
+                    
+                    Text("Treino Concluído!")
+                        .font(.largeTitle.bold())
+                }
+                .padding(.top, 40)
                 
-                Text("Treino Concluído!")
-                    .font(.largeTitle.bold())
+                // Summary cards
+                LazyVGrid(columns: [
+                    GridItem(.flexible()),
+                    GridItem(.flexible())
+                ], spacing: 20) {
+                    SummaryCard(
+                        title: "Duração",
+                        value: viewModel.formattedDuration,
+                        icon: "clock.fill"
+                    )
+                    
+                    SummaryCard(
+                        title: "Exercícios",
+                        value: "\(viewModel.completedExercisesCount)",
+                        icon: "figure.strengthtraining.traditional"
+                    )
+                    
+                    SummaryCard(
+                        title: "Séries",
+                        value: "\(viewModel.totalSets)",
+                        icon: "square.stack.3d.up.fill"
+                    )
+                    
+                    SummaryCard(
+                        title: "Repetições",
+                        value: "\(viewModel.totalReps)",
+                        icon: "number"
+                    )
+                }
+                .padding()
+                
+                Spacer()
+                
+                // Action button
+                Button(action: { dismiss() }) {
+                    Text("Finalizar")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                }
+                .buttonStyle(.borderedProminent)
+                .padding()
             }
-            .padding(.top, 40)
-            
-            // Summary cards
-            LazyVGrid(columns: [
-                GridItem(.flexible()),
-                GridItem(.flexible())
-            ], spacing: 20) {
-                SummaryCard(
-                    title: "Duração",
-                    value: viewModel.formattedDuration,
-                    icon: "clock.fill"
-                )
-                
-                SummaryCard(
-                    title: "Exercícios",
-                    value: "\(viewModel.completedExercisesCount)",
-                    icon: "figure.strengthtraining.traditional"
-                )
-                
-                SummaryCard(
-                    title: "Séries",
-                    value: "\(viewModel.totalSets)",
-                    icon: "square.stack.3d.up.fill"
-                )
-                
-                SummaryCard(
-                    title: "Repetições",
-                    value: "\(viewModel.totalReps)",
-                    icon: "number"
-                )
-            }
-            .padding()
-            
-            Spacer()
-            
-            // Action button
-            Button(action: { dismiss() }) {
-                Text("Finalizar")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-            }
-            .buttonStyle(.borderedProminent)
-            .padding()
         }
     }
 }

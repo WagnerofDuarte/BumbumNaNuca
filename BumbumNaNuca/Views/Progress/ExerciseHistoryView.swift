@@ -13,7 +13,7 @@ struct ExerciseHistoryView: View {
     let exercise: Exercise
     let viewModel: ProgressViewModel
     
-    private var personalRecord: ProgressViewModel.PersonalRecord? {
+    private var personalRecord: PersonalRecord? {
         viewModel.calculatePersonalRecord(for: exercise)
     }
     
@@ -21,6 +21,7 @@ struct ExerciseHistoryView: View {
         exercise.sets.reduce(0.0) { total, set in
             total + (Double(set.reps) * set.weight)
         }
+    }
     
     private var totalSets: Int {
         exercise.sets.count
@@ -76,11 +77,13 @@ struct ExerciseHistoryView: View {
                                         .font(.caption2)
                                         .foregroundStyle(.secondary)
                                 }
+                            }
                             .padding()
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .background(Color.yellow.opacity(0.1))
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
+                    }
                     
                     // Additional stats
                     HStack(spacing: 16) {
@@ -96,6 +99,7 @@ struct ExerciseHistoryView: View {
                             icon: "scalemass.fill"
                         )
                     }
+                }
                 .padding()
                 .background(Color(.systemGray6))
                 .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -115,6 +119,9 @@ struct ExerciseHistoryView: View {
                         ForEach(sessionGroups, id: \.0.id) { session, sets in
                             SessionSetsCard(session: session, sets: sets)
                         }
+                    }
+                }
+            }
             .padding()
         }
         .navigationTitle("Histórico do Exercício")
@@ -156,6 +163,7 @@ private struct StatBadge: View {
         .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
+}
 
 /// Card showing all sets from a specific session
 private struct SessionSetsCard: View {
@@ -179,6 +187,7 @@ private struct SessionSetsCard: View {
             formatter.locale = Locale(identifier: "pt_BR")
             return formatter.string(from: session.startTime)
         }
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -247,6 +256,8 @@ private struct SessionSetsCard: View {
                     if index < sets.count - 1 {
                         Divider()
                     }
+                }
+            }
             .background(Color(.systemBackground))
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .overlay(
@@ -258,3 +269,5 @@ private struct SessionSetsCard: View {
         .background(Color(.systemGray6).opacity(0.3))
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
+}
+}

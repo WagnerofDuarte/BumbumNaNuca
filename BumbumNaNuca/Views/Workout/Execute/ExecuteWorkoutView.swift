@@ -27,7 +27,7 @@ struct ExecuteWorkoutView: View {
             if let viewModel = viewModel {
                 workoutContent(viewModel: viewModel)
             } else {
-                ProgressView("Carregando...")
+                ProgressView()
                     .onAppear {
                         initializeSession()
                     }

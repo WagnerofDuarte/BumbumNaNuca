@@ -37,6 +37,7 @@ struct WorkoutHistoryRowView: View {
             formatter.locale = Locale(identifier: "pt_BR")
             return formatter.string(from: session.startTime)
         }
+    }
     
     private var exerciseCount: Int {
         session.completedExercises.count
@@ -46,6 +47,7 @@ struct WorkoutHistoryRowView: View {
         session.completedExercises.reduce(0) { total, exercise in
             total + exercise.sets.count
         }
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -85,13 +87,13 @@ struct WorkoutHistoryRowView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
+        }
         .padding()
         .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
-
-// MARK: - Preview
+}
 
 
 

@@ -23,6 +23,7 @@ struct SessionDetailView: View {
         } else {
             return "\(minutes) min"
         }
+    }
     
     private var formattedDate: String {
         let formatter = DateFormatter()
@@ -36,12 +37,15 @@ struct SessionDetailView: View {
         session.completedExercises.reduce(0) { total, exercise in
             total + exercise.sets.count
         }
+    }
     
     private var totalVolume: Double {
         session.completedExercises.reduce(0.0) { total, exercise in
             total + exercise.sets.reduce(0.0) { exerciseTotal, set in
                 exerciseTotal + (Double(set.reps) * set.weight)
             }
+        }
+    }
     
     var body: some View {
         ScrollView {
@@ -100,6 +104,7 @@ struct SessionDetailView: View {
                     })) { exercise in
                         ExerciseDetailCard(exercise: exercise, session: session)
                     }
+                }
                 
                 // Notes (if any)
                 if let notes = session.notes, !notes.isEmpty {
@@ -115,11 +120,14 @@ struct SessionDetailView: View {
                             .background(Color(.systemGray6))
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
+                }
+            }
             .padding()
         }
         .navigationTitle("Detalhes do Treino")
         .navigationBarTitleDisplayMode(.inline)
     }
+}
 
 // MARK: - Supporting Views
 
@@ -144,6 +152,7 @@ private struct StatItem: View {
         }
         .frame(maxWidth: .infinity)
     }
+}
 
 /// Card showing exercise details with all sets
 private struct ExerciseDetailCard: View {
@@ -154,11 +163,13 @@ private struct ExerciseDetailCard: View {
         exercise.sets
             .filter { $0.workoutSession?.id == session.id }
             .sorted { $0.order < $1.order }
+    }
     
     private var exerciseVolume: Double {
         sets.reduce(0.0) { total, set in
             total + (Double(set.reps) * set.weight)
         }
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -186,6 +197,8 @@ private struct ExerciseDetailCard: View {
                             .font(.caption2)
                             .foregroundStyle(.secondary)
                     }
+                }
+            }
             
             // Sets table
             VStack(spacing: 0) {
@@ -235,6 +248,8 @@ private struct ExerciseDetailCard: View {
                     if index < sets.count - 1 {
                         Divider()
                     }
+                }
+            }
             .background(Color(.systemBackground))
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .overlay(
@@ -246,11 +261,5 @@ private struct ExerciseDetailCard: View {
         .background(Color(.systemGray6).opacity(0.3))
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
-
-// MARK: - Preview
-
-
 }
-
-
 }

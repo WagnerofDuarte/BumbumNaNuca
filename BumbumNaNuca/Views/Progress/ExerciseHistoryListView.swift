@@ -21,6 +21,7 @@ struct ExerciseHistoryListView: View {
         let grouped = Dictionary(grouping: exercisesWithSets) { $0.muscleGroup }
         return grouped.sorted { $0.key.rawValue < $1.key.rawValue }
             .map { ($0.key, $0.value.sorted { $0.name < $1.name }) }
+    }
     
     var body: some View {
         Group {
@@ -52,17 +53,25 @@ struct ExerciseHistoryListView: View {
                                     }
                                     .buttonStyle(.plain)
                                 }
+                            }
+                            .padding(.vertical)
+                        }
+                    }
                     .padding(.vertical)
                 }
                 .navigationDestination(for: Exercise.self) { exercise in
                     ExerciseHistoryView(exercise: exercise, viewModel: viewModel)
                 }
+            }
+        }
         .onAppear {
             viewModel.loadExerciseHistory(context: modelContext)
         }
+    }
+}
 
 /// Row showing exercise stats summary
-struct ExerciseStatsRow: View {
+private struct ExerciseStatsRow: View {
     let exercise: Exercise
     let viewModel: ProgressViewModel
     
@@ -76,7 +85,7 @@ struct ExerciseStatsRow: View {
         exercise.sets.count
     }
     
-    private var personalRecord: ProgressViewModel.PersonalRecord? {
+    private var personalRecord: PersonalRecord? {
         viewModel.calculatePersonalRecord(for: exercise)
     }
     
@@ -102,6 +111,7 @@ struct ExerciseStatsRow: View {
             formatter.locale = Locale(identifier: "pt_BR")
             return formatter.string(from: date)
         }
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -122,6 +132,7 @@ struct ExerciseStatsRow: View {
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
+                }
                 
                 Spacer()
                 
@@ -143,14 +154,17 @@ struct ExerciseStatsRow: View {
                             .font(.caption)
                             .fontWeight(.semibold)
                     }
+                }
                 
                 Image(systemName: "chevron.right")
                     .font(.caption)
                     .foregroundStyle(.tertiary)
             }
+        }
         .padding()
         .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
         .padding(.horizontal)
     }
+}

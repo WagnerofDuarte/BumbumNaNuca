@@ -37,21 +37,16 @@ struct WorkoutHistoryListView: View {
                             }
                             .buttonStyle(.plain)
                         }
+                    }
                     .padding()
                 }
                 .navigationDestination(for: WorkoutSession.self) { session in
                     SessionDetailView(session: session)
                 }
+            }
+        }
         .onAppear {
             viewModel.loadWorkoutHistory(context: modelContext)
         }
-
-// MARK: - Preview
-
-
-    .modelContainer(for: [WorkoutSession.self, WorkoutPlan.self, Exercise.self, ExerciseSet.self])
-}
-
-
-    .modelContainer(container)
+    }
 }

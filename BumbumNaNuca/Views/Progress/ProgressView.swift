@@ -22,6 +22,7 @@ struct ProgressView: View {
                 ForEach(HistorySegment.allCases, id: \.self) { segment in
                     Text(segment.rawValue).tag(segment)
                 }
+            }
             .pickerStyle(.segmented)
             .padding()
             
@@ -32,28 +33,18 @@ struct ProgressView: View {
             case .exercises:
                 ExerciseHistoryListView()
             }
+        }
         .navigationTitle("Progresso")
         .navigationBarTitleDisplayMode(.large)
         .onAppear {
             viewModel.loadWorkoutHistory(context: modelContext)
             viewModel.loadExerciseHistory(context: modelContext)
         }
+    }
+}
 
 /// Segment options for history view
 enum HistorySegment: String, CaseIterable {
     case workouts = "Treinos"
     case exercises = "Exercícios"
 }
-
-// MARK: - Preview
-
-
-    .modelContainer(for: [WorkoutSession.self, WorkoutPlan.self, Exercise.self, ExerciseSet.self])
-}
-
-
-    .modelContainer(for: [WorkoutSession.self, WorkoutPlan.self, Exercise.self, ExerciseSet.self])
-    .onAppear {
-        // Simulate starting on exercises tab
-        _ = HistorySegment.exercises
-    }

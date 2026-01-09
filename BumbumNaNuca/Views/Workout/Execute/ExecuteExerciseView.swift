@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import OSLog
 
 struct ExecuteExerciseView: View {
     let exercise: Exercise
@@ -42,7 +43,7 @@ struct ExecuteExerciseView: View {
             let _ = try viewModel.recordSet()
             viewModel.clearInputs()
         } catch {
-            print("Error recording set: \(error)")
+            AppLogger.execution.error("Failed to record set: \(error.localizedDescription)")
         }
     }
     

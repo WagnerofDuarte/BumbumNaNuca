@@ -28,8 +28,6 @@ struct SetInputView: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(weightError != nil ? Color.red : Color.clear, lineWidth: 2)
                         )
-                        .accessibilityLabel("Peso em quilogramas")
-                        .accessibilityHint("Deixe vazio para peso corporal")
                     
                     Text("kg")
                         .foregroundColor(.secondary)
@@ -55,7 +53,6 @@ struct SetInputView: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(repsError != nil ? Color.red : Color.clear, lineWidth: 2)
                         )
-                        .accessibilityLabel("Número de repetições")
                     
                     Text("reps")
                         .foregroundColor(.secondary)

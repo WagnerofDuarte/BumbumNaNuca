@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 import Observation
+import OSLog
 
 @Observable
 final class ExecuteExerciseViewModel {
@@ -198,7 +199,7 @@ final class ExecuteExerciseViewModel {
             }
         } catch {
             // Fail silently - não é crítico
-            print("Error fetching last workout data: \(error)")
+            AppLogger.execution.warning("Failed to fetch last workout data: \(error.localizedDescription)")
         }
     }
     

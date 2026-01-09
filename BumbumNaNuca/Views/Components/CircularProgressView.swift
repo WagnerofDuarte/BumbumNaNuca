@@ -35,8 +35,6 @@ struct CircularProgressView: View {
                 .rotationEffect(.degrees(-90))
                 .animation(.linear(duration: 0.3), value: progress)
         }
-        .accessibilityLabel("Progresso")
-        .accessibilityValue("\(Int(progress * 100)) por cento")
     }
 }
 

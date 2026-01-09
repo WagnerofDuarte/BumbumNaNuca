@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OSLog
 
 struct RestTimerView: View {
     @State private var viewModel: RestTimerViewModel
@@ -84,6 +85,6 @@ struct RestTimerView: View {
 
 #Preview {
     RestTimerView(duration: 90) {
-        print("Timer completed")
+        AppLogger.execution.debug("Preview: Timer completed")
     }
 }

@@ -36,8 +36,6 @@ struct StreakBadge: View {
             RoundedRectangle(cornerRadius: 20)
                 .fill(Color(.secondarySystemBackground))
         )
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(isLongest ? "Maior sequência: \(streak) dias" : "Sequência atual: \(streak) dias")
     }
 }
 

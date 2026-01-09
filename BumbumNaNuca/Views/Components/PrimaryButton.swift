@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OSLog
 
 struct PrimaryButton: View {
     let title: String
@@ -20,18 +21,17 @@ struct PrimaryButton: View {
         .buttonStyle(.borderedProminent)
         .controlSize(.large)
         .tint(isDestructive ? .red : .accentColor)
-        .accessibilityLabel(title)
     }
 }
 
 #Preview {
     VStack(spacing: 16) {
         PrimaryButton(title: "Salvar") {
-            print("Salvar")
+            AppLogger.ui.debug("Preview: Salvar tapped")
         }
         
         PrimaryButton(title: "Excluir", isDestructive: true) {
-            print("Excluir")
+            AppLogger.ui.debug("Preview: Excluir tapped")
         }
     }
     .padding()

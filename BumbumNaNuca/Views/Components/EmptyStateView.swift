@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OSLog
 
 struct EmptyStateView: View {
     let icon: String
@@ -35,6 +36,6 @@ struct EmptyStateView: View {
         message: "Crie seu primeiro plano de treino para começar",
         actionTitle: "Criar Plano"
     ) {
-        print("Criar plano")
+        AppLogger.ui.debug("Preview: Criar plano tapped")
     }
 }

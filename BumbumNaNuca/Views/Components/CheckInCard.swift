@@ -43,15 +43,12 @@ struct CheckInCard: View {
                             .foregroundStyle(.blue)
                     }
                     .buttonStyle(.plain)
-                    .accessibilityLabel("Fazer check-in agora")
                 }
             }
         }
         .padding()
         .background(Color(.secondarySystemBackground))
         .cornerRadius(12)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(hasCheckInToday ? "Check-in feito hoje às \(checkInTime ?? "")" : "Check-in - Registre sua presença")
     }
 }
 

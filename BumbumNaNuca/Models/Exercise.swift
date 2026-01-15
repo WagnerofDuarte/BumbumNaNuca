@@ -17,6 +17,7 @@ final class Exercise {
     var defaultReps: Int
     var defaultRestTime: Int  // em segundos
     var order: Int  // posição no plano (para drag & drop)
+    var load: Double?  // carga em kg (opcional - nil para peso corporal)
     
     var workoutPlan: WorkoutPlan?
     
@@ -27,7 +28,8 @@ final class Exercise {
         defaultSets: Int = 3,
         defaultReps: Int = 12,
         defaultRestTime: Int = 60,
-        order: Int = 0
+        order: Int = 0,
+        load: Double? = nil
     ) {
         self.id = id
         self.name = name
@@ -36,5 +38,6 @@ final class Exercise {
         self.defaultReps = defaultReps
         self.defaultRestTime = defaultRestTime
         self.order = order
+        self.load = load
     }
 }

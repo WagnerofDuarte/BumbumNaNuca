@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WorkoutSummaryView: View {
     let session: WorkoutSession
+    let onFinish: () -> Void
     
     @Environment(\.dismiss) private var dismiss
     @State private var viewModel: WorkoutSummaryViewModel?
@@ -76,7 +77,10 @@ struct WorkoutSummaryView: View {
                 Spacer()
                 
                 // Action button
-                Button(action: { dismiss() }) {
+                Button(action: { 
+                    dismiss()
+                    onFinish()
+                }) {
                     Text("Finalizar")
                         .font(.headline)
                         .frame(maxWidth: .infinity)
@@ -127,6 +131,8 @@ struct SummaryCard: View {
     session.exerciseSets = [set1, set2, set3]
     
     return NavigationStack {
-        WorkoutSummaryView(session: session)
+        WorkoutSummaryView(session: session, onFinish: {
+            print("Preview: Workout finished")
+        })
     }
 }

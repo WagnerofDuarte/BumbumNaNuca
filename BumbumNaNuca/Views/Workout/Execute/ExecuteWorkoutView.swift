@@ -13,6 +13,7 @@ struct ExecuteWorkoutView: View {
     
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.navigateToHome) private var navigateToHome
     
     @State private var viewModel: WorkoutSessionViewModel?
     @State private var selectedExercise: Exercise?
@@ -117,7 +118,9 @@ struct ExecuteWorkoutView: View {
         }
         .navigationDestination(isPresented: $showingSummary) {
             if let session = viewModel.session {
-                WorkoutSummaryView(session: session)
+                WorkoutSummaryView(session: session, onFinish: {
+                    navigateToHome()
+                })
             }
         }
         .alert("Cancelar Treino", isPresented: $showingCancelAlert) {

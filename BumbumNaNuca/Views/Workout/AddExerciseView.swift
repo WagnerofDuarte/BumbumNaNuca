@@ -44,6 +44,23 @@ struct AddExerciseView: View {
                     Stepper("Repetições: \(viewModel.reps)", value: $viewModel.reps, in: 1...50)
                 }
                 
+                Section {
+                    TextField("Carga (kg)", text: $viewModel.loadText)
+                        .keyboardType(.decimalPad)
+                    
+                    if let error = viewModel.loadError {
+                        Text(error)
+                            .font(.caption)
+                            .foregroundStyle(.red)
+                    }
+                    
+                    Text("Deixe em branco para exercícios de peso corporal")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                } header: {
+                    Text("Carga")
+                }
+                
                 Section("Descanso") {
                     Stepper("Descanso: \(viewModel.restTime)s", value: $viewModel.restTime, in: 15...300, step: 15)
                     

@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 import Observation
+import OSLog
 
 @Observable
 final class WorkoutSessionViewModel {
@@ -49,6 +50,7 @@ final class WorkoutSessionViewModel {
     func startSession() throws {
         // Verificar se já existe sessão ativa
         if let existingSession = try? checkExistingSession() {
+            AppLogger.execution.warning("Found existing session for workout plan: \(self.workoutPlan.name)")
             throw SessionError.sessionAlreadyExists(existingSession)
         }
         
@@ -61,7 +63,9 @@ final class WorkoutSessionViewModel {
         do {
             try modelContext.save()
             self.session = newSession
+            AppLogger.execution.info("Started workout session for plan: \(self.workoutPlan.name)")
         } catch {
+            AppLogger.execution.error("Failed to start session: \(error.localizedDescription)")
             throw SessionError.persistenceError(error)
         }
     }
@@ -77,7 +81,9 @@ final class WorkoutSessionViewModel {
         do {
             try session.validate()
             try modelContext.save()
+            AppLogger.execution.info("Finalized workout session - Sets: \(session.totalSets)")
         } catch {
+            AppLogger.execution.error("Failed to finalize session: \(error.localizedDescription)")
             throw SessionError.persistenceError(error)
         }
     }
@@ -87,6 +93,8 @@ final class WorkoutSessionViewModel {
         
         // Atualizar exercícios completados com base nas séries
         completedExercises = existingSession.completedExercises
+        
+        AppLogger.execution.info("Resumed existing session - Started: \(existingSession.startDate)")
     }
     
     func abandonSession(_ existingSession: WorkoutSession) throws {
@@ -95,7 +103,9 @@ final class WorkoutSessionViewModel {
         
         do {
             try modelContext.save()
+            AppLogger.execution.info("Abandoned existing session")
         } catch {
+            AppLogger.execution.error("Failed to abandon session: \(error.localizedDescription)")
             throw SessionError.persistenceError(error)
         }
     }

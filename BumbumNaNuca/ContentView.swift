@@ -38,10 +38,24 @@ private struct NavigateToWorkoutKey: EnvironmentKey {
     static let defaultValue = NavigateToWorkoutAction { _ in }
 }
 
+struct NavigateToHomeAction {
+    let action: () -> Void
+    func callAsFunction() { action() }
+}
+
+private struct NavigateToHomeKey: EnvironmentKey {
+    static let defaultValue = NavigateToHomeAction { }
+}
+
 extension EnvironmentValues {
     var navigateToWorkout: NavigateToWorkoutAction {
         get { self[NavigateToWorkoutKey.self] }
         set { self[NavigateToWorkoutKey.self] = newValue }
+    }
+    
+    var navigateToHome: NavigateToHomeAction {
+        get { self[NavigateToHomeKey.self] }
+        set { self[NavigateToHomeKey.self] = newValue }
     }
 }
 
@@ -100,6 +114,12 @@ struct ContentView: View {
             // Cross-tab navigation: Home → Workouts tab → Execute
             // Note: ExecuteWorkoutView navigation will be implemented when HomeView is created
             selectedTab = .workouts
+        })
+        .environment(\.navigateToHome, NavigateToHomeAction {
+            // Clear all navigation stacks and return to home
+            popToRoot(for: .home)
+            popToRoot(for: .workouts)
+            selectedTab = .home
         })
     }
     

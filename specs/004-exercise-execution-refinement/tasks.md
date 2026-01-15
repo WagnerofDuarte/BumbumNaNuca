@@ -19,7 +19,7 @@
 
 **Purpose**: Project initialization and permission configuration
 
-- [ ] T001 Request UserNotifications permission in BumbumNaNuca/BumbumNaNucaApp.swift for timer alerts
+- [X] T001 Request UserNotifications permission in BumbumNaNuca/BumbumNaNucaApp.swift for timer alerts
 
 **Checkpoint**: Permission requested on app launch
 
@@ -31,8 +31,8 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T002 Add optional load field to Exercise model in BumbumNaNuca/Models/Exercise.swift
-- [ ] T003 Update Exercise init() to accept optional load parameter in BumbumNaNuca/Models/Exercise.swift
+- [X] T002 Add optional load field to Exercise model in BumbumNaNuca/Models/Exercise.swift
+- [X] T003 Update Exercise init() to accept optional load parameter in BumbumNaNuca/Models/Exercise.swift
 
 **Checkpoint**: Foundation ready - SwiftData migration automatic, user story implementation can now begin
 
@@ -46,31 +46,31 @@
 
 ### Components for User Story 1
 
-- [ ] T004 [P] [US1] Create ExerciseInfoHeader component in BumbumNaNuca/Views/Components/ExerciseInfoHeader.swift
-- [ ] T005 [P] [US1] Create InfoPill subcomponent in BumbumNaNuca/Views/Components/ExerciseInfoHeader.swift
-- [ ] T006 [P] [US1] Create TimerDisplay component in BumbumNaNuca/Views/Components/TimerDisplay.swift
+- [X] T004 [P] [US1] Create ExerciseInfoHeader component in BumbumNaNuca/Views/Components/ExerciseInfoHeader.swift
+- [X] T005 [P] [US1] Create InfoPill subcomponent in BumbumNaNuca/Views/Components/ExerciseInfoHeader.swift
+- [X] T006 [P] [US1] Create TimerDisplay component in BumbumNaNuca/Views/Components/TimerDisplay.swift
 - [ ] T007 [P] [US1] Create ProgressIndicator component in BumbumNaNuca/Views/Components/ProgressIndicator.swift (inline or separate file)
 
 ### ViewModels for User Story 1
 
-- [ ] T008 [US1] Refactor ExecuteExerciseViewModel: remove input fields (weightText, repsText, errors) in BumbumNaNuca/ViewModels/Execute/ExecuteExerciseViewModel.swift
-- [ ] T009 [US1] Add automatic set recording to ExecuteExerciseViewModel.recordSet() using exercise defaults in BumbumNaNuca/ViewModels/Execute/ExecuteExerciseViewModel.swift
-- [ ] T010 [US1] Add early finish confirmation logic (attemptFinish, finish methods) to ExecuteExerciseViewModel in BumbumNaNuca/ViewModels/Execute/ExecuteExerciseViewModel.swift
-- [ ] T011 [US1] Add computed properties (isLastSet, setsRemaining) to ExecuteExerciseViewModel in BumbumNaNuca/ViewModels/Execute/ExecuteExerciseViewModel.swift
-- [ ] T012 [US1] Enhance RestTimerViewModel with background task support in BumbumNaNuca/ViewModels/Execute/RestTimerViewModel.swift
-- [ ] T013 [US1] Add local notification scheduling to RestTimerViewModel in BumbumNaNuca/ViewModels/Execute/RestTimerViewModel.swift
-- [ ] T014 [US1] Add default 60s rest time to RestTimerViewModel.init in BumbumNaNuca/ViewModels/Execute/RestTimerViewModel.swift
-- [ ] T015 [US1] Add sound/haptic feedback to RestTimerViewModel.complete() in BumbumNaNuca/ViewModels/Execute/RestTimerViewModel.swift
+- [X] T008 [US1] Refactor ExecuteExerciseViewModel: remove input fields (weightText, repsText, errors) in BumbumNaNuca/ViewModels/Execute/ExecuteExerciseViewModel.swift
+- [X] T009 [US1] Add automatic set recording to ExecuteExerciseViewModel.recordSet() using exercise defaults in BumbumNaNuca/ViewModels/Execute/ExecuteExerciseViewModel.swift
+- [X] T010 [US1] Add early finish confirmation logic (attemptFinish, finish methods) to ExecuteExerciseViewModel in BumbumNaNuca/ViewModels/Execute/ExecuteExerciseViewModel.swift
+- [X] T011 [US1] Add computed properties (isLastSet, setsRemaining) to ExecuteExerciseViewModel in BumbumNaNuca/ViewModels/Execute/ExecuteExerciseViewModel.swift
+- [X] T012 [US1] Enhance RestTimerViewModel with background task support in BumbumNaNuca/ViewModels/Execute/RestTimerViewModel.swift
+- [X] T013 [US1] Add local notification scheduling to RestTimerViewModel in BumbumNaNuca/ViewModels/Execute/RestTimerViewModel.swift
+- [X] T014 [US1] Add default 60s rest time to RestTimerViewModel.init in BumbumNaNuca/ViewModels/Execute/RestTimerViewModel.swift
+- [X] T015 [US1] Add sound/haptic feedback to RestTimerViewModel.complete() in BumbumNaNuca/ViewModels/Execute/RestTimerViewModel.swift
 
 ### Views for User Story 1
 
-- [ ] T016 [US1] Refactor ExecuteExerciseView: remove SetInputView and input forms in BumbumNaNuca/Views/Workout/Execute/ExecuteExerciseView.swift
-- [ ] T017 [US1] Add ExerciseInfoHeader to ExecuteExerciseView top section in BumbumNaNuca/Views/Workout/Execute/ExecuteExerciseView.swift
-- [ ] T018 [US1] Add inline timer display (TimerDisplay component) to ExecuteExerciseView in BumbumNaNuca/Views/Workout/Execute/ExecuteExerciseView.swift
-- [ ] T019 [US1] Add ProgressIndicator to ExecuteExerciseView when timer not running in BumbumNaNuca/Views/Workout/Execute/ExecuteExerciseView.swift
-- [ ] T020 [US1] Implement dynamic button ("Começar Descanso" / "Finalizar Exercício") in ExecuteExerciseView in BumbumNaNuca/Views/Workout/Execute/ExecuteExerciseView.swift
-- [ ] T021 [US1] Add early finish confirmation alert to ExecuteExerciseView in BumbumNaNuca/Views/Workout/Execute/ExecuteExerciseView.swift
-- [ ] T022 [US1] Wire up "Começar Descanso" button to recordSet() and timer start in ExecuteExerciseView in BumbumNaNuca/Views/Workout/Execute/ExecuteExerciseView.swift
+- [X] T016 [US1] Refactor ExecuteExerciseView: remove SetInputView and input forms in BumbumNaNuca/Views/Workout/Execute/ExecuteExerciseView.swift
+- [X] T017 [US1] Add ExerciseInfoHeader to ExecuteExerciseView top section in BumbumNaNuca/Views/Workout/Execute/ExecuteExerciseView.swift
+- [X] T018 [US1] Add inline timer display (TimerDisplay component) to ExecuteExerciseView in BumbumNaNuca/Views/Workout/Execute/ExecuteExerciseView.swift
+- [X] T019 [US1] Add ProgressIndicator to ExecuteExerciseView when timer not running in BumbumNaNuca/Views/Workout/Execute/ExecuteExerciseView.swift
+- [X] T020 [US1] Implement dynamic button ("Começar Descanso" / "Finalizar Exercício") in ExecuteExerciseView in BumbumNaNuca/Views/Workout/Execute/ExecuteExerciseView.swift
+- [X] T021 [US1] Add early finish confirmation alert to ExecuteExerciseView in BumbumNaNuca/Views/Workout/Execute/ExecuteExerciseView.swift
+- [X] T022 [US1] Wire up "Começar Descanso" button to recordSet() and timer start in ExecuteExerciseView in BumbumNaNuca/Views/Workout/Execute/ExecuteExerciseView.swift
 
 ### Manual Validation for User Story 1
 
@@ -94,16 +94,16 @@
 
 ### ViewModels for User Story 2
 
-- [ ] T030 [P] [US2] Add loadText property to AddExerciseViewModel in BumbumNaNuca/ViewModels/AddExerciseViewModel.swift
-- [ ] T031 [P] [US2] Add loadError validation to AddExerciseViewModel.validateInputs() in BumbumNaNuca/ViewModels/AddExerciseViewModel.swift
-- [ ] T032 [US2] Update AddExerciseViewModel.saveExercise() to parse and save load field in BumbumNaNuca/ViewModels/AddExerciseViewModel.swift
+- [X] T030 [P] [US2] Add loadText property to AddExerciseViewModel in BumbumNaNuca/ViewModels/AddExerciseViewModel.swift
+- [X] T031 [P] [US2] Add loadError validation to AddExerciseViewModel.validateInputs() in BumbumNaNuca/ViewModels/AddExerciseViewModel.swift
+- [X] T032 [US2] Update AddExerciseViewModel.saveExercise() to parse and save load field in BumbumNaNuca/ViewModels/AddExerciseViewModel.swift
 
 ### Views for User Story 2
 
-- [ ] T033 [US2] Add load TextField to AddExerciseView form in BumbumNaNuca/Views/Workout/AddExerciseView.swift
-- [ ] T034 [US2] Add load validation error display to AddExerciseView in BumbumNaNuca/Views/Workout/AddExerciseView.swift
-- [ ] T035 [US2] Add help text ("Deixe em branco...") for load field in AddExerciseView in BumbumNaNuca/Views/Workout/AddExerciseView.swift
-- [ ] T036 [US2] Add onChange handler for loadText validation in AddExerciseView in BumbumNaNuca/Views/Workout/AddExerciseView.swift
+- [X] T033 [US2] Add load TextField to AddExerciseView form in BumbumNaNuca/Views/Workout/AddExerciseView.swift
+- [X] T034 [US2] Add load validation error display to AddExerciseView in BumbumNaNuca/Views/Workout/AddExerciseView.swift
+- [X] T035 [US2] Add help text ("Deixe em branco...") for load field in AddExerciseView in BumbumNaNuca/Views/Workout/AddExerciseView.swift
+- [X] T036 [US2] Add onChange handler for loadText validation in AddExerciseView in BumbumNaNuca/Views/Workout/AddExerciseView.swift
 
 ### Integration for User Story 2
 
@@ -130,12 +130,12 @@
 
 ### ViewModels for User Story 3
 
-- [ ] T044 [US3] Verify WorkoutSessionViewModel.finalizeSession() sets session.endDate (no changes needed) in BumbumNaNuca/ViewModels/Execute/WorkoutSessionViewModel.swift
+- [X] T044 [US3] Verify WorkoutSessionViewModel.finalizeSession() sets session.endDate (no changes needed) in BumbumNaNuca/ViewModels/Execute/WorkoutSessionViewModel.swift
 
 ### Views for User Story 3
 
-- [ ] T045 [US3] Add onChange(session.endDate) handler to ExecuteWorkoutView for auto-dismiss in BumbumNaNuca/Views/Workout/Execute/ExecuteWorkoutView.swift
-- [ ] T046 [US3] Verify WorkoutSummaryView "Finalizar" button calls dismiss() (no changes needed) in BumbumNaNuca/Views/Workout/Execute/WorkoutSummaryView.swift
+- [X] T045 [US3] Add onChange(session.endDate) handler to ExecuteWorkoutView for auto-dismiss in BumbumNaNuca/Views/Workout/Execute/ExecuteWorkoutView.swift
+- [X] T046 [US3] Verify WorkoutSummaryView "Finalizar" button calls dismiss() (no changes needed) in BumbumNaNuca/Views/Workout/Execute/WorkoutSummaryView.swift
 
 ### Manual Validation for User Story 3
 
@@ -153,8 +153,8 @@
 **Purpose**: Cleanup, deprecation, and final validation
 
 - [ ] T051 [P] Deprecate or remove SetInputView component in BumbumNaNuca/Views/Components/SetInputView.swift
-- [ ] T052 [P] Add OSLog statements for timer events (start, complete, background) in RestTimerViewModel
-- [ ] T053 [P] Add OSLog statements for session transitions (start, finish) in WorkoutSessionViewModel
+- [X] T052 [P] Add OSLog statements for timer events (start, complete, background) in RestTimerViewModel
+- [X] T053 [P] Add OSLog statements for session transitions (start, finish) in WorkoutSessionViewModel
 - [ ] T054 [P] Add SwiftUI Previews for ExerciseInfoHeader component
 - [ ] T055 [P] Add SwiftUI Previews for TimerDisplay component
 - [ ] T056 [P] Add SwiftUI Previews for ExecuteExerciseView

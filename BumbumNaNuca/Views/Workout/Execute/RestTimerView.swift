@@ -16,7 +16,7 @@ struct RestTimerView: View {
     init(duration: TimeInterval, onComplete: @escaping () -> Void) {
         self.duration = duration
         self.onComplete = onComplete
-        self._viewModel = State(initialValue: RestTimerViewModel())
+        self._viewModel = State(initialValue: RestTimerViewModel(duration: duration))
     }
     
     var body: some View {
@@ -73,7 +73,7 @@ struct RestTimerView: View {
         }
         .padding()
         .onAppear {
-            viewModel.start(duration: duration)
+            viewModel.start()
         }
         .onChange(of: viewModel.isCompleted) { _, isCompleted in
             if isCompleted {

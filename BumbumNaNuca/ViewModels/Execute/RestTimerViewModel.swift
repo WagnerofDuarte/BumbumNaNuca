@@ -9,7 +9,9 @@ import Foundation
 import Combine
 import AVFoundation
 import UIKit
+import UserNotifications
 import Observation
+import OSLog
 
 @Observable
 final class RestTimerViewModel {
@@ -32,28 +34,43 @@ final class RestTimerViewModel {
         return (totalTime - remainingTime) / totalTime
     }
     
-    var formattedTime: String {
+    var timeString: String {
         let minutes = Int(remainingTime) / 60
         let seconds = Int(remainingTime) % 60
         return String(format: "%d:%02d", minutes, seconds)
     }
     
+    var formattedTime: String {
+        timeString
+    }
+    
     var isCompleted: Bool {
-        remainingTime <= 0 && isRunning
+        remainingTime <= 0 && !isRunning
+    }
+    
+    // MARK: - Initialization
+    
+    init(duration: TimeInterval = 60) {
+        self.totalTime = duration
+        self.remainingTime = duration
     }
     
     // MARK: - Public Methods
     
-    func start(duration: TimeInterval) {
-        guard duration > 0 else { return }
+    func start() {
+        guard totalTime > 0 else { return }
         
-        totalTime = duration
-        remainingTime = duration
+        if remainingTime <= 0 {
+            remainingTime = totalTime
+        }
+        
         isRunning = true
         isPaused = false
         
         startBackgroundTask()
         startTimer()
+        
+        AppLogger.execution.info("Rest timer started: \(self.totalTime)s")
     }
     
     func pause() {
@@ -62,6 +79,8 @@ final class RestTimerViewModel {
         isPaused = true
         timer?.cancel()
         timer = nil
+        
+        AppLogger.execution.info("Rest timer paused at \(self.remainingTime)s")
     }
     
     func resume() {
@@ -69,19 +88,24 @@ final class RestTimerViewModel {
         
         isPaused = false
         startTimer()
+        
+        AppLogger.execution.info("Rest timer resumed at \(self.remainingTime)s")
     }
     
     func skip() {
+        AppLogger.execution.info("Rest timer skipped")
         stop()
     }
     
     func stop() {
         isRunning = false
         isPaused = false
-        remainingTime = 0
         timer?.cancel()
         timer = nil
         endBackgroundTask()
+        
+        // Cancel any pending notifications
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
     
     // MARK: - Private Methods
@@ -96,14 +120,14 @@ final class RestTimerViewModel {
     
     private func tick() {
         guard remainingTime > 0 else {
-            onTimerComplete()
+            complete()
             return
         }
         
         remainingTime -= 1
     }
     
-    private func onTimerComplete() {
+    private func complete() {
         isRunning = false
         isPaused = false
         remainingTime = 0
@@ -114,7 +138,14 @@ final class RestTimerViewModel {
         triggerHapticFeedback()
         playCompletionSound()
         
+        // Schedule notification if in background
+        if UIApplication.shared.applicationState != .active {
+            scheduleCompletionNotification()
+        }
+        
         endBackgroundTask()
+        
+        AppLogger.execution.info("Rest timer completed")
     }
     
     private func triggerHapticFeedback() {
@@ -122,29 +153,39 @@ final class RestTimerViewModel {
     }
     
     private func playCompletionSound() {
-        // Play system sound
-        guard let soundURL = Bundle.main.url(forResource: "timer_complete", withExtension: "wav") else {
-            // Fallback to system sound if custom sound not available
-            AudioServicesPlaySystemSound(1315) // System notification sound
-            return
-        }
+        // Play system sound (1322 is a nice timer completion sound)
+        AudioServicesPlaySystemSound(1322)
+    }
+    
+    private func scheduleCompletionNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "Descanso concluído"
+        content.body = "Hora da próxima série!"
+        content.sound = .default
+        content.categoryIdentifier = "REST_TIMER"
         
-        do {
-            // Respect silent mode
-            try AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default)
-            try AVAudioSession.sharedInstance().setActive(true)
-            
-            audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
-            audioPlayer?.play()
-        } catch {
-            // Fallback to system sound on error
-            AudioServicesPlaySystemSound(1315)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
+        let request = UNNotificationRequest(
+            identifier: "rest-timer-\(UUID().uuidString)",
+            content: content,
+            trigger: trigger
+        )
+        
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                AppLogger.execution.error("Failed to schedule notification: \(error.localizedDescription)")
+            }
         }
     }
     
     private func startBackgroundTask() {
         backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self] in
+            AppLogger.execution.warning("Background task expired for rest timer")
             self?.endBackgroundTask()
+        }
+        
+        if backgroundTask != .invalid {
+            AppLogger.execution.info("Background task started for rest timer")
         }
     }
     
@@ -153,6 +194,8 @@ final class RestTimerViewModel {
         
         UIApplication.shared.endBackgroundTask(backgroundTask)
         backgroundTask = .invalid
+        
+        AppLogger.execution.info("Background task ended for rest timer")
     }
     
     // MARK: - Deinitialization

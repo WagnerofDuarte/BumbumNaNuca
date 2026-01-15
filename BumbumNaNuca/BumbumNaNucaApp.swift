@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import UserNotifications
 
 @main
 struct BumbumNaNucaApp: App {
@@ -33,6 +34,15 @@ struct BumbumNaNucaApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+    
+    init() {
+        // Request UserNotifications permission for timer alerts
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if let error = error {
+                print("Failed to request notification permission: \(error.localizedDescription)")
+            }
+        }
+    }
     
     var body: some Scene {
         WindowGroup {

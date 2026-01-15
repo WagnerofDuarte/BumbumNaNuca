@@ -26,13 +26,13 @@ struct PrimaryButton: View {
 
 #Preview {
     VStack(spacing: 16) {
-        PrimaryButton(title: "Salvar") {
+        PrimaryButton(title: "Salvar", action: {
             AppLogger.ui.debug("Preview: Salvar tapped")
-        }
+        })
         
-        PrimaryButton(title: "Excluir", isDestructive: true) {
+        PrimaryButton(title: "Excluir", action: {
             AppLogger.ui.debug("Preview: Excluir tapped")
-        }
+        }, isDestructive: true)
     }
     .padding()
 }

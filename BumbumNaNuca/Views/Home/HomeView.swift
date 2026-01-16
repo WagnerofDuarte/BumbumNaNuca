@@ -13,6 +13,7 @@ struct HomeView: View {
     @Environment(\.navigateToWorkout) private var navigateToWorkout
     
     @State private var viewModel = HomeViewModel()
+    @State private var showRegisterCheckIn = false
     
     var body: some View {
         ScrollView {
@@ -30,6 +31,24 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
                 .padding(.top)
+                
+                // Botão de Check-In com Foto
+                Button {
+                    showRegisterCheckIn = true
+                } label: {
+                    HStack {
+                        Image(systemName: "camera.fill")
+                        Text("Registrar Check-In")
+                            .fontWeight(.semibold)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.accentColor)
+                    .foregroundStyle(.white)
+                    .cornerRadius(12)
+                }
+                .buttonStyle(.plain)
+                .padding(.horizontal)
                 
                 // Card de Check-in
                 CheckInCard(
@@ -67,6 +86,9 @@ struct HomeView: View {
         }
         .refreshable {
             viewModel.loadDashboard(context: modelContext)
+        }
+        .sheet(isPresented: $showRegisterCheckIn) {
+            RegisterCheckInView(modelContext: modelContext)
         }
     }
     

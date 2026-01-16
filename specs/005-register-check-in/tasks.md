@@ -20,11 +20,11 @@
 
 **Purpose**: Project initialization and data layer foundation
 
-- [ ] T001 Extend CheckIn model with new fields (photoData, exerciseType, title, calories, location) in BumbumNaNuca/Models/CheckIn.swift
-- [ ] T002 [P] Create ExerciseType helper with 8 predefined types and icon mapping in BumbumNaNuca/Utilities/ExerciseType.swift
-- [ ] T003 [P] Add UIImage compression extension (JPEG 0.7 quality, <2MB target) in BumbumNaNuca/Utilities/Extensions/UIImage+Compression.swift
-- [ ] T004 [P] Add Calendar extensions (startOfMonth, endOfMonth, daysInMonth) in BumbumNaNuca/Utilities/Extensions/Calendar+CheckIn.swift
-- [ ] T005 [P] Create Logger extension for check-in operations in BumbumNaNuca/Utilities/Helpers/Logger.swift
+- [X] T001 Extend CheckIn model with new fields (photoData, exerciseType, title, calories, location) in BumbumNaNuca/Models/CheckIn.swift
+- [X] T002 [P] Create ExerciseType helper with 8 predefined types and icon mapping in BumbumNaNuca/Utilities/ExerciseType.swift
+- [X] T003 [P] Add UIImage compression extension (JPEG 0.7 quality, <2MB target) in BumbumNaNuca/Utilities/Extensions/UIImage+Compression.swift
+- [X] T004 [P] Add Calendar extensions (startOfMonth, endOfMonth, daysInMonth) in BumbumNaNuca/Utilities/Extensions/Calendar+CheckIn.swift
+- [X] T005 [P] Create Logger extension for check-in operations in BumbumNaNuca/Utilities/Helpers/Logger.swift
 
 ---
 
@@ -34,9 +34,9 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T006 Create CameraPicker UIViewControllerRepresentable for camera capture in BumbumNaNuca/Views/Components/CameraPicker.swift
-- [ ] T007 [P] Create PlaceholderIconView component for exercise type icons (40-48pt rounded) in BumbumNaNuca/Views/Components/PlaceholderIconView.swift
-- [ ] T008 [P] Create ExerciseTypePicker component for exercise type selection in BumbumNaNuca/Views/Components/ExerciseTypePicker.swift
+- [X] T006 Create CameraPicker UIViewControllerRepresentable for camera capture in BumbumNaNuca/Views/Components/CameraPicker.swift
+- [X] T007 [P] Create PlaceholderIconView component for exercise type icons (40-48pt rounded) in BumbumNaNuca/Views/Components/PlaceholderIconView.swift
+- [X] T008 [P] Create ExerciseTypePicker component for exercise type selection in BumbumNaNuca/Views/Components/ExerciseTypePicker.swift
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -56,14 +56,14 @@
 
 ### Implementation for User Story 1
 
-- [ ] T009 [P] [US1] Create RegisterCheckInViewModel with form state, validation, and save logic in BumbumNaNuca/ViewModels/RegisterCheckInViewModel.swift
-- [ ] T010 [US1] Create RegisterCheckInView with form UI (exercise picker, title field, photo buttons, date picker) in BumbumNaNuca/Views/CheckIn/RegisterCheckInView.swift
-- [ ] T011 [US1] Add "Check In" button to Home screen that presents RegisterCheckInView in BumbumNaNuca/Views/Home/HomeView.swift
-- [ ] T012 [US1] Implement photo selection flow (camera + gallery) with permissions handling in RegisterCheckInView
-- [ ] T013 [US1] Add form validation (required: exercise type, title; future date prevention) in RegisterCheckInViewModel
-- [ ] T014 [US1] Implement save action with SwiftData persistence and navigation dismissal in RegisterCheckInViewModel
-- [ ] T015 [US1] Add error display for validation failures and save errors in RegisterCheckInView
-- [ ] T016 [US1] Add unsaved changes warning when navigating away from RegisterCheckInView
+- [X] T009 [P] [US1] Create RegisterCheckInViewModel with form state, validation, and save logic in BumbumNaNuca/ViewModels/RegisterCheckInViewModel.swift
+- [X] T010 [US1] Create RegisterCheckInView with form UI (exercise picker, title field, photo buttons, date picker) in BumbumNaNuca/Views/CheckIn/RegisterCheckInView.swift
+- [X] T011 [US1] Add "Check In" button to Home screen that presents RegisterCheckInView in BumbumNaNuca/Views/Home/HomeView.swift
+- [X] T012 [US1] Implement photo selection flow (camera + gallery) with permissions handling in RegisterCheckInView
+- [X] T013 [US1] Add form validation (required: exercise type, title; future date prevention) in RegisterCheckInViewModel
+- [X] T014 [US1] Implement save action with SwiftData persistence and navigation dismissal in RegisterCheckInViewModel
+- [X] T015 [US1] Add error display for validation failures and save errors in RegisterCheckInView
+- [X] T016 [US1] Add unsaved changes warning when navigating away from RegisterCheckInView
 
 **Checkpoint**: At this point, User Story 1 should be fully functional - users can create check-ins with photos
 
@@ -82,11 +82,11 @@
 
 ### Implementation for User Story 2
 
-- [ ] T017 [P] [US2] Add calories input field (numeric, optional) to RegisterCheckInView in BumbumNaNuca/Views/CheckIn/RegisterCheckInView.swift
-- [ ] T018 [P] [US2] Add location input field (text, optional, max 200 chars) to RegisterCheckInView in BumbumNaNuca/Views/CheckIn/RegisterCheckInView.swift
-- [ ] T019 [US2] Implement date/time picker with future date restriction in RegisterCheckInView
-- [ ] T020 [US2] Add numeric validation for calories (non-negative) in RegisterCheckInViewModel
-- [ ] T021 [US2] Update save logic to persist optional fields in RegisterCheckInViewModel
+- [X] T017 [P] [US2] Add calories input field (numeric, optional) to RegisterCheckInView in BumbumNaNuca/Views/CheckIn/RegisterCheckInView.swift
+- [X] T018 [P] [US2] Add location input field (text, optional, max 200 chars) to RegisterCheckInView in BumbumNaNuca/Views/CheckIn/RegisterCheckInView.swift
+- [X] T019 [US2] Implement date/time picker with future date restriction in RegisterCheckInView
+- [X] T020 [US2] Add numeric validation for calories (non-negative) in RegisterCheckInViewModel
+- [X] T021 [US2] Update save logic to persist optional fields in RegisterCheckInViewModel
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work - check-ins can have full detail capture
 
@@ -106,15 +106,15 @@
 
 ### Implementation for User Story 3
 
-- [ ] T022 [P] [US3] Create CheckInViewModel with total count and current month data in BumbumNaNuca/ViewModels/CheckInViewModel.swift
-- [ ] T023 [P] [US3] Create CalendarDayView component showing photo/icon with rounded style in BumbumNaNuca/Views/CheckIn/CalendarDayView.swift
-- [ ] T024 [P] [US3] Create CalendarMonthView with 7-column LazyVGrid layout in BumbumNaNuca/Views/CheckIn/CalendarMonthView.swift
-- [ ] T025 [US3] Create CheckInTabView with summary section (total count) at top in BumbumNaNuca/Views/CheckIn/CheckInTabView.swift
-- [ ] T026 [US3] Add current month calendar display to CheckInTabView below summary
-- [ ] T027 [US3] Implement SwiftData query for check-ins grouped by calendar day in CheckInViewModel
-- [ ] T028 [US3] Add logic to show most recent photo when multiple check-ins on same day in CalendarDayView
-- [ ] T029 [US3] Add placeholder icon display for check-ins without photos in CalendarDayView
-- [ ] T030 [US3] Add Check-In tab to main TabView navigation in BumbumNaNuca/ContentView.swift
+- [X] T022 [P] [US3] Create CheckInViewModel with total count and current month data in BumbumNaNuca/ViewModels/CheckInViewModel.swift
+- [X] T023 [P] [US3] Create CalendarDayView component showing photo/icon with rounded style in BumbumNaNuca/Views/CheckIn/CalendarDayView.swift
+- [X] T024 [P] [US3] Create CalendarMonthView with 7-column LazyVGrid layout in BumbumNaNuca/Views/CheckIn/CalendarMonthView.swift
+- [X] T025 [US3] Create CheckInTabView with summary section (total count) at top in BumbumNaNuca/Views/CheckIn/CheckInTabView.swift
+- [X] T026 [US3] Add current month calendar display to CheckInTabView below summary
+- [X] T027 [US3] Implement SwiftData query for check-ins grouped by calendar day in CheckInViewModel
+- [X] T028 [US3] Add logic to show most recent photo when multiple check-ins on same day in CalendarDayView
+- [X] T029 [US3] Add placeholder icon display for check-ins without photos in CalendarDayView
+- [X] T030 [US3] Add Check-In tab to main TabView navigation in BumbumNaNuca/ContentView.swift
 
 **Checkpoint**: At this point, User Stories 1 AND 3 should work independently - MVP calendar visualization complete
 
@@ -134,13 +134,13 @@
 
 ### Implementation for User Story 4
 
-- [ ] T031 [P] [US4] Create CalendarViewModel with month grouping logic (current → earliest) in BumbumNaNuca/ViewModels/CalendarViewModel.swift
-- [ ] T032 [US4] Create AllCheckInsView with scrollable list of monthly calendars in BumbumNaNuca/Views/CheckIn/AllCheckInsView.swift
-- [ ] T033 [US4] Implement SwiftData query for all months containing check-ins in CalendarViewModel
-- [ ] T034 [US4] Add month filtering (exclude empty months) in CalendarViewModel
-- [ ] T035 [US4] Add "View All Check-Ins" button below calendar in CheckInTabView
-- [ ] T036 [US4] Connect button to AllCheckInsView navigation in CheckInTabView
-- [ ] T037 [US4] Optimize scrolling performance with LazyVStack for 100+ check-ins in AllCheckInsView
+- [X] T031 [P] [US4] Create CalendarViewModel with month grouping logic (current → earliest) in BumbumNaNuca/ViewModels/CalendarViewModel.swift
+- [X] T032 [US4] Create AllCheckInsView with scrollable list of monthly calendars in BumbumNaNuca/Views/CheckIn/AllCheckInsView.swift
+- [X] T033 [US4] Implement SwiftData query for all months containing check-ins in CalendarViewModel
+- [X] T034 [US4] Add month filtering (exclude empty months) in CalendarViewModel
+- [X] T035 [US4] Add "View All Check-Ins" button below calendar in CheckInTabView
+- [X] T036 [US4] Connect button to AllCheckInsView navigation in CheckInTabView
+- [X] T037 [US4] Optimize scrolling performance with LazyVStack for 100+ check-ins in AllCheckInsView
 
 **Checkpoint**: All user stories should now be independently functional - complete feature delivered
 
@@ -150,22 +150,22 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T038 [P] Add haptic feedback on successful check-in save in RegisterCheckInViewModel
-- [ ] T039 [P] Add pull-to-refresh on CheckInTabView to reload check-ins
-- [ ] T040 Add empty state view when no check-ins exist in CheckInTabView
+- [X] T038 [P] Add haptic feedback on successful check-in save in RegisterCheckInViewModel
+- [X] T039 [P] Add pull-to-refresh on CheckInTabView to reload check-ins
+- [X] T040 Add empty state view when no check-ins exist in CheckInTabView
 - [ ] T041 [P] Add loading indicators during photo loading in RegisterCheckInView
 - [ ] T042 [P] OPTIONAL: Add accessibility labels for VoiceOver support on all check-in views (not required per Constitution v2.0)
-- [ ] T043 Verify image compression and format compatibility (JPEG/PNG/HEIC) and corrupted image handling in UIImage+Compression.swift and CheckIn.photo
-- [ ] T044 Add error handling for corrupted image data in CheckIn.photo computed property
-- [ ] T045 [P] Verify no sensitive data logged (photo data, titles, locations excluded) in Logger usage
-- [ ] T046 Test permissions flow for denied camera/gallery access in RegisterCheckInView
+- [X] T043 Verify image compression and format compatibility (JPEG/PNG/HEIC) and corrupted image handling in UIImage+Compression.swift and CheckIn.photo
+- [X] T044 Add error handling for corrupted image data in CheckIn.photo computed property
+- [X] T045 [P] Verify no sensitive data logged (photo data, titles, locations excluded) in Logger usage
+- [X] T046 Test permissions flow for denied camera/gallery access in RegisterCheckInView
 - [ ] T047 Performance test: Load calendar with 100+ check-ins (<2s load time) in CheckInTabView
 - [ ] T048 Performance test: Scroll through 12+ months (60fps smooth) in AllCheckInsView
-- [ ] T049 Test backward compatibility with existing CheckIn records (Feature 003) in BumbumNaNuca/Models/CheckIn.swift
-- [ ] T050 [P] Add SwiftUI previews for all new views with sample data
+- [X] T049 Test backward compatibility with existing CheckIn records (Feature 003) in BumbumNaNuca/Models/CheckIn.swift
+- [X] T050 [P] Add SwiftUI previews for all new views with sample data
 - [ ] T051 Run quickstart.md manual testing scenarios across all user stories
-- [ ] T052 Update IMPLEMENTATION_STATUS.md with Feature 005 completion status
-- [ ] T053 [P] Implement permission denial error UI (camera/gallery) with user guidance in RegisterCheckInView per FR-027
+- [X] T052 Update IMPLEMENTATION_STATUS.md with Feature 005 completion status
+- [X] T053 [P] Implement permission denial error UI (camera/gallery) with user guidance in RegisterCheckInView per FR-027
 
 ---
 

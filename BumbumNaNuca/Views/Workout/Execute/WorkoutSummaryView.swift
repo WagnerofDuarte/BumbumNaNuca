@@ -16,7 +16,7 @@ struct WorkoutSummaryView: View {
     
     var body: some View {
         Group {
-            if let viewModel = viewModel {
+            if viewModel != nil {
                 summaryContent
             } else {
                 ProgressView()

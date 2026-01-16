@@ -6,38 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		E66A53752EF7589B0013A0E4 /* speckit.constitution.agent.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A53532EF7589B0013A0E4 /* speckit.constitution.agent.md */; };
-		E66A53762EF7589B0013A0E4 /* speckit.analyze.agent.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A53502EF7589B0013A0E4 /* speckit.analyze.agent.md */; };
-		E66A53772EF7589B0013A0E4 /* setup-plan.sh in Resources */ = {isa = PBXBuildFile; fileRef = E66A536A2EF7589B0013A0E4 /* setup-plan.sh */; };
-		E66A53782EF7589B0013A0E4 /* check-prerequisites.sh in Resources */ = {isa = PBXBuildFile; fileRef = E66A53672EF7589B0013A0E4 /* check-prerequisites.sh */; };
-		E66A53792EF7589B0013A0E4 /* speckit.constitution.prompt.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A535D2EF7589B0013A0E4 /* speckit.constitution.prompt.md */; };
-		E66A537A2EF7589B0013A0E4 /* speckit.specify.prompt.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A53602EF7589B0013A0E4 /* speckit.specify.prompt.md */; };
-		E66A537B2EF7589B0013A0E4 /* speckit.tasks.agent.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A53572EF7589B0013A0E4 /* speckit.tasks.agent.md */; };
-		E66A537C2EF7589B0013A0E4 /* speckit.specify.agent.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A53562EF7589B0013A0E4 /* speckit.specify.agent.md */; };
-		E66A537D2EF7589B0013A0E4 /* tasks-template.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A53722EF7589B0013A0E4 /* tasks-template.md */; };
-		E66A537E2EF7589B0013A0E4 /* speckit.tasks.prompt.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A53612EF7589B0013A0E4 /* speckit.tasks.prompt.md */; };
-		E66A537F2EF7589B0013A0E4 /* speckit.implement.agent.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A53542EF7589B0013A0E4 /* speckit.implement.agent.md */; };
-		E66A53802EF7589B0013A0E4 /* agent-file-template.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A536E2EF7589B0013A0E4 /* agent-file-template.md */; };
-		E66A53812EF7589B0013A0E4 /* speckit.plan.agent.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A53552EF7589B0013A0E4 /* speckit.plan.agent.md */; };
-		E66A53822EF7589B0013A0E4 /* speckit.plan.prompt.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A535F2EF7589B0013A0E4 /* speckit.plan.prompt.md */; };
-		E66A53832EF7589B0013A0E4 /* speckit.implement.prompt.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A535E2EF7589B0013A0E4 /* speckit.implement.prompt.md */; };
-		E66A53842EF7589B0013A0E4 /* update-agent-context.sh in Resources */ = {isa = PBXBuildFile; fileRef = E66A536B2EF7589B0013A0E4 /* update-agent-context.sh */; };
-		E66A53852EF7589B0013A0E4 /* speckit.checklist.agent.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A53512EF7589B0013A0E4 /* speckit.checklist.agent.md */; };
-		E66A53862EF7589B0013A0E4 /* speckit.checklist.prompt.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A535B2EF7589B0013A0E4 /* speckit.checklist.prompt.md */; };
-		E66A53872EF7589B0013A0E4 /* speckit.taskstoissues.prompt.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A53622EF7589B0013A0E4 /* speckit.taskstoissues.prompt.md */; };
-		E66A53882EF7589B0013A0E4 /* create-new-feature.sh in Resources */ = {isa = PBXBuildFile; fileRef = E66A53692EF7589B0013A0E4 /* create-new-feature.sh */; };
-		E66A53892EF7589B0013A0E4 /* speckit.clarify.prompt.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A535C2EF7589B0013A0E4 /* speckit.clarify.prompt.md */; };
-		E66A538A2EF7589B0013A0E4 /* checklist-template.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A536F2EF7589B0013A0E4 /* checklist-template.md */; };
-		E66A538B2EF7589B0013A0E4 /* spec-template.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A53712EF7589B0013A0E4 /* spec-template.md */; };
-		E66A538C2EF7589B0013A0E4 /* constitution.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A53652EF7589B0013A0E4 /* constitution.md */; };
-		E66A538D2EF7589B0013A0E4 /* speckit.clarify.agent.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A53522EF7589B0013A0E4 /* speckit.clarify.agent.md */; };
-		E66A538E2EF7589B0013A0E4 /* speckit.taskstoissues.agent.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A53582EF7589B0013A0E4 /* speckit.taskstoissues.agent.md */; };
-		E66A538F2EF7589B0013A0E4 /* plan-template.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A53702EF7589B0013A0E4 /* plan-template.md */; };
-		E66A53902EF7589B0013A0E4 /* common.sh in Resources */ = {isa = PBXBuildFile; fileRef = E66A53682EF7589B0013A0E4 /* common.sh */; };
-		E66A53912EF7589B0013A0E4 /* speckit.analyze.prompt.md in Resources */ = {isa = PBXBuildFile; fileRef = E66A535A2EF7589B0013A0E4 /* speckit.analyze.prompt.md */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		E66A53342EF757640013A0E4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -59,35 +27,6 @@
 		E66A53262EF757630013A0E4 /* BumbumNaNuca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BumbumNaNuca.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E66A53332EF757640013A0E4 /* BumbumNaNucaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BumbumNaNucaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E66A533D2EF757640013A0E4 /* BumbumNaNucaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BumbumNaNucaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E66A53502EF7589B0013A0E4 /* speckit.analyze.agent.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.analyze.agent.md; sourceTree = "<group>"; };
-		E66A53512EF7589B0013A0E4 /* speckit.checklist.agent.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.checklist.agent.md; sourceTree = "<group>"; };
-		E66A53522EF7589B0013A0E4 /* speckit.clarify.agent.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.clarify.agent.md; sourceTree = "<group>"; };
-		E66A53532EF7589B0013A0E4 /* speckit.constitution.agent.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.constitution.agent.md; sourceTree = "<group>"; };
-		E66A53542EF7589B0013A0E4 /* speckit.implement.agent.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.implement.agent.md; sourceTree = "<group>"; };
-		E66A53552EF7589B0013A0E4 /* speckit.plan.agent.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.plan.agent.md; sourceTree = "<group>"; };
-		E66A53562EF7589B0013A0E4 /* speckit.specify.agent.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.specify.agent.md; sourceTree = "<group>"; };
-		E66A53572EF7589B0013A0E4 /* speckit.tasks.agent.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.tasks.agent.md; sourceTree = "<group>"; };
-		E66A53582EF7589B0013A0E4 /* speckit.taskstoissues.agent.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.taskstoissues.agent.md; sourceTree = "<group>"; };
-		E66A535A2EF7589B0013A0E4 /* speckit.analyze.prompt.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.analyze.prompt.md; sourceTree = "<group>"; };
-		E66A535B2EF7589B0013A0E4 /* speckit.checklist.prompt.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.checklist.prompt.md; sourceTree = "<group>"; };
-		E66A535C2EF7589B0013A0E4 /* speckit.clarify.prompt.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.clarify.prompt.md; sourceTree = "<group>"; };
-		E66A535D2EF7589B0013A0E4 /* speckit.constitution.prompt.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.constitution.prompt.md; sourceTree = "<group>"; };
-		E66A535E2EF7589B0013A0E4 /* speckit.implement.prompt.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.implement.prompt.md; sourceTree = "<group>"; };
-		E66A535F2EF7589B0013A0E4 /* speckit.plan.prompt.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.plan.prompt.md; sourceTree = "<group>"; };
-		E66A53602EF7589B0013A0E4 /* speckit.specify.prompt.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.specify.prompt.md; sourceTree = "<group>"; };
-		E66A53612EF7589B0013A0E4 /* speckit.tasks.prompt.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.tasks.prompt.md; sourceTree = "<group>"; };
-		E66A53622EF7589B0013A0E4 /* speckit.taskstoissues.prompt.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = speckit.taskstoissues.prompt.md; sourceTree = "<group>"; };
-		E66A53652EF7589B0013A0E4 /* constitution.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = constitution.md; sourceTree = "<group>"; };
-		E66A53672EF7589B0013A0E4 /* check-prerequisites.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "check-prerequisites.sh"; sourceTree = "<group>"; };
-		E66A53682EF7589B0013A0E4 /* common.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = common.sh; sourceTree = "<group>"; };
-		E66A53692EF7589B0013A0E4 /* create-new-feature.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "create-new-feature.sh"; sourceTree = "<group>"; };
-		E66A536A2EF7589B0013A0E4 /* setup-plan.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "setup-plan.sh"; sourceTree = "<group>"; };
-		E66A536B2EF7589B0013A0E4 /* update-agent-context.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "update-agent-context.sh"; sourceTree = "<group>"; };
-		E66A536E2EF7589B0013A0E4 /* agent-file-template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "agent-file-template.md"; sourceTree = "<group>"; };
-		E66A536F2EF7589B0013A0E4 /* checklist-template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "checklist-template.md"; sourceTree = "<group>"; };
-		E66A53702EF7589B0013A0E4 /* plan-template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "plan-template.md"; sourceTree = "<group>"; };
-		E66A53712EF7589B0013A0E4 /* spec-template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "spec-template.md"; sourceTree = "<group>"; };
-		E66A53722EF7589B0013A0E4 /* tasks-template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "tasks-template.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -136,8 +75,6 @@
 		E66A531D2EF757630013A0E4 = {
 			isa = PBXGroup;
 			children = (
-				E66A53642EF7589B0013A0E4 /* .github */,
-				E66A53742EF7589B0013A0E4 /* .specify */,
 				E66A53282EF757630013A0E4 /* BumbumNaNuca */,
 				E66A53362EF757640013A0E4 /* BumbumNaNucaTests */,
 				E66A53402EF757640013A0E4 /* BumbumNaNucaUITests */,
@@ -153,97 +90,6 @@
 				E66A533D2EF757640013A0E4 /* BumbumNaNucaUITests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		E66A53592EF7589B0013A0E4 /* agents */ = {
-			isa = PBXGroup;
-			children = (
-				E66A53502EF7589B0013A0E4 /* speckit.analyze.agent.md */,
-				E66A53512EF7589B0013A0E4 /* speckit.checklist.agent.md */,
-				E66A53522EF7589B0013A0E4 /* speckit.clarify.agent.md */,
-				E66A53532EF7589B0013A0E4 /* speckit.constitution.agent.md */,
-				E66A53542EF7589B0013A0E4 /* speckit.implement.agent.md */,
-				E66A53552EF7589B0013A0E4 /* speckit.plan.agent.md */,
-				E66A53562EF7589B0013A0E4 /* speckit.specify.agent.md */,
-				E66A53572EF7589B0013A0E4 /* speckit.tasks.agent.md */,
-				E66A53582EF7589B0013A0E4 /* speckit.taskstoissues.agent.md */,
-			);
-			path = agents;
-			sourceTree = "<group>";
-		};
-		E66A53632EF7589B0013A0E4 /* prompts */ = {
-			isa = PBXGroup;
-			children = (
-				E66A535A2EF7589B0013A0E4 /* speckit.analyze.prompt.md */,
-				E66A535B2EF7589B0013A0E4 /* speckit.checklist.prompt.md */,
-				E66A535C2EF7589B0013A0E4 /* speckit.clarify.prompt.md */,
-				E66A535D2EF7589B0013A0E4 /* speckit.constitution.prompt.md */,
-				E66A535E2EF7589B0013A0E4 /* speckit.implement.prompt.md */,
-				E66A535F2EF7589B0013A0E4 /* speckit.plan.prompt.md */,
-				E66A53602EF7589B0013A0E4 /* speckit.specify.prompt.md */,
-				E66A53612EF7589B0013A0E4 /* speckit.tasks.prompt.md */,
-				E66A53622EF7589B0013A0E4 /* speckit.taskstoissues.prompt.md */,
-			);
-			path = prompts;
-			sourceTree = "<group>";
-		};
-		E66A53642EF7589B0013A0E4 /* .github */ = {
-			isa = PBXGroup;
-			children = (
-				E66A53592EF7589B0013A0E4 /* agents */,
-				E66A53632EF7589B0013A0E4 /* prompts */,
-			);
-			path = .github;
-			sourceTree = "<group>";
-		};
-		E66A53662EF7589B0013A0E4 /* memory */ = {
-			isa = PBXGroup;
-			children = (
-				E66A53652EF7589B0013A0E4 /* constitution.md */,
-			);
-			path = memory;
-			sourceTree = "<group>";
-		};
-		E66A536C2EF7589B0013A0E4 /* bash */ = {
-			isa = PBXGroup;
-			children = (
-				E66A53672EF7589B0013A0E4 /* check-prerequisites.sh */,
-				E66A53682EF7589B0013A0E4 /* common.sh */,
-				E66A53692EF7589B0013A0E4 /* create-new-feature.sh */,
-				E66A536A2EF7589B0013A0E4 /* setup-plan.sh */,
-				E66A536B2EF7589B0013A0E4 /* update-agent-context.sh */,
-			);
-			path = bash;
-			sourceTree = "<group>";
-		};
-		E66A536D2EF7589B0013A0E4 /* scripts */ = {
-			isa = PBXGroup;
-			children = (
-				E66A536C2EF7589B0013A0E4 /* bash */,
-			);
-			path = scripts;
-			sourceTree = "<group>";
-		};
-		E66A53732EF7589B0013A0E4 /* templates */ = {
-			isa = PBXGroup;
-			children = (
-				E66A536E2EF7589B0013A0E4 /* agent-file-template.md */,
-				E66A536F2EF7589B0013A0E4 /* checklist-template.md */,
-				E66A53702EF7589B0013A0E4 /* plan-template.md */,
-				E66A53712EF7589B0013A0E4 /* spec-template.md */,
-				E66A53722EF7589B0013A0E4 /* tasks-template.md */,
-			);
-			path = templates;
-			sourceTree = "<group>";
-		};
-		E66A53742EF7589B0013A0E4 /* .specify */ = {
-			isa = PBXGroup;
-			children = (
-				E66A53662EF7589B0013A0E4 /* memory */,
-				E66A536D2EF7589B0013A0E4 /* scripts */,
-				E66A53732EF7589B0013A0E4 /* templates */,
-			);
-			path = .specify;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,35 +212,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E66A53752EF7589B0013A0E4 /* speckit.constitution.agent.md in Resources */,
-				E66A53762EF7589B0013A0E4 /* speckit.analyze.agent.md in Resources */,
-				E66A53772EF7589B0013A0E4 /* setup-plan.sh in Resources */,
-				E66A53782EF7589B0013A0E4 /* check-prerequisites.sh in Resources */,
-				E66A53792EF7589B0013A0E4 /* speckit.constitution.prompt.md in Resources */,
-				E66A537A2EF7589B0013A0E4 /* speckit.specify.prompt.md in Resources */,
-				E66A537B2EF7589B0013A0E4 /* speckit.tasks.agent.md in Resources */,
-				E66A537C2EF7589B0013A0E4 /* speckit.specify.agent.md in Resources */,
-				E66A537D2EF7589B0013A0E4 /* tasks-template.md in Resources */,
-				E66A537E2EF7589B0013A0E4 /* speckit.tasks.prompt.md in Resources */,
-				E66A537F2EF7589B0013A0E4 /* speckit.implement.agent.md in Resources */,
-				E66A53802EF7589B0013A0E4 /* agent-file-template.md in Resources */,
-				E66A53812EF7589B0013A0E4 /* speckit.plan.agent.md in Resources */,
-				E66A53822EF7589B0013A0E4 /* speckit.plan.prompt.md in Resources */,
-				E66A53832EF7589B0013A0E4 /* speckit.implement.prompt.md in Resources */,
-				E66A53842EF7589B0013A0E4 /* update-agent-context.sh in Resources */,
-				E66A53852EF7589B0013A0E4 /* speckit.checklist.agent.md in Resources */,
-				E66A53862EF7589B0013A0E4 /* speckit.checklist.prompt.md in Resources */,
-				E66A53872EF7589B0013A0E4 /* speckit.taskstoissues.prompt.md in Resources */,
-				E66A53882EF7589B0013A0E4 /* create-new-feature.sh in Resources */,
-				E66A53892EF7589B0013A0E4 /* speckit.clarify.prompt.md in Resources */,
-				E66A538A2EF7589B0013A0E4 /* checklist-template.md in Resources */,
-				E66A538B2EF7589B0013A0E4 /* spec-template.md in Resources */,
-				E66A538C2EF7589B0013A0E4 /* constitution.md in Resources */,
-				E66A538D2EF7589B0013A0E4 /* speckit.clarify.agent.md in Resources */,
-				E66A538E2EF7589B0013A0E4 /* speckit.taskstoissues.agent.md in Resources */,
-				E66A538F2EF7589B0013A0E4 /* plan-template.md in Resources */,
-				E66A53902EF7589B0013A0E4 /* common.sh in Resources */,
-				E66A53912EF7589B0013A0E4 /* speckit.analyze.prompt.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,6 +400,8 @@
 				DEVELOPMENT_TEAM = 9A8JUJ4K6L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "BumbumNaNuca precisa de acesso à câmera para capturar fotos dos seus treinos";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "BumbumNaNuca precisa de acesso à galeria de fotos para selecionar fotos dos seus treinos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -615,6 +434,8 @@
 				DEVELOPMENT_TEAM = 9A8JUJ4K6L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "BumbumNaNuca precisa de acesso à câmera para capturar fotos dos seus treinos";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "BumbumNaNuca precisa de acesso à galeria de fotos para selecionar fotos dos seus treinos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

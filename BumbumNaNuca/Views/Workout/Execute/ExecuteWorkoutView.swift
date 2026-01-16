@@ -139,8 +139,11 @@ struct ExecuteWorkoutView: View {
         do {
             try vm.startSession()
             self.viewModel = vm
-        } catch WorkoutSessionViewModel.SessionError.sessionAlreadyExists(let existing) {
-            self.existingSession = existing
+        } catch WorkoutSessionViewModel.SessionError.sessionAlreadyExists {
+            // Fetch existing session
+            if let existing = try? vm.checkExistingSession() {
+                self.existingSession = existing
+            }
             self.viewModel = vm
             showingSessionConflict = true
         } catch {

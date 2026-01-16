@@ -11,7 +11,7 @@ import Observation
 
 @Observable
 final class CheckInViewModel {
-    // MARK: - Properties
+    // MARK: - Properties (Feature 003)
     
     /// Check-in de hoje (se existir)
     var todayCheckIn: CheckIn?
@@ -30,6 +30,17 @@ final class CheckInViewModel {
     
     /// Estado de carregamento
     var isLoading: Bool = false
+    
+    // MARK: - Properties (Feature 005: Calendar View)
+    
+    /// Check-ins do mês atual agrupados por dia (mostra apenas o mais recente)
+    var currentMonthCheckIns: [Date: CheckIn] = [:]
+    
+    /// Mês atualmente exibido no calendário
+    var currentMonth: Date = Date()
+    
+    /// Total de check-ins de todos os tempos
+    var totalCheckIns: Int = 0
     
     // MARK: - Computed Properties
     
@@ -66,6 +77,12 @@ final class CheckInViewModel {
         
         // Estatísticas mensais
         monthlyStats = calculateMonthlyStats(from: recentCheckIns)
+        
+        // Feature 005: Carregar calendário do mês atual
+        loadCurrentMonthCalendar(context: context)
+        
+        // Feature 005: Total de check-ins
+        loadTotalCheckIns(context: context)
     }
     
     /// Executa check-in
@@ -161,6 +178,50 @@ final class CheckInViewModel {
             totalCheckIns: monthlyCheckIns.count,
             totalDaysInMonth: totalDaysInMonth
         )
+    }
+    
+    // MARK: - Feature 005: Calendar Helpers
+    
+    /// Carrega check-ins do mês atual para o calendário
+    private func loadCurrentMonthCalendar(context: ModelContext) {
+        let calendar = Calendar.current
+        let startOfMonth = calendar.startOfMonth(for: currentMonth)
+        let endOfMonth = calendar.endOfMonth(for: currentMonth)
+        
+        let descriptor = FetchDescriptor<CheckIn>(
+            predicate: #Predicate { checkIn in
+                checkIn.date >= startOfMonth && checkIn.date <= endOfMonth
+            },
+            sortBy: [SortDescriptor(\CheckIn.date, order: .reverse)]
+        )
+        
+        do {
+            let checkIns = try context.fetch(descriptor)
+            
+            // Agrupa por dia (mostra apenas o mais recente de cada dia)
+            var grouped: [Date: CheckIn] = [:]
+            for checkIn in checkIns {
+                let day = checkIn.calendarDay
+                if grouped[day] == nil {
+                    grouped[day] = checkIn
+                }
+            }
+            
+            currentMonthCheckIns = grouped
+        } catch {
+            currentMonthCheckIns = [:]
+        }
+    }
+    
+    /// Carrega total de check-ins
+    private func loadTotalCheckIns(context: ModelContext) {
+        let descriptor = FetchDescriptor<CheckIn>()
+        do {
+            let allCheckIns = try context.fetch(descriptor)
+            totalCheckIns = allCheckIns.count
+        } catch {
+            totalCheckIns = 0
+        }
     }
 }
 

@@ -18,35 +18,34 @@ struct WorkoutPlanListView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            Group {
-                if filteredPlans.isEmpty {
-                    if viewModel.searchText.isEmpty {
-                        EmptyStateView(
-                            icon: "list.bullet.clipboard",
-                            title: "Nenhum Plano",
-                            message: "Crie seu primeiro plano de treino para começar",
-                            actionTitle: "Criar Plano",
-                            action: viewModel.showCreateSheet
-                        )
-                    } else {
-                        ContentUnavailableView.search(text: viewModel.searchText)
-                    }
+        Group {
+            if filteredPlans.isEmpty {
+                if viewModel.searchText.isEmpty {
+                    EmptyStateView(
+                        icon: "list.bullet.clipboard",
+                        title: "Nenhum Plano",
+                        message: "Crie seu primeiro plano de treino para começar",
+                        actionTitle: "Criar Plano",
+                        action: viewModel.showCreateSheet
+                    )
                 } else {
-                    List {
-                        ForEach(filteredPlans) { plan in
-                            WorkoutPlanRowView(plan: plan)
-                        }
-                        .onDelete(perform: deletePlans)
+                    ContentUnavailableView.search(text: viewModel.searchText)
+                }
+            } else {
+                List {
+                    ForEach(filteredPlans) { plan in
+                        WorkoutPlanRowView(plan: plan)
                     }
-                    .navigationDestination(for: WorkoutPlan.self) { plan in
-                        WorkoutPlanDetailView(plan: plan)
-                    }
+                    .onDelete(perform: deletePlans)
                 }
             }
-            .navigationTitle("Meus Planos")
-            .searchable(text: $viewModel.searchText, prompt: "Buscar planos")
-            .toolbar {
+        }
+        .navigationDestination(for: WorkoutPlan.self) { plan in
+            WorkoutPlanDetailView(plan: plan)
+        }
+        .navigationTitle("Meus Planos")
+        .searchable(text: $viewModel.searchText, prompt: "Buscar planos")
+        .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         viewModel.showCreateSheet()
@@ -64,7 +63,6 @@ struct WorkoutPlanListView: View {
             .sheet(isPresented: $viewModel.isShowingCreateSheet) {
                 CreateWorkoutPlanView()
             }
-        }
     }
     
     private func deletePlans(at offsets: IndexSet) {

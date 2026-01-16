@@ -30,13 +30,10 @@ struct WorkoutPlanDetailView: View {
                         
                         Spacer()
                         
-                        if plan.isActive {
-                            Text("ATIVO")
-                                .font(.caption2.weight(.semibold))
-                                .foregroundStyle(.white)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(.green, in: Capsule())
+                        if plan.isFavorite {
+                            Image(systemName: "star.fill")
+                                .font(.title3)
+                                .foregroundStyle(.yellow)
                         }
                     }
                     
@@ -72,14 +69,14 @@ struct WorkoutPlanDetailView: View {
                 .tint(.accentColor)
                 
                 Button {
-                    viewModel.toggleActive(plan: plan, context: modelContext)
+                    viewModel.toggleFavorite(plan: plan, context: modelContext)
                 } label: {
                     Label(
-                        plan.isActive ? "Desativar Plano" : "Ativar Plano",
-                        systemImage: plan.isActive ? "checkmark.circle.fill" : "circle"
+                        plan.isFavorite ? "Remover dos Favoritos" : "Adicionar aos Favoritos",
+                        systemImage: plan.isFavorite ? "star.fill" : "star"
                     )
                 }
-                .foregroundStyle(plan.isActive ? .red : .green)
+                .foregroundStyle(plan.isFavorite ? .yellow : .gray)
             }
             
             // Lista de exercícios
@@ -93,6 +90,21 @@ struct WorkoutPlanDetailView: View {
                 } else {
                     ForEach(sortedExercises) { exercise in
                         ExerciseRowView(exercise: exercise)
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    modelContext.delete(exercise)
+                                } label: {
+                                    Label("Excluir", systemImage: "trash")
+                                }
+                            }
+                            .swipeActions(edge: .leading) {
+                                Button {
+                                    viewModel.showEditExercise(exercise)
+                                } label: {
+                                    Label("Editar", systemImage: "pencil")
+                                }
+                                .tint(.blue)
+                            }
                     }
                 }
             }
@@ -144,7 +156,7 @@ struct WorkoutPlanDetailView: View {
             EditWorkoutPlanView(plan: plan)
         }
         .sheet(isPresented: $viewModel.isShowingAddExerciseSheet) {
-            AddExerciseView(plan: plan)
+            AddExerciseView(plan: plan, exerciseToEdit: viewModel.editingExercise)
         }
     }
 }
@@ -153,7 +165,7 @@ struct WorkoutPlanDetailView: View {
     NavigationStack {
         WorkoutPlanDetailView(plan: {
             let plan = WorkoutPlan(name: "Treino A", description: "Peito e Tríceps")
-            plan.isActive = true
+            plan.isFavorite = true
             return plan
         }())
     }

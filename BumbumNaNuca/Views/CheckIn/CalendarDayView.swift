@@ -14,6 +14,24 @@ struct CalendarDayView: View {
     let checkIn: CheckIn?
     
     var body: some View {
+        Group {
+            if let checkIn = checkIn {
+                // Dia com check-in - torna clicável
+                NavigationLink {
+                    CheckInDetailView(checkIn: checkIn)
+                } label: {
+                    dayContent
+                }
+                .buttonStyle(.plain)
+            } else {
+                // Dia sem check-in - não clicável
+                dayContent
+            }
+        }
+        .frame(width: 44, height: 44)
+    }
+    
+    private var dayContent: some View {
         ZStack {
             // Background: foto, ícone ou vazio
             if let checkIn = checkIn {
@@ -35,27 +53,13 @@ struct CalendarDayView: View {
                     .frame(width: 44, height: 44)
             }
             
-            // Número do dia sobreposto
-            VStack {
-                Spacer()
-                HStack {
-                    Spacer()
-                    Text("\(Calendar.current.component(.day, from: day))")
-                        .font(.caption2)
-                        .fontWeight(.semibold)
-                        .foregroundColor(checkIn != nil ? .white : .secondary)
-                        .padding(4)
-                        .background(
-                            checkIn != nil
-                                ? Color.black.opacity(0.5)
-                                : Color.clear
-                        )
-                        .clipShape(Circle())
-                        .padding(2)
-                }
-            }
+            // Número do dia sobreposto (centralizado)
+            Text("\(Calendar.current.component(.day, from: day))")
+                .font(.caption)
+                .fontWeight(.semibold)
+                .foregroundColor(checkIn != nil ? .white : .primary)
+                .shadow(color: checkIn != nil ? .black.opacity(0.5) : .clear, radius: 2, x: 0, y: 1)
         }
-        .frame(width: 44, height: 44)
     }
 }
 

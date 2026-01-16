@@ -25,6 +25,18 @@ final class RegisterCheckInViewModel {
     /// Calorias queimadas (opcional)
     var calories: String = ""
     
+    /// Erro de validação do tipo de exercício
+    var exerciseTypeError: String? = nil
+    
+    /// Erro de validação do título
+    var titleError: String? = nil
+    
+    /// Erro de validação das calorias
+    var caloriesError: String? = nil
+    
+    /// Erro de validação da data
+    var dateError: String? = nil
+    
     /// Localização do treino (opcional)
     var location: String = ""
     
@@ -52,11 +64,13 @@ final class RegisterCheckInViewModel {
     // MARK: - Private Dependencies
     
     private let modelContext: ModelContext
+    private let workoutSession: WorkoutSession?
     
     // MARK: - Initialization
     
-    init(modelContext: ModelContext) {
+    init(modelContext: ModelContext, workoutSession: WorkoutSession? = nil) {
         self.modelContext = modelContext
+        self.workoutSession = workoutSession
     }
     
     // MARK: - Public Actions
@@ -64,6 +78,7 @@ final class RegisterCheckInViewModel {
     /// Atualiza tipo de exercício selecionado
     func setExerciseType(_ type: String) {
         exerciseType = type
+        exerciseTypeError = nil
         clearValidationError(containing: "exercício")
     }
     
@@ -71,6 +86,7 @@ final class RegisterCheckInViewModel {
     func setTitle(_ value: String) {
         let trimmed = String(value.prefix(100))
         title = trimmed
+        titleError = nil
         clearValidationError(containing: "título")
     }
     
@@ -79,6 +95,7 @@ final class RegisterCheckInViewModel {
         // Permite apenas números
         let filtered = value.filter { $0.isNumber }
         calories = filtered
+        caloriesError = nil
         clearValidationError(containing: "calorias")
     }
     
@@ -95,6 +112,7 @@ final class RegisterCheckInViewModel {
         } else {
             date = value
         }
+        dateError = nil
         clearValidationError(containing: "data")
     }
     
@@ -130,11 +148,13 @@ final class RegisterCheckInViewModel {
     func save() async -> Bool {
         isSaving = true
         validationErrors = []
+        exerciseTypeError = nil
+        titleError = nil
+        caloriesError = nil
+        dateError = nil
         
         // Validação
-        let errors = validate()
-        if !errors.isEmpty {
-            validationErrors = errors
+        if !validate() {
             isSaving = false
             return false
         }
@@ -160,6 +180,11 @@ final class RegisterCheckInViewModel {
             calories: caloriesInt,
             location: location.isEmpty ? nil : location
         )
+        
+        // Associa workout session se fornecida
+        if let workoutSession = workoutSession {
+            checkIn.workoutSession = workoutSession
+        }
         
         // Salva no contexto
         modelContext.insert(checkIn)
@@ -195,6 +220,10 @@ final class RegisterCheckInViewModel {
         photo = nil
         selectedPhotoItem = nil
         validationErrors = []
+        exerciseTypeError = nil
+        titleError = nil
+        caloriesError = nil
+        dateError = nil
         isSaving = false
         didSave = false
     }
@@ -210,26 +239,30 @@ final class RegisterCheckInViewModel {
     
     // MARK: - Private Helpers
     
-    private func validate() -> [String] {
-        var errors: [String] = []
-        
-        if exerciseType.isEmpty || !ExerciseType.isValid(exerciseType) {
-            errors.append("Selecione um tipo de exercício")
-        }
+    private func validate() -> Bool {
+        var isValid = true
         
         if title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            errors.append("Digite um título para o check-in")
+            titleError = "Digite um título para o check-in"
+            isValid = false
+        }
+        
+        if exerciseType.isEmpty || !ExerciseType.isValid(exerciseType) {
+            exerciseTypeError = "Selecione um tipo de exercício"
+            isValid = false
         }
         
         if date > Date() {
-            errors.append("Data do check-in não pode ser no futuro")
+            dateError = "Data do check-in não pode ser no futuro"
+            isValid = false
         }
         
-        if let caloriesInt = Int(calories), caloriesInt < 0 {
-            errors.append("Calorias não podem ser negativas")
+        if !calories.isEmpty, let caloriesInt = Int(calories), caloriesInt < 0 {
+            caloriesError = "Calorias não podem ser negativas"
+            isValid = false
         }
         
-        return errors
+        return isValid
     }
     
     private func clearValidationError(containing text: String) {

@@ -12,14 +12,14 @@ import SwiftUI
 struct ExerciseType {
     /// Lista completa de tipos de exercício disponíveis
     static let all: [String] = [
-        "Run",
-        "Gym",
-        "Swim",
-        "Bike",
-        "Walk",
+        "Corrida",
+        "Musculação",
+        "Natação",
+        "Ciclismo",
+        "Caminhada",
         "Yoga",
-        "Cycling",
-        "Strength Training"
+        "Treino de Força",
+        "Funcional"
     ]
     
     /// Valida se o tipo de exercício é válido
@@ -30,22 +30,22 @@ struct ExerciseType {
     /// Retorna o ícone SF Symbol e cor associados ao tipo de exercício
     static func icon(for type: String) -> (symbol: String, color: Color) {
         switch type {
-        case "Run":
+        case "Corrida":
             return ("figure.run", .orange)
-        case "Gym":
+        case "Musculação":
             return ("dumbbell.fill", .red)
-        case "Swim":
+        case "Natação":
             return ("figure.pool.swim", .blue)
-        case "Bike":
+        case "Ciclismo":
             return ("bicycle", .green)
-        case "Walk":
+        case "Caminhada":
             return ("figure.walk", .teal)
         case "Yoga":
             return ("figure.mind.and.body", .purple)
-        case "Cycling":
-            return ("bicycle.circle.fill", .indigo)
-        case "Strength Training":
+        case "Treino de Força":
             return ("figure.strengthtraining.traditional", .pink)
+        case "Funcional":
+            return ("figure.mixed.cardio", .indigo)
         default:
             return ("figure.mixed.cardio", .gray)
         }

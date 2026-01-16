@@ -17,91 +17,48 @@ struct RegisterCheckInView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var viewModel: RegisterCheckInViewModel
+    @State private var showPhotoOptions = false
     @State private var showCamera = false
     @State private var showPermissionAlert = false
     @State private var permissionMessage = ""
     
-    init(modelContext: ModelContext) {
-        _viewModel = State(initialValue: RegisterCheckInViewModel(modelContext: modelContext))
+    let onComplete: (() -> Void)?
+    
+    init(modelContext: ModelContext, workoutSession: WorkoutSession? = nil, onComplete: (() -> Void)? = nil) {
+        _viewModel = State(initialValue: RegisterCheckInViewModel(modelContext: modelContext, workoutSession: workoutSession))
+        self.onComplete = onComplete
     }
     
     var body: some View {
         NavigationStack {
-            Form {
-                // Tipo de Exercício
-                Section {
-                    ExerciseTypePicker(selectedType: $viewModel.exerciseType)
-                }
-                
-                // Foto
-                Section {
-                    photoSection
-                } header: {
-                    Text("Foto do Treino")
-                }
-                
-                // Título
-                Section {
-                    TextField("Título do Check-in", text: Binding(
-                        get: { viewModel.title },
-                        set: { viewModel.setTitle($0) }
-                    ))
-                } header: {
-                    Text("Título")
-                } footer: {
-                    Text("\(viewModel.title.count)/100 caracteres")
-                }
-                
-                // Detalhes Opcionais
-                Section {
-                    // Calorias
-                    TextField("Calorias", text: Binding(
-                        get: { viewModel.calories },
-                        set: { viewModel.setCalories($0) }
-                    ))
-                    .keyboardType(.numberPad)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 24) {
+                    // SECTION B: Training Details Form (Reordered)
+                    VStack(alignment: .leading, spacing: 20) {
+                        // 1. Title
+                        titleSection
+                        
+                        // 2. Location
+                        locationSection
+                        
+                        // 3. Calories Burned
+                        caloriesSection
+                        
+                        // 4. Exercise Type
+                        exerciseTypeSection
+                        
+                        // 5. Date & Time
+                        dateTimeSection
+                    }
+                    .padding(.horizontal)
                     
-                    // Localização
-                    TextField("Localização", text: Binding(
-                        get: { viewModel.location },
-                        set: { viewModel.setLocation($0) }
-                    ))
-                } header: {
-                    Text("Detalhes Opcionais")
-                } footer: {
-                    if !viewModel.location.isEmpty {
-                        Text("\(viewModel.location.count)/200 caracteres")
-                    }
+                    // SECTION A: Training Photo (moved to bottom)
+                    photoSection
+                    
+                    Spacer(minLength: 100)
                 }
-                
-                // Data/Hora
-                Section {
-                    DatePicker(
-                        "Data e Hora",
-                        selection: Binding(
-                            get: { viewModel.date },
-                            set: { viewModel.setDate($0) }
-                        ),
-                        in: ...Date(),
-                        displayedComponents: [.date, .hourAndMinute]
-                    )
-                } header: {
-                    Text("Quando")
-                }
-                
-                // Erros de validação
-                if !viewModel.validationErrors.isEmpty {
-                    Section {
-                        ForEach(viewModel.validationErrors, id: \.self) { error in
-                            Label(error, systemImage: "exclamationmark.triangle.fill")
-                                .foregroundColor(.red)
-                                .font(.callout)
-                        }
-                    }
-                }
+                .padding(.top)
             }
-            .navigationTitle("Registrar Check-In")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancelar") {
@@ -110,17 +67,23 @@ struct RegisterCheckInView: View {
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Check In") {
+                    Button {
                         Task {
                             let success = await viewModel.save()
                             if success {
-                                dismiss()
-                            }
+                                dismiss();                                onComplete?()                            }
+                        }
+                    } label: {
+                        if viewModel.isSaving {
+                            ProgressView()
+                        } else {
+                            Text("Check In")
                         }
                     }
                     .disabled(viewModel.isSaving)
                 }
             }
+
             .sheet(isPresented: $showCamera) {
                 CameraPicker(image: Binding(
                     get: { viewModel.photo },
@@ -145,48 +108,231 @@ struct RegisterCheckInView: View {
         }
     }
     
+    // MARK: - Title Section
+    
+    @ViewBuilder
+    private var titleSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Título")
+                .font(.subheadline)
+                .fontWeight(.medium)
+                .foregroundStyle(.secondary)
+            
+            TextField("Digite o título do check-in", text: Binding(
+                get: { viewModel.title },
+                set: { viewModel.setTitle($0) }
+            ))
+            .padding()
+            .background(Color(.secondarySystemBackground))
+            .cornerRadius(12)
+            
+            if !viewModel.title.isEmpty {
+                Text("\(viewModel.title.count)/100 caracteres")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            
+            // Inline error
+            if let error = viewModel.titleError {
+                ErrorLabel(message: error)
+            }
+        }
+    }
+    
     // MARK: - Photo Section
     
     @ViewBuilder
     private var photoSection: some View {
-        if let photo = viewModel.photo {
-            // Mostra foto selecionada
-            VStack(spacing: 12) {
-                Image(uiImage: photo)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(height: 200)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                
-                Button(role: .destructive) {
-                    viewModel.clearPhoto()
-                } label: {
-                    Label("Remover Foto", systemImage: "trash")
+        VStack(alignment: .leading, spacing: 16) {
+            if let photo = viewModel.photo {
+                // Show selected photo
+                VStack(alignment: .leading, spacing: 12) {
+                    Image(uiImage: photo)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: 250)
                         .frame(maxWidth: .infinity)
-                }
-            }
-        } else {
-            // Botões para adicionar foto
-            VStack(spacing: 12) {
-                Button {
-                    requestCameraPermission()
-                } label: {
-                    Label("Tirar Foto", systemImage: "camera.fill")
-                        .frame(maxWidth: .infinity)
-                }
-                
-                PhotosPicker(
-                    selection: $viewModel.selectedPhotoItem,
-                    matching: .images
-                ) {
-                    Label("Escolher da Galeria", systemImage: "photo.on.rectangle")
-                        .frame(maxWidth: .infinity)
-                }
-                .onChange(of: viewModel.selectedPhotoItem) { _, newItem in
-                    Task {
-                        await viewModel.loadPhoto(from: newItem)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                    
+                    Button(role: .destructive) {
+                        viewModel.clearPhoto()
+                    } label: {
+                        Label("Remover Foto", systemImage: "trash")
+                            .font(.subheadline)
+                            .fontWeight(.medium)
                     }
                 }
+                .padding(.horizontal)
+            } else {
+                // Add Photo section
+                VStack(alignment: .leading, spacing: 12) {
+                    Button {
+                        requestCameraPermission()
+                    } label: {
+                        HStack {
+                            Image(systemName: "camera.fill")
+                                .font(.title3)
+                            Text("Tirar Foto")
+                                .fontWeight(.semibold)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.accentColor)
+                        .foregroundStyle(.white)
+                        .cornerRadius(12)
+                    }
+                    .buttonStyle(.plain)
+                    
+                    PhotosPicker(
+                        selection: $viewModel.selectedPhotoItem,
+                        matching: .images
+                    ) {
+                        HStack {
+                            Image(systemName: "photo.on.rectangle")
+                                .font(.title3)
+                            Text("Escolher da Galeria")
+                                .fontWeight(.semibold)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.accentColor)
+                        .foregroundStyle(.white)
+                        .cornerRadius(12)
+                    }
+                    .buttonStyle(.plain)
+                    .onChange(of: viewModel.selectedPhotoItem) { _, newItem in
+                        Task {
+                            await viewModel.loadPhoto(from: newItem)
+                        }
+                    }
+                    
+                    Text("Adicione uma foto do seu treino (opcional)")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.horizontal)
+            }
+        }
+    }
+    
+    // MARK: - Exercise Type Section
+    
+    @ViewBuilder
+    private var exerciseTypeSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Tipo de Exercício")
+                .font(.subheadline)
+                .fontWeight(.medium)
+                .foregroundStyle(.secondary)
+            
+            Picker("Tipo de Exercício", selection: Binding(
+                get: { viewModel.exerciseType },
+                set: { viewModel.setExerciseType($0) }
+            )) {
+                Text("Selecione...").tag("")
+                
+                ForEach(ExerciseType.all, id: \.self) { type in
+                    HStack {
+                        let iconConfig = ExerciseType.icon(for: type)
+                        Image(systemName: iconConfig.symbol)
+                            .foregroundColor(iconConfig.color)
+                        Text(type)
+                    }
+                    .tag(type)
+                }
+            }
+            .pickerStyle(.menu)
+            .padding()
+            .background(Color(.secondarySystemBackground))
+            .cornerRadius(12)
+            
+            // Inline error
+            if let error = viewModel.exerciseTypeError {
+                ErrorLabel(message: error)
+            }
+        }
+    }
+    
+    // MARK: - Calories Section
+    
+    @ViewBuilder
+    private var caloriesSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Calorias Queimadas")
+                .font(.subheadline)
+                .fontWeight(.medium)
+                .foregroundStyle(.secondary)
+            
+            TextField("Digite as calorias", text: Binding(
+                get: { viewModel.calories },
+                set: { viewModel.setCalories($0) }
+            ))
+            .keyboardType(.numberPad)
+            .padding()
+            .background(Color(.secondarySystemBackground))
+            .cornerRadius(12)
+            
+            // Inline error
+            if let error = viewModel.caloriesError {
+                ErrorLabel(message: error)
+            }
+        }
+    }
+    
+    // MARK: - Date & Time Section
+    
+    @ViewBuilder
+    private var dateTimeSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Data e Hora")
+                .font(.subheadline)
+                .fontWeight(.medium)
+                .foregroundStyle(.secondary)
+            
+            DatePicker(
+                "",
+                selection: Binding(
+                    get: { viewModel.date },
+                    set: { viewModel.setDate($0) }
+                ),
+                in: ...Date(),
+                displayedComponents: [.date, .hourAndMinute]
+            )
+            .datePickerStyle(.compact)
+            .labelsHidden()
+            .padding()
+            .background(Color(.secondarySystemBackground))
+            .cornerRadius(12)
+            
+            // Inline error
+            if let error = viewModel.dateError {
+                ErrorLabel(message: error)
+            }
+        }
+    }
+    
+    // MARK: - Location Section
+    
+    @ViewBuilder
+    private var locationSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Localização (Opcional)")
+                .font(.subheadline)
+                .fontWeight(.medium)
+                .foregroundStyle(.secondary)
+            
+            TextField("Digite a localização", text: Binding(
+                get: { viewModel.location },
+                set: { viewModel.setLocation($0) }
+            ))
+            .padding()
+            .background(Color(.secondarySystemBackground))
+            .cornerRadius(12)
+            
+            if !viewModel.location.isEmpty {
+                Text("\(viewModel.location.count)/200 caracteres")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
         }
     }
@@ -235,6 +381,26 @@ struct RegisterCheckInView: View {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)
         }
+    }
+}
+
+// MARK: - Error Label Component
+
+private struct ErrorLabel: View {
+    let message: String
+    
+    var body: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "exclamationmark.circle.fill")
+                .font(.caption)
+            Text(message)
+                .font(.caption)
+        }
+        .foregroundColor(.white)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(Color.red)
+        .cornerRadius(8)
     }
 }
 

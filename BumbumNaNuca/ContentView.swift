@@ -111,9 +111,9 @@ struct ContentView: View {
             }
         }
         .environment(\.navigateToWorkout, NavigateToWorkoutAction { workout in
-            // Cross-tab navigation: Home → Workouts tab → Execute
-            // Note: ExecuteWorkoutView navigation will be implemented when HomeView is created
+            // Cross-tab navigation: Home → Workouts tab → Plan detail
             selectedTab = .workouts
+            workoutsNavPath.append(workout)
         })
         .environment(\.navigateToHome, NavigateToHomeAction {
             // Clear all navigation stacks and return to home

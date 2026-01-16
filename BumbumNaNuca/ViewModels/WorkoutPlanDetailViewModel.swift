@@ -13,27 +13,11 @@ final class WorkoutPlanDetailViewModel {
     var isShowingEditSheet: Bool = false
     var isShowingDeleteAlert: Bool = false
     var isShowingAddExerciseSheet: Bool = false
+    var editingExercise: Exercise? = nil
     
-    func toggleActive(plan: WorkoutPlan, context: ModelContext) {
-        // Se o plano já está ativo, apenas desativa
-        if plan.isActive {
-            plan.isActive = false
-            return
-        }
-        
-        // Buscar todos os planos e desativar o ativo atual
-        let descriptor = FetchDescriptor<WorkoutPlan>(
-            predicate: #Predicate { $0.isActive == true }
-        )
-        
-        if let activePlans = try? context.fetch(descriptor) {
-            for activePlan in activePlans {
-                activePlan.isActive = false
-            }
-        }
-        
-        // Ativar o plano atual
-        plan.isActive = true
+    func toggleFavorite(plan: WorkoutPlan, context: ModelContext) {
+        // Simplesmente inverte o estado de favorito
+        plan.isFavorite.toggle()
     }
     
     func showEditSheet() {
@@ -53,10 +37,17 @@ final class WorkoutPlanDetailViewModel {
     }
     
     func showAddExerciseSheet() {
+        editingExercise = nil
         isShowingAddExerciseSheet = true
     }
     
     func hideAddExerciseSheet() {
         isShowingAddExerciseSheet = false
+        editingExercise = nil
+    }
+    
+    func showEditExercise(_ exercise: Exercise) {
+        editingExercise = exercise
+        isShowingAddExerciseSheet = true
     }
 }

@@ -65,6 +65,26 @@ final class WorkoutSession {
     var completedExercises: Set<UUID> {
         Set(exerciseSets.compactMap { $0.exercise?.id })
     }
+    
+    var completedExercisesCount: Int {
+        completedExercises.count
+    }
+    
+    var formattedDuration: String {
+        guard let duration = duration else { return "Em andamento" }
+        
+        let hours = Int(duration) / 3600
+        let minutes = Int(duration) / 60 % 60
+        let seconds = Int(duration) % 60
+        
+        if hours > 0 {
+            return String(format: "%dh %02dm %02ds", hours, minutes, seconds)
+        } else if minutes > 0 {
+            return String(format: "%dm %02ds", minutes, seconds)
+        } else {
+            return String(format: "%ds", seconds)
+        }
+    }
 }
 
 // MARK: - Validation Errors

@@ -97,4 +97,18 @@ extension CheckIn {
     var calendarDay: Date {
         Calendar.current.startOfDay(for: date)
     }
+    
+    /// Retorna imagem em tamanho completo para exibição em detalhes
+    var fullSizeImage: UIImage? {
+        return photo // Usa a mesma foto já descomprimida
+    }
+    
+    /// Retorna data formatada para exibição
+    var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .short
+        formatter.locale = Locale(identifier: "pt_BR")
+        return formatter.string(from: date)
+    }
 }

@@ -11,9 +11,16 @@ import SwiftData
 struct AddExerciseView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
-    @State private var viewModel = AddExerciseViewModel()
+    @State private var viewModel: AddExerciseViewModel
     
     let plan: WorkoutPlan
+    let exerciseToEdit: Exercise?
+    
+    init(plan: WorkoutPlan, exerciseToEdit: Exercise? = nil) {
+        self.plan = plan
+        self.exerciseToEdit = exerciseToEdit
+        _viewModel = State(initialValue: AddExerciseViewModel(exercise: exerciseToEdit))
+    }
     
     var body: some View {
         NavigationStack {
@@ -69,7 +76,7 @@ struct AddExerciseView: View {
                         .foregroundStyle(.secondary)
                 }
             }
-            .navigationTitle("Novo Exercício")
+            .navigationTitle(exerciseToEdit == nil ? "Novo Exercício" : "Editar Exercício")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -79,8 +86,13 @@ struct AddExerciseView: View {
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Adicionar") {
-                        if let _ = viewModel.addExercise(to: plan, context: modelContext) {
+                    Button(exerciseToEdit == nil ? "Adicionar" : "Salvar") {
+                        if exerciseToEdit == nil {
+                            if let _ = viewModel.addExercise(to: plan, context: modelContext) {
+                                dismiss()
+                            }
+                        } else {
+                            viewModel.updateExercise(exerciseToEdit!, context: modelContext)
                             dismiss()
                         }
                     }

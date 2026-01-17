@@ -6,17 +6,20 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct WorkoutSummaryView: View {
     let session: WorkoutSession
     let onFinish: () -> Void
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
     @State private var viewModel: WorkoutSummaryViewModel?
+    @State private var showCheckInSheet = false
     
     var body: some View {
         Group {
-            if let viewModel = viewModel {
+            if viewModel != nil {
                 summaryContent
             } else {
                 ProgressView()
@@ -76,18 +79,43 @@ struct WorkoutSummaryView: View {
                 
                 Spacer()
                 
-                // Action button
-                Button(action: { 
-                    dismiss()
-                    onFinish()
-                }) {
-                    Text("Finalizar")
+                // Action buttons
+                VStack(spacing: 12) {
+                    // Primary: Fazer CheckIn
+                    Button(action: { 
+                        showCheckInSheet = true
+                    }) {
+                        HStack {
+                            Image(systemName: "camera.fill")
+                            Text("Fazer CheckIn")
+                        }
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    
+                    // Tertiary: Finalizar
+                    Button(action: { 
+                        dismiss()
+                        onFinish()
+                    }) {
+                        Text("Finalizar")
+                            .font(.subheadline)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                    }
+                    .buttonStyle(.borderless)
+                    .foregroundStyle(.secondary)
                 }
-                .buttonStyle(.borderedProminent)
                 .padding()
+            }
+            .sheet(isPresented: $showCheckInSheet) {
+                RegisterCheckInView(modelContext: modelContext, workoutSession: session) {
+                    // After check-in is completed, finish workout and go to home
+                    dismiss()
+                    onFinish()
+                }
             }
         }
     }

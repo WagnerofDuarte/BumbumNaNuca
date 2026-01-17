@@ -17,6 +17,18 @@ final class AddExerciseViewModel {
     var restTime: Int = 60
     var loadText: String = ""
     
+    init(exercise: Exercise? = nil) {
+        if let exercise = exercise {
+            // Populate fields with existing exercise data
+            self.name = exercise.name
+            self.muscleGroup = exercise.muscleGroup
+            self.sets = exercise.defaultSets
+            self.reps = exercise.defaultReps
+            self.restTime = exercise.defaultRestTime
+            self.loadText = exercise.load.map { String($0) } ?? ""
+        }
+    }
+    
     // Validações
     var isNameValid: Bool {
         !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -66,6 +78,21 @@ final class AddExerciseViewModel {
         context.insert(exercise)
         
         return exercise
+    }
+    
+    func updateExercise(_ exercise: Exercise, context: ModelContext) {
+        guard canSave else { return }
+        
+        // Parse load (nil if empty)
+        let load: Double? = loadText.isEmpty ? nil : Double(loadText)
+        
+        // Update exercise properties
+        exercise.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        exercise.muscleGroup = muscleGroup
+        exercise.defaultSets = sets
+        exercise.defaultReps = reps
+        exercise.defaultRestTime = restTime
+        exercise.load = load
     }
     
     func reset() {

@@ -13,6 +13,7 @@ struct HomeView: View {
     @Environment(\.navigateToWorkout) private var navigateToWorkout
     
     @State private var viewModel = HomeViewModel()
+    @State private var showRegisterCheckIn = false
     
     var body: some View {
         ScrollView {
@@ -31,14 +32,22 @@ struct HomeView: View {
                 .padding(.horizontal)
                 .padding(.top)
                 
-                // Card de Check-in
-                CheckInCard(
-                    hasCheckInToday: viewModel.hasCheckInToday,
-                    checkInTime: viewModel.checkInTimeText,
-                    onCheckIn: {
-                        viewModel.performQuickCheckIn(context: modelContext)
+                // Botão de Check-In com Foto
+                Button {
+                    showRegisterCheckIn = true
+                } label: {
+                    HStack {
+                        Image(systemName: "camera.fill")
+                        Text("Registrar Check-In")
+                            .fontWeight(.semibold)
                     }
-                )
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.accentColor)
+                    .foregroundStyle(.white)
+                    .cornerRadius(12)
+                }
+                .buttonStyle(.plain)
                 .padding(.horizontal)
                 
                 // Badge de Sequência
@@ -46,9 +55,17 @@ struct HomeView: View {
                     StreakBadge(streak: viewModel.currentStreak)
                 }
                 
-                // Card de Plano Ativo
-                if let plan = viewModel.activePlan {
-                    activePlanCard(plan: plan)
+                // Cards de Planos Favoritos
+                if viewModel.hasFavoritePlans {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Planos Favoritos")
+                            .font(.headline)
+                            .padding(.horizontal)
+                        
+                        ForEach(viewModel.favoritePlans) { plan in
+                            favoritePlanCard(plan: plan)
+                        }
+                    }
                 } else {
                     emptyPlanCard
                 }
@@ -68,22 +85,25 @@ struct HomeView: View {
         .refreshable {
             viewModel.loadDashboard(context: modelContext)
         }
+        .sheet(isPresented: $showRegisterCheckIn) {
+            RegisterCheckInView(modelContext: modelContext)
+        }
     }
     
-    // MARK: - Active Plan Card
+    // MARK: - Favorite Plan Card
     
-    private func activePlanCard(plan: WorkoutPlan) -> some View {
+    private func favoritePlanCard(plan: WorkoutPlan) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Image(systemName: "dumbbell.fill")
+                Image(systemName: "star.fill")
                     .font(.title2)
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(.yellow)
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Plano Ativo")
+                    Text(plan.name)
                         .font(.headline)
                     
-                    Text(plan.name)
+                    Text("\(plan.exercises.count) exercícios")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
@@ -95,8 +115,8 @@ struct HomeView: View {
                 navigateToWorkout(plan)
             }) {
                 HStack {
-                    Image(systemName: "play.fill")
-                    Text("Iniciar Treino")
+                    Image(systemName: "eye.fill")
+                    Text("Ver Treino")
                         .fontWeight(.semibold)
                 }
                 .frame(maxWidth: .infinity)
@@ -116,15 +136,15 @@ struct HomeView: View {
     private var emptyPlanCard: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Image(systemName: "dumbbell")
+                Image(systemName: "star")
                     .font(.title2)
                     .foregroundStyle(.secondary)
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Nenhum plano ativo")
+                    Text("Nenhum plano favorito")
                         .font(.headline)
                     
-                    Text("Ative um plano para começar")
+                    Text("Favorite um plano para começar")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }

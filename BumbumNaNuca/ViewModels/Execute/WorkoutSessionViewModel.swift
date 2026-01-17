@@ -49,9 +49,9 @@ final class WorkoutSessionViewModel {
     
     func startSession() throws {
         // Verificar se já existe sessão ativa
-        if let existingSession = try? checkExistingSession() {
+        if let _ = try? checkExistingSession() {
             AppLogger.execution.warning("Found existing session for workout plan: \(self.workoutPlan.name)")
-            throw SessionError.sessionAlreadyExists(existingSession)
+            throw SessionError.sessionAlreadyExists
         }
         
         // Criar nova sessão
@@ -137,7 +137,7 @@ final class WorkoutSessionViewModel {
     
     // MARK: - Query
     
-    private func checkExistingSession() throws -> WorkoutSession? {
+    func checkExistingSession() throws -> WorkoutSession? {
         let planId = workoutPlan.id
         let descriptor = FetchDescriptor<WorkoutSession>(
             predicate: #Predicate<WorkoutSession> { session in
@@ -160,7 +160,7 @@ final class WorkoutSessionViewModel {
     }
     
     enum SessionError: LocalizedError {
-        case sessionAlreadyExists(WorkoutSession)
+        case sessionAlreadyExists
         case invalidWorkoutPlan
         case persistenceError(Error)
         

@@ -14,7 +14,7 @@ final class WorkoutPlan {
     var name: String
     var desc: String  // "description" é palavra reservada do SwiftData
     var createdDate: Date
-    var isActive: Bool
+    var isFavorite: Bool
     
     @Relationship(deleteRule: .cascade, inverse: \Exercise.workoutPlan)
     var exercises: [Exercise]
@@ -27,13 +27,13 @@ final class WorkoutPlan {
         name: String,
         description: String = "",
         createdDate: Date = Date(),
-        isActive: Bool = false
+        isFavorite: Bool = false
     ) {
         self.id = id
         self.name = name
         self.desc = description
         self.createdDate = createdDate
-        self.isActive = isActive
+        self.isFavorite = isFavorite
         self.exercises = []
         self.workoutSessions = []
     }

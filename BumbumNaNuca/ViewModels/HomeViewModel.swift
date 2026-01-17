@@ -13,8 +13,8 @@ import Observation
 final class HomeViewModel {
     // MARK: - Properties
     
-    /// Plano de treino marcado como ativo (máximo 1)
-    var activePlan: WorkoutPlan?
+    /// Planos de treino marcados como favoritos
+    var favoritePlans: [WorkoutPlan] = []
     
     /// Última sessão de treino completada
     var lastCompletedWorkout: WorkoutSession?
@@ -30,9 +30,9 @@ final class HomeViewModel {
     
     // MARK: - Computed Properties
     
-    /// Indica se existe plano ativo
-    var hasActivePlan: Bool {
-        activePlan != nil
+    /// Indica se existem planos favoritos
+    var hasFavoritePlans: Bool {
+        !favoritePlans.isEmpty
     }
     
     /// Indica se já fez check-in hoje
@@ -58,8 +58,8 @@ final class HomeViewModel {
         isLoading = true
         defer { isLoading = false }
         
-        // Buscar plano ativo
-        activePlan = fetchActivePlan(context: context)
+        // Buscar planos favoritos
+        favoritePlans = fetchFavoritePlans(context: context)
         
         // Buscar último treino completado
         lastCompletedWorkout = fetchLastCompletedWorkout(context: context)
@@ -88,11 +88,12 @@ final class HomeViewModel {
     
     // MARK: - Private Helpers
     
-    private func fetchActivePlan(context: ModelContext) -> WorkoutPlan? {
+    private func fetchFavoritePlans(context: ModelContext) -> [WorkoutPlan] {
         let descriptor = FetchDescriptor<WorkoutPlan>(
-            predicate: #Predicate { $0.isActive == true }
+            predicate: #Predicate { $0.isFavorite == true },
+            sortBy: [SortDescriptor(\.name)]
         )
-        return try? context.fetch(descriptor).first
+        return (try? context.fetch(descriptor)) ?? []
     }
     
     private func fetchLastCompletedWorkout(context: ModelContext) -> WorkoutSession? {

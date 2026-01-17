@@ -27,13 +27,10 @@ struct WorkoutPlanRowView: View {
                     
                     Spacer()
                     
-                    if plan.isActive {
-                        Text("ATIVO")
-                            .font(.caption2.weight(.semibold))
-                            .foregroundStyle(.white)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(.green, in: Capsule())
+                    if plan.isFavorite {
+                        Image(systemName: "star.fill")
+                            .font(.caption)
+                            .foregroundStyle(.yellow)
                     }
                 }
                 
@@ -67,7 +64,7 @@ struct WorkoutPlanRowView: View {
         
         WorkoutPlanRowView(plan: {
             let plan = WorkoutPlan(name: "Treino B", description: "Costas e Bíceps com descrição muito longa que vai ocupar mais de uma linha")
-            plan.isActive = true
+            plan.isFavorite = true
             return plan
         }())
         
